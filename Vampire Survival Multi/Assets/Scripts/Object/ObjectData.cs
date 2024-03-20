@@ -15,33 +15,6 @@ public class ObjectData : ScriptableObject
     public int HP
     {
         get { return _healthPoint; }
-        set
-        {
-            if (_maxHealthPoint < value) _healthPoint = _maxHealthPoint;
-            else if (value < 0) _healthPoint = 0;
-            else _healthPoint = value;
-        }
-    }
-
-    [SerializeField]
-    private int _maxHealthPoint;
-    public int MaxHP
-    {
-        get { return _maxHealthPoint; }
-        set
-        {
-            if (value <= 0) _maxHealthPoint = 1; // 최대체력의 최하수치는 1로 설정
-            else
-            {
-                _maxHealthPoint = value;
-
-                if (_healthPoint > _maxHealthPoint)
-                {
-                    // 최대체력보다 기본 체력이 높을 경우 기본 체력 수정
-                    _healthPoint = _maxHealthPoint;
-                }
-            }
-        }
     }
 
     [SerializeField]
@@ -55,11 +28,19 @@ public class ObjectData : ScriptableObject
     public int STR
     {
         get { return _strength; }
-        set
-        {
-            if (value < 0) _strength = 0;
-            else _strength = value;
-        }
+    }
+
+    [SerializeField]
+    private int _defensive;
+    /***************************************************************
+    * [ 방어력 (Defensive) ]
+    * 
+    * 오브젝트의 방어력 수치로 받는 데미지에 영향을 끼친다.
+    * 방어력 1당 1의 데미지를 줄인다.
+    ****************************************************************/
+    public int DEF
+    {
+        get { return _defensive; }
     }
 
     [SerializeField]
@@ -69,33 +50,8 @@ public class ObjectData : ScriptableObject
     * 
     * 오브젝트의 민첩 수치로 이동속도에 영향을 끼친다.
     ****************************************************************/
-    public int AGI
+    public int Speed
     {
         get { return _agility; }
-        set
-        {
-            if (value < 0) _agility = 0;
-            else _agility = value;
-        }
-    }
-
-    [SerializeField]
-    private int _moveSpeed;
-    /***************************************************************
-    * [ 이동속도 (Speed) ]
-    * 
-    * 오브젝트의 이동속도로 민첩 수치에 영향을 받는다.
-    ****************************************************************/
-    public virtual int MoveSpeed
-    {
-        get
-        {
-            if (_moveSpeed <= 0)
-            {
-                _moveSpeed = Mathf.RoundToInt(_agility * 1000f);
-            }
-
-            return _moveSpeed;
-        }
     }
 }

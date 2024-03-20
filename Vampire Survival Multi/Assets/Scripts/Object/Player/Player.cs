@@ -3,16 +3,9 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-
-    // Use this for initialization
-    void Start()
+    public void OnTakeDamage(int damage)
     {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
+        // 공격 받았을 때
+        Debug.Log("피해를 입었습니다: " +  damage);
     }
 }
