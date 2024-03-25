@@ -11,12 +11,12 @@ public class PlayerController : MonoBehaviour
     // 플레이어 움직임 제어 변수
     private Vector2 position;
 
-    void Start()
+    private void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
     }
 
-    void Update()
+    private void Update()
     {
         float horizontalInput = Input.GetAxisRaw("Horizontal");
         float verticalInput = Input.GetAxisRaw("Vertical");
@@ -25,9 +25,9 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    void FixedUpdate()
+    private void FixedUpdate()
     {
-        Vector2 movement = position.normalized * classData.Speed * Time.deltaTime;
+        Vector2 movement = position.normalized * classData.AGI * Time.deltaTime;
 
         rigid.MovePosition(rigid.position + movement);
     }

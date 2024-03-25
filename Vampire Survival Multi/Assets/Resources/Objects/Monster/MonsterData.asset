@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: MonsterData
   m_EditorClassIdentifier: 
   _healthPoint: 10
-  _strength: 10
+  _strength: 1
   _defensive: 0
   _agility: 4
-  _attackDistance: 1.1
+  _attackDistance: 1
   _attackCooldown: 1

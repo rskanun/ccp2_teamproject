@@ -50,7 +50,7 @@ public class ObjectData : ScriptableObject
     * 
     * 오브젝트의 민첩 수치로 이동속도에 영향을 끼친다.
     ****************************************************************/
-    public int Speed
+    public int AGI
     {
         get { return _agility; }
     }

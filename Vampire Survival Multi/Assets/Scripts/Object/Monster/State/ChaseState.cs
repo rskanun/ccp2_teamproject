@@ -52,7 +52,7 @@ public class ChaseState : IMonsterState
 
     private void MoveToPlayer(Vector2 playerPos)
     {
-        float speed = _monster.MonsterData.Speed * Time.deltaTime;
+        float speed = _monster.MonsterData.AGI * Time.deltaTime;
 
         _monster.transform.position = Vector2.MoveTowards(_monster.transform.position, playerPos, speed);
     }

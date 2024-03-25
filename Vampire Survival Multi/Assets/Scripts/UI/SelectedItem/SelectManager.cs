@@ -4,12 +4,14 @@ using UnityEngine;
 public class SelectManager : MonoBehaviour
 {
     [Header("사용 오브젝트")]
-    [SerializeField]
-    private GameObject[] selectWindows;
+    [SerializeField] private GameObject selectWindow;
+    [SerializeField] private GameObject container;
 
     [Header("아이템 선택 관련 변수")]
-    [SerializeField]
-    private ItemData[] selectableItems;
+    [SerializeField] private int selectCount;
+
+    // 생성된 아이템 선택창
+    private List<GameObject> selectPrefabs = new List<GameObject>();
 
     private void Update()
     {
@@ -29,28 +31,52 @@ public class SelectManager : MonoBehaviour
     {
         if (isActive)
         {
-            OpenWindow();
+            // 게임 일시정지
+            Time.timeScale = 0;
 
+            OpenWindow();
+        }
+        else
+        {
+            // 게임 일시정지 해제
+            Time.timeScale = 1f;
+
+            CloseWindow();
         }
     }
 
     private void OpenWindow()
     {
         // 선택할 수 있는 아이템 랜덤 뽑기
-        selectableItems = GetRandomItems(selectWindows.Length);
+        ItemData[] selectableItems = GetRandomItems(selectCount);
 
         // 아이템 선택창 띄우기
-        int count = 0;
-        foreach (GameObject selectWindow in selectWindows)
+        for (int i = 0; i <selectCount; i++)
         {
-            selectWindow.SetActive(true);
+            container.SetActive(true);
+
+            // 아이템 선택창 생성
+            GameObject prefeb = Instantiate(selectWindow, container.transform);
+
+            selectPrefabs.Add(prefeb);
 
             // 선택된 아이템 띄우기
-            SelectedItem selectedItem = selectWindow.GetComponent<SelectedItem>();
-            ItemData item = selectableItems[count++];
+            SelectedItem selectedItem = prefeb.GetComponent<SelectedItem>();
+            ItemData item = selectableItems[i];
 
             selectedItem.SetItem(item);
         }
+    }
+
+    private void CloseWindow()
+    {
+        // 아이템 선택창 지우기
+        foreach(GameObject prefab in selectPrefabs)
+        {
+            Destroy(prefab);
+        }
+
+        container.SetActive(false);
     }
 
     private ItemData[] GetRandomItems(int count)

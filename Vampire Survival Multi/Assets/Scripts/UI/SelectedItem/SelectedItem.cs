@@ -3,6 +3,7 @@
 [RequireComponent (typeof(SelectedItemUI))]
 public class SelectedItem : MonoBehaviour
 {
+    private ItemData item;
     private SelectedItemUI ui;
 
     private void Awake()
@@ -12,6 +13,13 @@ public class SelectedItem : MonoBehaviour
 
     public void SetItem(ItemData item)
     {
+        this.item = item;
+
         ui.SetItem(item);
+    }
+
+    public void SelectItem()
+    {
+
     }
 }
