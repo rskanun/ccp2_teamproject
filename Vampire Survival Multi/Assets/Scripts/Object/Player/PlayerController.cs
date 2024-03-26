@@ -2,11 +2,11 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField]
-    private ClassData classData;
-
     // 참조 컴포넌트
     private Rigidbody2D rigid;
+
+    // 참조 스크립터블 오브젝트
+    private PlayerStatus status;
 
     // 플레이어 움직임 제어 변수
     private Vector2 position;
@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
+        status = PlayerStatus.Instance;
     }
 
     private void Update()
@@ -27,7 +28,7 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        Vector2 movement = position.normalized * classData.AGI * Time.deltaTime;
+        Vector2 movement = position.normalized * status.AGI * Time.deltaTime;
 
         rigid.MovePosition(rigid.position + movement);
     }

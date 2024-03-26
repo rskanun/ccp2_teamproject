@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ItemResource
   m_EditorClassIdentifier: 
   _itemDatas:
+  - {fileID: 11400000, guid: fc1f5d16bacad444498668b815b3a690, type: 2}
   - {fileID: 11400000, guid: 199ad2969eaa96a4c90c3ae4cc2af832, type: 2}
-  - {fileID: 11400000, guid: ae14ee0b47300a9448730a505c55738a, type: 2}
-  - {fileID: 11400000, guid: 243497a40a52fee42afb0bc3ecfd8cd9, type: 2}
-  - {fileID: 11400000, guid: eca00f2364184f147aa283da2f30a893, type: 2}
+  - {fileID: 11400000, guid: 6b8399565a8a7164e83e07d9163bf213, type: 2}
+  - {fileID: 11400000, guid: b7ca22e1a06e87449bcca8ec88a2cec1, type: 2}

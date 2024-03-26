@@ -3,11 +3,16 @@ using UnityEngine;
 
 public class HealthUI : MonoBehaviour
 {
-    [Header("참조 컴포넌스")]
+    [Header("참조 컴포넌트")]
     [SerializeField] private TextMeshProUGUI tmpHP;
 
-    public void UpdateHP(int currentHP, int hp)
+    public void UpdateHP()
     {
-        tmpHP.text = string.Format("HP : {0} / {1}", currentHP, hp);
+        PlayerStatus status = PlayerStatus.Instance;
+
+        int curHP = status.HP;
+        int MaxHP = status.MaxHP;
+
+        tmpHP.text = string.Format("HP : {0} / {1}", curHP, MaxHP);
     }
 }

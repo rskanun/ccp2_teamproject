@@ -2,20 +2,20 @@
 using UnityEditor;
 using UnityEngine;
 
-public class PlayerStat : ScriptableObject
+public class PlayerStatus : ScriptableObject
 {
     // 저장 파일 위치
     private const string FILE_DIRECTORY = "Assets/Resources/Objects/Player";
-    private const string FILE_PATH = "Assets/Resources/Objects/Player/PlayerData.asset";
+    private const string FILE_PATH = "Assets/Resources/Objects/Player/PlayerStatus.asset";
 
-    private static PlayerStat _instance;
-    public static PlayerStat Instance
+    private static PlayerStatus _instance;
+    public static PlayerStatus Instance
     {
         get
         {
             if (_instance != null) return _instance;
 
-            _instance = Resources.Load<PlayerStat>("Objects/Player/PlayerData");
+            _instance = Resources.Load<PlayerStatus>("Objects/Player/PlayerStatus");
 
 #if UNITY_EDITOR
             if (_instance == null)
@@ -38,11 +38,11 @@ public class PlayerStat : ScriptableObject
                 }
 
                 // Resource.Load가 실패했을 경우
-                _instance = AssetDatabase.LoadAssetAtPath<PlayerStat>(FILE_PATH);
+                _instance = AssetDatabase.LoadAssetAtPath<PlayerStatus>(FILE_PATH);
 
                 if (_instance == null)
                 {
-                    _instance = CreateInstance<PlayerStat>();
+                    _instance = CreateInstance<PlayerStatus>();
                     AssetDatabase.CreateAsset(_instance, FILE_PATH);
                 }
             }
@@ -63,10 +63,6 @@ public class PlayerStat : ScriptableObject
     [Header("플레이어 현재 스텟")]
     [SerializeField]
     private int _currentHP;
-    public int MaxHP
-    {
-        get { return _classData.HP; }
-    }
     public int HP
     {
         get { return _currentHP; }
@@ -78,6 +74,26 @@ public class PlayerStat : ScriptableObject
                 _currentHP = MaxHP;
             else
                 _currentHP = value;
+
+            // 이벤트 알림
+            hpEvent.NotifyUpdate();
+        }
+    }
+
+    [SerializeField]
+    private int _currentMaxHP;
+    public int MaxHP
+    {
+        get { return _currentMaxHP; }
+        set
+        {
+            if (value <= 0)
+                _currentMaxHP = 1;
+            else
+                _currentMaxHP = value;
+
+            // 이벤트 알림
+            hpEvent.NotifyUpdate();
         }
     }
 
@@ -123,11 +139,6 @@ public class PlayerStat : ScriptableObject
         }
     }
 
-    public void InitStat()
-    {
-        _currentHP = _classData.HP;
-        _currentSTR = _classData.STR;
-        _currentDEF = _classData.DEF;
-        _currentAGI = _classData.AGI;
-    }
+    [Header("이벤트")]
+    [SerializeField] private GameEvent hpEvent;
 }

@@ -1,43 +1,57 @@
-﻿using System.Collections.Generic;
+﻿using TMPro;
 using UnityEngine;
 
 public class EquipmentManager : MonoBehaviour
 {
-    [Header("장비 중인 아이템 리스트")]
-    [SerializeField] private List<ItemData> equipItems;
-
-    public void EquipItem(ItemData item)
+    private class StatData
     {
-        // 장비 장착
-        equipItems.Add(item);
-
-        // 장비 장착 후 플레이어 스텟 변경
-        UpdateStat();
+        public int hp;
+        public int str;
+        public int def;
+        public int agi;
     }
 
-    private void UpdateStat()
+    [SerializeField]
+    private TextMeshProUGUI testStatInfo;
+
+    public void UpdateStat()
     {
-        PlayerStat stat = PlayerStat.Instance;
+        ClassData classData = PlayerStatus.Instance.Class;
 
         // 기초 스텟 가져오기
-        int hp = stat.HP;
-        int str = stat.STR;
-        int def = stat.DEF;
-        int agi = stat.AGI;
+        StatData stat = new StatData();
+
+        stat.hp = classData.HP;
+        stat.str = classData.STR;
+        stat.def = classData.DEF;
+        stat.agi = classData.AGI;
 
         // 적용 스텟 계산
-        foreach (ItemData item in equipItems)
+        foreach (ItemData item in PlayerEquip.Instance.EquipItems)
         {
-            hp += item.IncreasedHP;
-            str += item.IncreasedSTR;
-            def += item.IncreasedDEF;
-            agi += item.IncreasedDEF;
+            stat.hp += item.IncreasedHP;
+            stat.str += item.IncreasedSTR;
+            stat.def += item.IncreasedDEF;
+            stat.agi += item.IncreasedAGI;
         }
 
         // 플레이어 스텟에 적용
-        stat.HP = hp;
-        stat.STR = str;
-        stat.DEF = def;
-        stat.AGI = agi;
+        SetStat(stat);
+    }
+
+    private void SetStat(StatData stat)
+    {
+        PlayerStatus playerStat = PlayerStatus.Instance;
+
+        playerStat.MaxHP = stat.hp;
+        playerStat.STR = stat.str;
+        playerStat.DEF = stat.def;
+        playerStat.AGI = stat.agi;
+
+        testStatInfo.text =
+            "<Status>" +
+            "\r\nSTR : " + stat.str +
+            "\r\nDEF : " + stat.def +
+            "\r\nAGI : " + stat.agi;
     }
 }

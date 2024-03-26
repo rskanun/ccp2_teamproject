@@ -10,8 +10,10 @@ public class PlayerTracker : MonoBehaviour
     private Vector2 min;
     private Vector2 max;
 
-    void Start()
+    public void InitPlayer(GameObject playerObj)
     {
+        player = playerObj.transform;
+
         // 해당 이벤트의 위치를 캐릭터에 고정
         transform.position = player.position;
 
