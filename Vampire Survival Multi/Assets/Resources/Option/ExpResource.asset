@@ -9,12 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e2588cb85cf3494380add9239a721c9, type: 3}
-  m_Name: MonsterData
+  m_Script: {fileID: 11500000, guid: ddacc4be35022754da0429691510349b, type: 3}
+  m_Name: ExpResource
   m_EditorClassIdentifier: 
-  _healthPoint: 10
-  _strength: 1
-  _defensive: 0
-  _agility: 2
-  _attackDistance: 1
-  _attackCooldown: 1
+  expDataList:
+  - getExp: 1
+    probability: 60
+  - getExp: 3
+    probability: 30
+  - getExp: 5
+    probability: 15
+  - getExp: 10
+    probability: 5

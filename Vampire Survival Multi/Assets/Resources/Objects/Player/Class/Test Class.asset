@@ -15,5 +15,7 @@ MonoBehaviour:
   _healthPoint: 10
   _strength: 1
   _defensive: 1
-  _agility: 5
+  _agility: 4
+  _normalAttack: {fileID: 11400000, guid: a4887b7be445e4b43b3d91a4f22cf4f1, type: 2}
+  _skill: {fileID: 11400000, guid: a4887b7be445e4b43b3d91a4f22cf4f1, type: 2}
   _equips: []

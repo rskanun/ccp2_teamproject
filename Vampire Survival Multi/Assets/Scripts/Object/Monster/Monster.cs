@@ -8,7 +8,7 @@ public class Monster : MonoBehaviour
     public MonsterData MonsterData { get { return data; } }
 
     // 몬스터 스테이터스
-    private int _currentHP;
+    private float _currentHP;
     private float _currentCooldown;
 
     // 몬스터 유한 상태 기계
@@ -52,7 +52,7 @@ public class Monster : MonoBehaviour
     {
         if (_currentCooldown <= 0)
         {
-            int damage = data.STR; // 데미지 공식
+            float damage = data.STR; // 데미지 공식
 
             Player player = target.GetComponent<Player>();
             player.OnTakeDamage(damage);
@@ -62,9 +62,11 @@ public class Monster : MonoBehaviour
         }
     }
 
-    public void OnTakeDamage(int damage)
+    public void OnTakeDamage(float damage)
     {
         _currentHP -= Mathf.Abs(damage);
+        Debug.Log(damage + " take damage");
+        Debug.Log("remain HP: " + _currentHP);
 
         if (_currentHP <= 0)
         {

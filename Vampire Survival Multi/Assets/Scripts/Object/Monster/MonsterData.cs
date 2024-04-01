@@ -4,7 +4,6 @@
 public class MonsterData : ObjectData
 {
     [Header("몬스터 데이터")]
-
     [SerializeField]
     private float _attackDistance;
     public float AttackDistance

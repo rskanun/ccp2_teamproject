@@ -9,12 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e2588cb85cf3494380add9239a721c9, type: 3}
-  m_Name: MonsterData
+  m_Script: {fileID: 11500000, guid: 75d88db7275025e4fa697b413e7541c1, type: 3}
+  m_Name: Projectile
   m_EditorClassIdentifier: 
-  _healthPoint: 10
-  _strength: 1
-  _defensive: 0
-  _agility: 2
-  _attackDistance: 1
-  _attackCooldown: 1
+  cooldown: 2
+  projectilePrefab: {fileID: 660804144596147880, guid: 81f719473bc06e3488954201d18c8f80, type: 3}
+  distance: 5
+  speed: 20

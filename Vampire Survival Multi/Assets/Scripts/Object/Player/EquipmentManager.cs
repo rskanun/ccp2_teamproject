@@ -5,10 +5,10 @@ public class EquipmentManager : MonoBehaviour
 {
     private class StatData
     {
-        public int hp;
-        public int str;
-        public int def;
-        public int agi;
+        public float hp;
+        public float str;
+        public float def;
+        public float agi;
     }
 
     [SerializeField]

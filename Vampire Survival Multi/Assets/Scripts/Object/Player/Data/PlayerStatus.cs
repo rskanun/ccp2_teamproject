@@ -51,6 +51,9 @@ public class PlayerStatus : ScriptableObject
         }
     }
 
+    [Header("이벤트")]
+    [SerializeField] private GameEvent hpEvent;
+
     [Header("클래스 데이터")]
     [SerializeField]
     private ClassData _classData;
@@ -62,8 +65,8 @@ public class PlayerStatus : ScriptableObject
 
     [Header("플레이어 현재 스텟")]
     [SerializeField]
-    private int _currentHP;
-    public int HP
+    private float _currentHP;
+    public float HP
     {
         get { return _currentHP; }
         set
@@ -81,8 +84,8 @@ public class PlayerStatus : ScriptableObject
     }
 
     [SerializeField]
-    private int _currentMaxHP;
-    public int MaxHP
+    private float _currentMaxHP;
+    public float MaxHP
     {
         get { return _currentMaxHP; }
         set
@@ -98,8 +101,8 @@ public class PlayerStatus : ScriptableObject
     }
 
     [SerializeField]
-    private int _currentSTR;
-    public int STR
+    private float _currentSTR;
+    public float STR
     {
         get { return _currentSTR; }
         set
@@ -112,8 +115,8 @@ public class PlayerStatus : ScriptableObject
     }
 
     [SerializeField]
-    private int _currentDEF;
-    public int DEF
+    private float _currentDEF;
+    public float DEF
     {
         get { return _currentDEF; }
         set
@@ -126,8 +129,8 @@ public class PlayerStatus : ScriptableObject
     }
 
     [SerializeField]
-    private int _currentAGI;
-    public int AGI
+    private float _currentAGI;
+    public float AGI
     {
         get { return _currentAGI; }
         set
@@ -139,6 +142,12 @@ public class PlayerStatus : ScriptableObject
         }
     }
 
-    [Header("이벤트")]
-    [SerializeField] private GameEvent hpEvent;
+    [Header("플레이어 좌표")]
+    [SerializeField]
+    private Vector3 _position;
+    public Vector3 Position
+    {
+        get { return _position; }
+        set { _position = value; }
+    }
 }

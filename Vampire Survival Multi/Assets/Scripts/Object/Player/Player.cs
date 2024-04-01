@@ -18,10 +18,16 @@ public class Player : MonoBehaviour
         status.HP = status.MaxHP;
     }
 
-    public void OnTakeDamage(int damage)
+    /***************************************************************
+    * [ 상태 처리 ]
+    * 
+    * 다른 오브젝트와의 상호작용에 의한 상태 처리
+    ***************************************************************/
+
+    public void OnTakeDamage(float damage)
     {
         // 공격 받았을 때
-        status.HP -= damage;
+        status.HP -= Mathf.Abs(damage);
 
         if (status.HP <= 0)
         {
