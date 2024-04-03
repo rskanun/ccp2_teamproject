@@ -1,7 +1,6 @@
-using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Game Object/Player", fileName = "ClassData")]
+[CreateAssetMenu(menuName = "Game Object/Player/Class Data", fileName = "ClassData")]
 public class ClassData : ObjectData
 {
     [Header("공격 및 스킬")]
@@ -17,13 +16,5 @@ public class ClassData : ObjectData
     public Skill ClassSkill
     {
         get { return _skill; }
-    }
-
-    [Header("초기 장비")]
-    [SerializeField]
-    private List<ItemData> _equips;
-    public List<ItemData> Equips
-    {
-        get { return _equips; }
     }
 }

@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         // 초기 클래스 설정
-        PlayerStatus.Instance.Class = classData;
+        LocalPlayerData.Instance.Class = classData;
 
         // 장비 초기 셋팅
         PlayerEquip.Instance.InitEquips();

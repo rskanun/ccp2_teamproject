@@ -1,21 +1,20 @@
-﻿using System.Collections.Generic;
-using UnityEditor;
+﻿using UnityEditor;
 using UnityEngine;
 
-public class PlayerEquip : ScriptableObject
+public class LocalPlayerData : PlayerData
 {
     // 저장 파일 위치
     private const string FILE_DIRECTORY = "Assets/Resources/Objects/Player";
-    private const string FILE_PATH = "Assets/Resources/Objects/Player/PlayerEquip.asset";
+    private const string FILE_PATH = "Assets/Resources/Objects/Player/LocalPlayerData.asset";
 
-    private static PlayerEquip _instance;
-    public static PlayerEquip Instance
+    private static LocalPlayerData _instance;
+    public static LocalPlayerData Instance
     {
         get
         {
             if (_instance != null) return _instance;
 
-            _instance = Resources.Load<PlayerEquip>("Objects/Player/PlayerEquip");
+            _instance = Resources.Load<LocalPlayerData>("Objects/Player/LocalPlayerData");
 
 #if UNITY_EDITOR
             if (_instance == null)
@@ -38,42 +37,16 @@ public class PlayerEquip : ScriptableObject
                 }
 
                 // Resource.Load가 실패했을 경우
-                _instance = AssetDatabase.LoadAssetAtPath<PlayerEquip>(FILE_PATH);
+                _instance = AssetDatabase.LoadAssetAtPath<LocalPlayerData>(FILE_PATH);
 
                 if (_instance == null)
                 {
-                    _instance = CreateInstance<PlayerEquip>();
+                    _instance = CreateInstance<LocalPlayerData>();
                     AssetDatabase.CreateAsset(_instance, FILE_PATH);
                 }
             }
 #endif
             return _instance;
         }
-    }
-
-    [Header("장비 중인 아이템 리스트")]
-    [SerializeField]
-    private List<ItemData> _equipItems;
-    public List<ItemData> EquipItems
-    {
-        get { return _equipItems; }
-    }
-
-    [Header("이벤트")]
-    [SerializeField] private GameEvent equipEvent;
-
-    public void InitEquips()
-    {
-        // 장비 초기화
-        _equipItems.Clear();
-    }
-
-    public void EquipItem(ItemData item)
-    {
-        // 아이템 장비
-        _equipItems.Add(item);
-
-        // 이벤트 알림
-        equipEvent.NotifyUpdate();
     }
 }

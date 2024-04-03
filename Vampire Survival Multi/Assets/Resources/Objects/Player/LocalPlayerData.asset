@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2a1899773abd2554fbeeeb9098188beb, type: 3}
-  m_Name: PlayerStatus
+  m_Name: LocalPlayerData
   m_EditorClassIdentifier: 
   _classData: {fileID: 11400000, guid: 016fdf86795781b4882c0830a17518aa, type: 2}
-  _currentHP: 10
+  _currentHP: 7
   _currentMaxHP: 10
   _currentSTR: 1
   _currentDEF: 1
-  _currentAGI: 5
+  _currentAGI: 3
   hpEvent: {fileID: 11400000, guid: 52e563fd5520f5843b47b88b99bdc1ce, type: 2}

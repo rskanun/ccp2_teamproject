@@ -3,19 +3,24 @@
 public class Player : MonoBehaviour
 {
     // 플레이어 스텟
-    private PlayerStatus status;
+    private LocalPlayerData status;
+
+    // 플레이어 공통 옵션
+    private PlayerOption playerOption;
+    private float curDuration;
 
     private void Start()
     {
-        status = PlayerStatus.Instance;
-
-        // HP 초기화
-        InitHP();
+        status = LocalPlayerData.Instance;
+        playerOption = PlayerOption.Instance;
     }
 
-    private void InitHP()
+    private void Update()
     {
-        status.HP = status.MaxHP;
+        if (curDuration > 0)
+        {
+            curDuration -= Time.deltaTime;
+        }
     }
 
     /***************************************************************
@@ -26,13 +31,18 @@ public class Player : MonoBehaviour
 
     public void OnTakeDamage(float damage)
     {
-        // 공격 받았을 때
-        status.HP -= Mathf.Abs(damage);
-
-        if (status.HP <= 0)
+        // 피격받은 지 일정시간이 경과하면 데미지
+        if (curDuration <= 0)
         {
-            // hp 값이 0이하면 죽음 처리
-            OnDead();
+            // 공격 받았을 때
+            status.HP -= Mathf.Abs(damage);
+            curDuration = playerOption.NoDamageDuration;
+
+            if (status.HP <= 0)
+            {
+                // hp 값이 0이하면 죽음 처리
+                OnDead();
+            }
         }
     }
 
