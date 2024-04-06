@@ -1,31 +1,30 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     [Header("초기 클래스")]
     [SerializeField] private ClassData classData;
 
-    [Header("참조 스크립트")]
-    [SerializeField] private PlayerTracker trakerCamera;
-
-    [Header("사용 오브젝트")]
-    [SerializeField] private GameObject player;
-
-    void Start()
+    private void Start()
     {
+        // 게임 데이터 초기화
+        InitGameData();
+
         // 초기 클래스 설정
         LocalPlayerData.Instance.Class = classData;
 
         // 장비 초기 셋팅
         PlayerEquip.Instance.InitEquips();
-
-        GameStart();
     }
 
-    private void GameStart()
+    private void InitGameData()
     {
-        GameObject PlayerObj = Instantiate(player);
+        // 게임을 플레이 할 플레이어 목록 가져오기
+        List<PlayerData> playerDatas = new List<PlayerData>();
 
-        trakerCamera.InitPlayer(PlayerObj);
+        playerDatas.Add(LocalPlayerData.Instance);
+
+        GameData.Instance.InitData(playerDatas);
     }
 }

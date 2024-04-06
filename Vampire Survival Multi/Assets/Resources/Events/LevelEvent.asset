@@ -9,7 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aea8a80d5ceed1549adb5819854f4aef, type: 3}
-  m_Name: PlayerOption
+  m_Script: {fileID: 11500000, guid: 5f9e8765185e34d49975ba4c662d70ff, type: 3}
+  m_Name: LevelEvent
   m_EditorClassIdentifier: 
-  _noDamageDuration: 0.5

@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aea8a80d5ceed1549adb5819854f4aef, type: 3}
-  m_Name: PlayerOption
+  m_Script: {fileID: 11500000, guid: b229a0d19aa44cf4098fa2c874a01da7, type: 3}
+  m_Name: LevelResource
   m_EditorClassIdentifier: 
-  _noDamageDuration: 0.5
+  levelCSV: {fileID: 4900000, guid: cb2b4e37efa333843818bd7dc610e750, type: 3}

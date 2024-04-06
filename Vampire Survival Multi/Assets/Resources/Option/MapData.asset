@@ -9,7 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aea8a80d5ceed1549adb5819854f4aef, type: 3}
-  m_Name: PlayerOption
+  m_Script: {fileID: 11500000, guid: d5a209ceb524ca44196cb049b58bfbec, type: 3}
+  m_Name: MapData
   m_EditorClassIdentifier: 
-  _noDamageDuration: 0.5
+  map: {fileID: 5331694148712834953, guid: 4ca4a14087fb1434fa3cfad218b65ddd, type: 3}

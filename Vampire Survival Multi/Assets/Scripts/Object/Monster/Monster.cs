@@ -9,7 +9,6 @@ public class Monster : MonoBehaviour
 
     // 몬스터 스테이터스
     private float _currentHP;
-    private float _currentCooldown;
 
     // 몬스터 유한 상태 기계
     private FSM fsm;
@@ -28,14 +27,6 @@ public class Monster : MonoBehaviour
         fsm.SetState(new ChaseState(this));
     }
 
-    private void Update()
-    {
-        if (_currentCooldown > 0)
-        {
-            _currentCooldown -= Time.deltaTime;
-        }
-    }
-
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
@@ -50,16 +41,10 @@ public class Monster : MonoBehaviour
 
     public virtual void OnAttack(GameObject target)
     {
-        if (_currentCooldown <= 0)
-        {
-            float damage = data.STR; // 데미지 공식
+        float damage = data.STR; // 데미지 공식
 
-            Player player = target.GetComponent<Player>();
-            player.OnTakeDamage(damage);
-
-            // 데미지 쿨타임 적용
-            _currentCooldown = data.AttackCooldown;
-        }
+        Player player = target.GetComponent<Player>();
+        player.OnTakeDamage(damage);
     }
 
     public void OnTakeDamage(float damage)
@@ -77,6 +62,10 @@ public class Monster : MonoBehaviour
     protected virtual void OnDead()
     {
         Destroy(gameObject);
+
+        // 경험치 획득
+        int exp = ExpResource.Instance.GetExp();
+        GameData.Instance.Exp += exp;
     }
 
     /***************************************************************

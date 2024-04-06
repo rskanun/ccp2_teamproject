@@ -15,4 +15,4 @@ MonoBehaviour:
   cooldown: 2
   projectilePrefab: {fileID: 660804144596147880, guid: 81f719473bc06e3488954201d18c8f80, type: 3}
   distance: 5
-  speed: 8
+  speed: 5

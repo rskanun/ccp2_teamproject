@@ -3,49 +3,40 @@
 public class PlayerTracker : MonoBehaviour
 {
     public Transform player;
-    public GameObject mapArea;
 
     public float speed;
 
-    private Vector2 min;
-    private Vector2 max;
+    private Vector2 minPos;
+    private Vector2 maxPos;
 
-    public void InitPlayer(GameObject playerObj)
+    private void Start()
     {
-        player = playerObj.transform;
-
         // 해당 이벤트의 위치를 캐릭터에 고정
         transform.position = player.position;
 
         // 카메라가 이동할 맵의 범위를 파악
-        // mapAreaSet();
+        mapAreaSet();
     }
 
-    void mapAreaSet()
+    private void mapAreaSet()
     {
-        // 맵의 가로 세로를 가져옴
-        float mapWidth = mapArea.GetComponent<RectTransform>().rect.width;
-        float mapHeight = mapArea.GetComponent<RectTransform>().rect.height;
+        MapData mapData = MapData.Instance;
 
-        // 카메라의 가로 세로 및 위치도 가져옴
-        float cameraHeight = 2 * Camera.main.orthographicSize;
-        float cameraWidth = cameraHeight * Camera.main.aspect;
+        // 카메라 사이즈 계산
+        Vector2 cameraSize = new Vector2(2 * Camera.main.orthographicSize * Camera.main.aspect, 2 * Camera.main.orthographicSize);
 
-        Vector2 mapPotision = mapArea.transform.localPosition;
+        // 카메라의 끝과 맵의 끝이 닿는 범위 계산
+        Vector2 cameraMoveSize = (mapData.Size - cameraSize) / 2;
 
-        // 카메라의 끝과 맵의 끝이 닿는 범위를 계산
-        float distanceWidth = Mathf.Abs(mapWidth / 2 - cameraWidth / 2);
-        float distanceHeight = Mathf.Abs(mapHeight / 2 - cameraHeight / 2);
-
-        min = new Vector2(mapPotision.x - distanceWidth, mapPotision.y - distanceHeight);
-        max = new Vector2(mapPotision.x + distanceWidth, mapPotision.y + distanceHeight);
+        minPos = mapData.Pivot - cameraMoveSize;
+        maxPos = mapData.Pivot + cameraMoveSize;
     }
 
     void LateUpdate()
     {
         // 범위 밖으로 나가지 않도록 해당 이벤트의 위치를 조정
-        float blockX = Mathf.Clamp(player.position.x, min.x, max.x);
-        float blockY = Mathf.Clamp(player.position.y, min.y, max.y);
+        float blockX = Mathf.Clamp(player.position.x, minPos.x, maxPos.x);
+        float blockY = Mathf.Clamp(player.position.y, minPos.y, maxPos.y);
 
         transform.position = Vector3.Lerp(transform.position, new Vector3(blockX, blockY, -1), speed);
     }

@@ -104,6 +104,7 @@ public class StatManager : MonoBehaviour
 
         testStatInfo.text =
             "<Status>" +
+            "\r\nHP : " + stat.hp +
             "\r\nSTR : " + stat.str +
             "\r\nDEF : " + stat.def +
             "\r\nAGI : " + stat.agi;

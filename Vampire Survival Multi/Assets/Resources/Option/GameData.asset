@@ -9,7 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aea8a80d5ceed1549adb5819854f4aef, type: 3}
-  m_Name: PlayerOption
+  m_Script: {fileID: 11500000, guid: 98a0ccfb373972847b804329476f2c8a, type: 3}
+  m_Name: GameData
   m_EditorClassIdentifier: 
-  _noDamageDuration: 0.5
+  expEvent: {fileID: 11400000, guid: c2fbf9f1db4fb1940a71d623476a36e8, type: 2}
+  _exp: 5
+  _requireExp: 10
+  _level: 1

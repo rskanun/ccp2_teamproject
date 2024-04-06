@@ -8,12 +8,12 @@ public class Projectile : MonoBehaviour
     public void CastProjectile(Vector2 targetPos, float speed)
     {
         this.targetPos = targetPos;
-        this.speed = speed * Time.deltaTime;
+        this.speed = speed;
     }
 
     private void FixedUpdate()
     {
-        transform.position = Vector2.MoveTowards(transform.position, targetPos, speed);
+        transform.position = Vector2.MoveTowards(transform.position, targetPos, speed * Time.deltaTime);
 
         if ((Vector2)transform.position == targetPos)
         {
