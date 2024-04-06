@@ -3,16 +3,18 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [Header("초기 클래스")]
-    [SerializeField] private ClassData classData;
+    // 참조 데이터
+    private WaveData waveData;
+
+    private void Awake()
+    {
+        waveData = WaveData.Instance;
+    }
 
     private void Start()
     {
         // 게임 데이터 초기화
         InitGameData();
-
-        // 초기 클래스 설정
-        LocalPlayerData.Instance.Class = classData;
 
         // 장비 초기 셋팅
         PlayerEquip.Instance.InitEquips();
@@ -26,5 +28,37 @@ public class GameManager : MonoBehaviour
         playerDatas.Add(LocalPlayerData.Instance);
 
         GameData.Instance.InitData(playerDatas);
+
+        // 웨이브 데이터 초기화
+        waveData.InitData();
+    }
+
+    /***************************************************************
+    * [ 웨이브 진행 ]
+    * 
+    * 웨이브 진행에 따른 게임 진행 설정
+    ***************************************************************/
+
+    private void Update()
+    {
+        if (waveData.RemainTime <= 0)
+        {
+            // 남은 시간이 떨어지면 다음 웨이브 진행
+            waveData.NextWave();
+
+            // 만약 최종 웨이브 다음으로 넘어갈 경우
+            if (waveData.WaveLevel <= 0)
+            {
+                // 게임 종료
+                OnComplete();
+            }
+        }
+        else
+            waveData.RemainTime -= Time.deltaTime;
+    }
+
+    private void OnComplete()
+    {
+        // 웨이브를 최종 클리어 했을 시
     }
 }

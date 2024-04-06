@@ -20,7 +20,7 @@ public class WaveResource : ScriptableObject
 
     // 저장 파일 위치
     private const string FILE_DIRECTORY = "Assets/Resources/Option";
-    private const string FILE_PATH = "Assets/Resources/Option/WaveData.asset";
+    private const string FILE_PATH = "Assets/Resources/Option/WaveResource.asset";
 
     private static WaveResource _instance;
     public static WaveResource Instance
@@ -29,7 +29,7 @@ public class WaveResource : ScriptableObject
         {
             if (_instance != null) return _instance;
 
-            _instance = Resources.Load<WaveResource>("Option/WaveData");
+            _instance = Resources.Load<WaveResource>("Option/WaveResource");
 
 #if UNITY_EDITOR
             if (_instance == null)
@@ -68,8 +68,18 @@ public class WaveResource : ScriptableObject
     [Header("웨이브 정보")]
     [SerializeField] 
     private List<Wave> _waveDatas;
+
+    public int MaxLevel
+    {
+        get { return _waveDatas.Count; }
+    }
+
+    public int GetWaveTime(int waveLevel)
+    {
+        return _waveDatas[waveLevel].time;
+    }
     
-    public List<GameObject> GetWaveData(int waveLevel)
+    public List<GameObject> GetWaveMobs(int waveLevel)
     {
         int index = waveLevel - 1;
 

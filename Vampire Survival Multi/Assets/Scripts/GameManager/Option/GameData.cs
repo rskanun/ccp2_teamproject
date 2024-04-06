@@ -128,14 +128,4 @@ public class GameData : ScriptableObject
         // 경험치 변경 이벤트
         expEvent.NotifyUpdate();
     }
-
-    [Header("웨이브 정보")]
-    [SerializeField]
-    private int _waveLevel;
-
-    [SerializeField]
-    private int _remainTime;
-
-    [SerializeField]
-    private int _mobCount;
 }
