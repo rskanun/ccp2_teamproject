@@ -38,13 +38,14 @@ public class Spawner : MonoBehaviour
 
     public void TestSpawn(GameObject mob)
     {
-        int verticalRange = (int)_spawnArea.x / 2;
-        int horizontalRange = (int)_spawnArea.y / 2;
+        int horizontalRange = (int)_spawnArea.x / 2;
+        int verticalRange = (int)_spawnArea.y / 2;
 
         int randomX = Random.Range(-horizontalRange, horizontalRange);
         int randomY = Random.Range(-verticalRange, verticalRange);
 
-        Vector2 spawnPos = new Vector2(randomX, randomY);
+        Vector2 pivot = transform.position;
+        Vector2 spawnPos = pivot + new Vector2(randomX, randomY);
 
         Instantiate(mob, spawnPos, Quaternion.identity);
     }

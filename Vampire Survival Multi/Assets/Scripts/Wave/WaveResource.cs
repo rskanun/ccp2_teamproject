@@ -76,7 +76,9 @@ public class WaveResource : ScriptableObject
 
     public int GetWaveTime(int waveLevel)
     {
-        return _waveDatas[waveLevel].time;
+        int index = waveLevel - 1;
+
+        return _waveDatas[index].time;
     }
     
     public List<GameObject> GetWaveMobs(int waveLevel)

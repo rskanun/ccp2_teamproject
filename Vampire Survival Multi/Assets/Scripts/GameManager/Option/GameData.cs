@@ -53,6 +53,7 @@ public class GameData : ScriptableObject
 
     [Header("이벤트")]
     [SerializeField] private GameEvent expEvent;
+    [SerializeField] private GameEvent levelUpEvent;
 
     [Header("참가 플레이어 목록")]
     [SerializeField]
@@ -68,27 +69,6 @@ public class GameData : ScriptableObject
     public int Exp
     {
         get { return _exp; }
-        set
-        {
-            if (_requireExp < int.MaxValue)
-            {
-                _exp = value;
-
-                // 레벨 및 레벨업에 필요한 경험치량 조정
-                while (_exp >= _requireExp)
-                {
-                    // 레벨업
-                    _level++;
-                    _exp -= _requireExp;
-
-                    // 필요 경험치량 조정
-                    _requireExp = LevelResource.Instance.GetRequireExp(_level);
-                }
-
-                // 경험치 변경 이벤트
-                expEvent.NotifyUpdate();
-            }
-        }
     }
 
     [SerializeField]
@@ -127,5 +107,30 @@ public class GameData : ScriptableObject
 
         // 경험치 변경 이벤트
         expEvent.NotifyUpdate();
+    }
+
+    public void AddExp(int exp)
+    {
+        if (_requireExp < int.MaxValue)
+        {
+            _exp += exp;
+
+            // 레벨 및 레벨업에 필요한 경험치량 조정
+            while (_exp >= _requireExp)
+            {
+                // 레벨업
+                _level++;
+                _exp -= _requireExp;
+
+                // 필요 경험치량 조정
+                _requireExp = LevelResource.Instance.GetRequireExp(_level);
+
+                // 레벨업 이벤트
+                levelUpEvent.NotifyUpdate();
+            }
+
+            // 경험치 변경 이벤트
+            expEvent.NotifyUpdate();
+        }
     }
 }

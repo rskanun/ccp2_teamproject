@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class SelectManager : MonoBehaviour
+public class RewardManager : MonoBehaviour
 {
     [Header("사용 오브젝트")]
     [SerializeField] private GameObject selectWindow;
@@ -13,36 +13,21 @@ public class SelectManager : MonoBehaviour
     // 생성된 아이템 선택창
     private List<GameObject> selectPrefabs = new List<GameObject>();
 
-    private void Update()
-    {
-        // 임시 아이템 선택창 띄우기
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            SetActive(true);
-        }
+    // 획득할 보상 수
+    private int rewardCount = 0;
 
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            SetActive(false);
-        }
-    }
-
-    public void SetActive(bool isActive)
+    public void GetReward()
     {
-        if (isActive)
+        // 이미 보상창이 열려 있다면 카운트 추가
+        if (container.activeSelf) rewardCount++;
+        else
         {
             // 게임 일시정지
-            Time.timeScale = 0;
+            Time.timeScale = 0f;
 
             OpenWindow();
         }
-        else
-        {
-            // 게임 일시정지 해제
-            Time.timeScale = 1f;
-
-            CloseWindow();
-        }
+        
     }
 
     private void OpenWindow()
@@ -68,7 +53,7 @@ public class SelectManager : MonoBehaviour
         }
     }
 
-    private void CloseWindow()
+    public void CloseWindow()
     {
         // 아이템 선택창 지우기
         foreach(GameObject prefab in selectPrefabs)
@@ -76,7 +61,20 @@ public class SelectManager : MonoBehaviour
             Destroy(prefab);
         }
 
-        container.SetActive(false);
+        if (rewardCount > 0)
+        {
+            // 받을 보상이 남아있다면 창 다시 열기
+            OpenWindow();
+
+            rewardCount--;
+        }
+        else
+        {
+            container.SetActive(false);
+
+            // 게임 일시정지 해제
+            Time.timeScale = 1f;
+        }
     }
 
     private ItemData[] GetRandomItems(int count)

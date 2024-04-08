@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
 public class LevelUI : MonoBehaviour
@@ -23,6 +22,6 @@ public class LevelUI : MonoBehaviour
 
         tmpUI.text = "<Level>" +
             "\r\nLv : " + level +
-            "\r\nExp : " + exp + "/" + requireExp; 
+            "\r\nExp : " + exp + " / " + requireExp; 
     }
 }

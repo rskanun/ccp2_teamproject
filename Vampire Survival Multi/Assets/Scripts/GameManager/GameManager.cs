@@ -6,6 +6,8 @@ public class GameManager : MonoBehaviour
     // 참조 데이터
     private WaveData waveData;
 
+    private bool isGameComplete = false;
+
     private void Awake()
     {
         waveData = WaveData.Instance;
@@ -41,24 +43,31 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        if (waveData.RemainTime <= 0)
+        if (isGameComplete == false)
         {
-            // 남은 시간이 떨어지면 다음 웨이브 진행
-            waveData.NextWave();
-
-            // 만약 최종 웨이브 다음으로 넘어갈 경우
-            if (waveData.WaveLevel <= 0)
+            // 남은 시간이 없거나 모든 몬스터를 제거했을 경우
+            if (waveData.RemainTime <= 0 || waveData.MobCount <= 0)
             {
-                // 게임 종료
-                OnComplete();
+                // 다음 웨이브 진행
+                waveData.NextWave();
+
+                // 만약 최종 웨이브 다음으로 넘어갈 경우
+                if (waveData.WaveLevel <= 0)
+                {
+                    // 게임 종료
+                    OnComplete();
+                }
             }
+            else
+                waveData.RemainTime -= Time.deltaTime;
         }
-        else
-            waveData.RemainTime -= Time.deltaTime;
     }
 
     private void OnComplete()
     {
+        isGameComplete = true;
+
         // 웨이브를 최종 클리어 했을 시
+        Debug.Log("Clear");
     }
 }

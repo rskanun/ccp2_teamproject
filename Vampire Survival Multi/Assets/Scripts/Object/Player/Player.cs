@@ -50,4 +50,9 @@ public class Player : MonoBehaviour
     {
         // 플레이어가 죽었을 때
     }
+
+    public void OnKilled()
+    {
+
+    }
 }

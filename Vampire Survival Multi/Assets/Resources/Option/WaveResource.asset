@@ -13,7 +13,11 @@ MonoBehaviour:
   m_Name: WaveResource
   m_EditorClassIdentifier: 
   _waveDatas:
-  - time: 9999
+  - time: 4
     monsters:
     - monster: {fileID: 325465133739098425, guid: 9100b634ffdb99146b2a94e6be723e74, type: 3}
-      spawnCount: 10
+      spawnCount: 2
+  - time: 999
+    monsters:
+    - monster: {fileID: 325465133739098425, guid: 9100b634ffdb99146b2a94e6be723e74, type: 3}
+      spawnCount: 5

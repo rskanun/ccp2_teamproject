@@ -2,7 +2,7 @@
 
 public class Monster : MonoBehaviour
 {
-    // 기본 데이터
+    [Header("몬스터 데이터")]
     [SerializeField]
     private MonsterData data;
     public MonsterData MonsterData { get { return data; } }
@@ -50,8 +50,6 @@ public class Monster : MonoBehaviour
     public void OnTakeDamage(float damage)
     {
         _currentHP -= Mathf.Abs(damage);
-        Debug.Log(damage + " take damage");
-        Debug.Log("remain HP: " + _currentHP);
 
         if (_currentHP <= 0)
         {
@@ -63,9 +61,12 @@ public class Monster : MonoBehaviour
     {
         Destroy(gameObject);
 
+        // 몬스터 카운트 감소
+        WaveData.Instance.MobCount -= 1;
+
         // 경험치 획득
         int exp = ExpResource.Instance.GetExp();
-        GameData.Instance.Exp += exp;
+        GameData.Instance.AddExp(exp);
     }
 
     /***************************************************************

@@ -66,7 +66,7 @@ public class LevelResource : ScriptableObject
             return levelTable[level];
         }
 
-        return 0;
+        return int.MaxValue;
     }
 
     private void InitTable()

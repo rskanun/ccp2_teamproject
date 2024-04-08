@@ -40,6 +40,7 @@ public class WaveManager : MonoBehaviour
     {
         GameObject spawnMob = waveData.GetMob();
 
-        testSpawner.TestSpawn(spawnMob);
+        if (spawnMob != null)
+            testSpawner.TestSpawn(spawnMob);
     }
 }

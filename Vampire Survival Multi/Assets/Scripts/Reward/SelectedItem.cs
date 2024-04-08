@@ -5,14 +5,14 @@ public class SelectedItem : MonoBehaviour
 {
     // 참조 컴포넌트
     private SelectedItemUI ui;
-    private SelectManager manager;
+    private RewardManager manager;
 
     private ItemData item;
 
     private void Awake()
     {
         ui = GetComponent<SelectedItemUI>();
-        manager = GetComponentInParent<SelectManager>();
+        manager = GetComponentInParent<RewardManager>();
     }
 
     public void SetItem(ItemData item)
@@ -26,6 +26,6 @@ public class SelectedItem : MonoBehaviour
     {
         PlayerEquip.Instance.EquipItem(item);
 
-        manager.SetActive(false);
+        manager.CloseWindow();
     }
 }

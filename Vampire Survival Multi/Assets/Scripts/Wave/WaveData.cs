@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Unity.Collections;
 using UnityEditor;
 using UnityEngine;
 
@@ -52,6 +53,7 @@ public class WaveData : ScriptableObject
     }
 
     [Header("현재 웨이브 정보")]
+    [ReadOnly]
     [SerializeField]
     private int _waveLevel;
     public int WaveLevel
@@ -59,6 +61,8 @@ public class WaveData : ScriptableObject
         get { return _waveLevel; }
     }
 
+    
+    [ReadOnly]
     [SerializeField]
     private float _remainTime;
     public float RemainTime
@@ -67,7 +71,16 @@ public class WaveData : ScriptableObject
         set { _remainTime = value; }
     }
 
+    [ReadOnly]
     [SerializeField]
+    private int _mobCount;
+    public int MobCount
+    {
+        get { return _mobCount; }
+        set { _mobCount = value; }
+    }
+     
+    // 소환할 몬스터 목록
     private Queue<GameObject> _waveMobs;
 
     public void InitData()
@@ -78,6 +91,7 @@ public class WaveData : ScriptableObject
 
         _waveLevel = startLevel;
         _remainTime = resource.GetWaveTime(startLevel);
+        _mobCount = resource.GetWaveMobs(startLevel).Count;
 
         // 소환할 몬스터 목록 추가
         List<GameObject> mobList = resource.GetWaveMobs(startLevel);
@@ -92,9 +106,10 @@ public class WaveData : ScriptableObject
 
         if (maxLevel > _waveLevel)
         {
-            int currentLevel = _waveLevel++;
+            int currentLevel = ++_waveLevel;
 
             _remainTime = resource.GetWaveTime(currentLevel);
+            _mobCount += resource.GetWaveMobs(currentLevel).Count;
 
             List<GameObject> mobList = resource.GetWaveMobs(currentLevel);
             AddMobs(mobList);
