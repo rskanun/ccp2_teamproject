@@ -2,8 +2,8 @@
 
 public class Player : MonoBehaviour
 {
-    // 플레이어 스텟
-    private LocalPlayerData status;
+    [Header("플레이어 데이터")]
+    [SerializeField] private PlayerData status;
 
     // 플레이어 공통 옵션
     private PlayerOption playerOption;
@@ -11,7 +11,6 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
-        status = LocalPlayerData.Instance;
         playerOption = PlayerOption.Instance;
     }
 

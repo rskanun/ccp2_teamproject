@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
+    [Header("참조 스크립트")]
+    [SerializeField] private WaveUI waveUI;
+
     // 참조 데이터
     private WaveData waveData;
 
@@ -60,6 +63,9 @@ public class GameManager : MonoBehaviour
             }
             else
                 waveData.RemainTime -= Time.deltaTime;
+
+            // 타이터 UI 업데이터
+            waveUI.UpdateTimer((int)waveData.RemainTime);
         }
     }
 

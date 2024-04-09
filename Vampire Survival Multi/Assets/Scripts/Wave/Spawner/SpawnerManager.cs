@@ -7,6 +7,9 @@ public class SpawnerManager : MonoBehaviour
     [Header("스포너")]
     [SerializeField] private List<Spawner> spawners;
 
+    // 플레이어 탐지
+    private bool playerInArea;
+
     public void SpawnMonster()
     {
         // 주변 플레이어 탐지
@@ -40,7 +43,7 @@ public class SpawnerManager : MonoBehaviour
         // 스폰 가능한 스포너
         foreach(Spawner spawner in spawners)
         {
-            if (spawner.PlayerInArea == false)
+            if (spawner.Spawnable)
             {
                 Gizmos.color = Color.red;
                 Gizmos.DrawWireCube(spawner.Pivot, spawner.SpawnArea);

@@ -13,6 +13,7 @@ public class PlayerData : ScriptableObject
     }
 
     [Header("플레이어 현재 스텟")]
+    [ReadOnly]
     [SerializeField]
     private float _currentHP;
     public float HP
@@ -32,6 +33,7 @@ public class PlayerData : ScriptableObject
         }
     }
 
+    [ReadOnly]
     [SerializeField]
     private float _currentMaxHP;
     public float MaxHP
@@ -49,6 +51,7 @@ public class PlayerData : ScriptableObject
         }
     }
 
+    [ReadOnly]
     [SerializeField]
     private float _currentSTR;
     public float STR
@@ -63,6 +66,7 @@ public class PlayerData : ScriptableObject
         }
     }
 
+    [ReadOnly]
     [SerializeField]
     private float _currentDEF;
     public float DEF
@@ -77,6 +81,7 @@ public class PlayerData : ScriptableObject
         }
     }
 
+    [ReadOnly]
     [SerializeField]
     private float _currentAGI;
     public float AGI
@@ -92,6 +97,7 @@ public class PlayerData : ScriptableObject
     }
 
     [Header("플레이어 좌표")]
+    [ReadOnly]
     [SerializeField]
     private Vector3 _position;
     public Vector3 Position
