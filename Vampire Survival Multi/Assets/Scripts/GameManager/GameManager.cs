@@ -6,6 +6,9 @@ public class GameManager : MonoBehaviour
     [Header("참조 스크립트")]
     [SerializeField] private WaveUI waveUI;
 
+    [Header("플레이어 프리팹")]
+    [SerializeField] private List<GameObject> playerObjs;
+
     // 참조 데이터
     private WaveData waveData;
 
@@ -27,15 +30,27 @@ public class GameManager : MonoBehaviour
 
     private void InitGameData()
     {
+        // 플레이어 데이터 초기화
+        InitPlayer();
+
+        // 웨이브 데이터 초기화
+        waveData.InitData();
+    }
+
+    /***************************************************************
+    * [ 플레이어 세팅 ]
+    * 
+    * 게임 시작 시 플레이어에 관한 세팅
+    ***************************************************************/
+
+    private void InitPlayer()
+    {
         // 게임을 플레이 할 플레이어 목록 가져오기
-        List<PlayerData> playerDatas = new List<PlayerData>();
+        List<GameObject> playerList = new List<GameObject>();
 
         playerDatas.Add(LocalPlayerData.Instance);
 
         GameData.Instance.InitData(playerDatas);
-
-        // 웨이브 데이터 초기화
-        waveData.InitData();
     }
 
     /***************************************************************

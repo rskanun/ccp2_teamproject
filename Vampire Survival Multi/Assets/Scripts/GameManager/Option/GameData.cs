@@ -57,8 +57,9 @@ public class GameData : ScriptableObject
 
     [Header("참가 플레이어 목록")]
     [SerializeField]
-    private List<PlayerData> _playerList;
-    public List<PlayerData> PlayerList
+    [ReadOnly]
+    private List<GameObject> _playerList;
+    public List<GameObject> PlayerList
     {
         get { return _playerList; }
     }
@@ -85,15 +86,15 @@ public class GameData : ScriptableObject
         get { return _level; }
     }
 
-    public void InitData(List<PlayerData> playerList)
+    public void InitData(List<GameObject> players)
     {
-        InitPlayer(playerList);
+        InitPlayer(players);
         InitLevel();
     }
 
-    private void InitPlayer(List<PlayerData> playerList)
+    private void InitPlayer(List<GameObject> players)
     {
-        _playerList = playerList;
+        _playerList = players;
     }
 
     private void InitLevel()

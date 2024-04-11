@@ -37,7 +37,7 @@ public class Spawner : MonoBehaviour
     [SerializeField]
     private int playerCount = 0;
 
-    public bool Spawnable
+    public bool IsSpawnable
     {
         get
         {
@@ -76,7 +76,7 @@ public class Spawner : MonoBehaviour
         }
     }
 
-    public void TestSpawn(GameObject mob)
+    public void SpawnMob(GameObject mob)
     {
         int horizontalRange = (int)_spawnArea.x / 2;
         int verticalRange = (int)_spawnArea.y / 2;
@@ -86,6 +86,7 @@ public class Spawner : MonoBehaviour
 
         Vector2 pivot = transform.position;
         Vector2 spawnPos = pivot + new Vector2(randomX, randomY);
+        Debug.Log(pivot + "/" + spawnPos);
 
         Instantiate(mob, spawnPos, Quaternion.identity);
     }

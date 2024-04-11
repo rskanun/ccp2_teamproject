@@ -6,28 +6,40 @@ public class SpawnerManager : MonoBehaviour
 {
     [Header("스포너")]
     [SerializeField] private List<Spawner> spawners;
+    [SerializeField] private PlayerChecker checker;
 
-    // 플레이어 탐지
-    private bool playerInArea;
-
-    public void SpawnMonster()
+    // 스폰 가능 여부
+    public bool IsSpawnable
     {
-        // 주변 플레이어 탐지
-        float distance = SpawnerResource.Instance.Distance;
-        Collider[] colliders = Physics.OverlapSphere(transform.position, distance);
-
-        foreach (Collider collider in colliders)
+        get
         {
-            if (collider.CompareTag("Player"))
+            if (checker.playerInArea == false) return true;
+
+            foreach (Spawner spawner in spawners)
             {
-                
+                if (spawner.IsSpawnable)
+                    return true;
             }
+
+            return false;
         }
     }
 
-    private List<Spawner> GetSpawnableList()
+    public void SpawnMob(GameObject mob)
     {
-        return null;
+        bool isSpawnable = false;
+        Spawner spawner = null;
+
+        // 스폰 가능한 스포너가 나올 때까지 반복
+        while(isSpawnable == false)
+        {
+            int num = Random.Range(0, spawners.Count);
+
+            spawner = spawners[num];
+            isSpawnable = checker.playerInArea == false || spawner.IsSpawnable;
+        }
+
+        spawner.SpawnMob(mob);
     }
 
     private void OnDrawGizmos()
@@ -43,11 +55,16 @@ public class SpawnerManager : MonoBehaviour
         // 스폰 가능한 스포너
         foreach(Spawner spawner in spawners)
         {
-            if (spawner.Spawnable)
+            if (checker.playerInArea == false || spawner.IsSpawnable)
             {
                 Gizmos.color = Color.red;
-                Gizmos.DrawWireCube(spawner.Pivot, spawner.SpawnArea);
             }
+            else
+            {
+                Gizmos.color = Color.blue;
+            }
+
+            Gizmos.DrawWireCube(spawner.Pivot, spawner.SpawnArea);
         }
     }
 }

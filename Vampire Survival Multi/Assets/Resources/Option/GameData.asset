@@ -15,7 +15,9 @@ MonoBehaviour:
   expEvent: {fileID: 11400000, guid: c2fbf9f1db4fb1940a71d623476a36e8, type: 2}
   levelUpEvent: {fileID: 11400000, guid: 2dcacb7b65f0e6c4497b45220ac07c3a, type: 2}
   _playerList:
+  - {fileID: 1773936598904198229, guid: 839f4181bdfed7e449dfd7d48f64879d, type: 3}
+  _playerDatas:
   - {fileID: 11400000, guid: 70ad74274a402fd46b1e40c75ce205c1, type: 2}
   _exp: 0
-  _requireExp: 15
-  _level: 3
+  _requireExp: 5
+  _level: 1
