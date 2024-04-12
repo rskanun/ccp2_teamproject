@@ -34,7 +34,8 @@ public class Projectile : MonoBehaviour
 
     private void OnDamage(Monster monster)
     {
-        float damage = LocalPlayerData.Instance.STR;
+        PlayerData stat = LocalPlayerData.Instance.PlayerData;
+        float damage = stat.STR;
 
         monster.OnTakeDamage(damage);
     }

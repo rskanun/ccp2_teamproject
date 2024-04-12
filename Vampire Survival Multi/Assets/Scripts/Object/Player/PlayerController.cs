@@ -6,7 +6,7 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rigid;
 
     // 참조 스크립터블 오브젝트
-    private LocalPlayerData status;
+    private PlayerData status;
 
     // 이동 변수
     private Vector2 moveVec;
@@ -18,7 +18,10 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
-        status = LocalPlayerData.Instance;
+        status = LocalPlayerData.Instance.PlayerData;
+
+        // Init Position In PlayerData
+        status.Position = transform.position;
 
         // Init Skill
         ClassData classData = status.Class;
@@ -78,7 +81,7 @@ public class PlayerController : MonoBehaviour
         rigid.MovePosition(rigid.position + movement);
 
         // 플레이어 좌표 갱신
-        LocalPlayerData.Instance.Position = transform.position;
+        status.Position = transform.position;
     }
 
 

@@ -13,11 +13,12 @@ public class ProjectileSkill : Skill
         GameObject projectileObj = Instantiate(projectilePrefab);
 
         // 투사체 생성 위치 설정
-        projectileObj.transform.position = LocalPlayerData.Instance.Position;
+        PlayerData playerData = LocalPlayerData.Instance.PlayerData;
+        projectileObj.transform.position = playerData.Position;
 
         // 이동 방향 설정
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 casterPos = LocalPlayerData.Instance.Position;
+        Vector2 casterPos = playerData.Position;
         Vector2 targetPos = casterPos + (mousePos - casterPos).normalized * distance;
 
         // 투사체 발사

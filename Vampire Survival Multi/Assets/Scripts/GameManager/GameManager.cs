@@ -4,10 +4,16 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
     [Header("참조 스크립트")]
-    [SerializeField] private WaveUI waveUI;
+    [SerializeField] private WaveManager waveManager;
+    [SerializeField] private PlayerTracker cameraManager;
 
-    [Header("플레이어 프리팹")]
-    [SerializeField] private List<GameObject> playerObjs;
+    [Header("시작 위치")]
+    [SerializeField] private List<Vector2> startPoints;
+
+    // 플레이어 리소스
+    private GameObject playerPrefab;
+    private GameObject localPlayerPrefab;
+    private List<PlayerData> playerDatas;
 
     // 참조 데이터
     private WaveData waveData;
@@ -17,6 +23,13 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         waveData = WaveData.Instance;
+
+        // Init Player Resource
+        PlayerResource resource = PlayerResource.Instance;
+
+        playerPrefab = resource.PlayerPrefab;
+        localPlayerPrefab = resource.LocalPlayerPrefab;
+        playerDatas = resource.PlayerDatas;
     }
 
     private void Start()
@@ -33,8 +46,16 @@ public class GameManager : MonoBehaviour
         // 플레이어 데이터 초기화
         InitPlayer();
 
+        
+    }
+
+    private void InitWave()
+    {
         // 웨이브 데이터 초기화
         waveData.InitData();
+
+        // 스포너 설정
+        waveManager.InitSpawner();
     }
 
     /***************************************************************
@@ -45,12 +66,53 @@ public class GameManager : MonoBehaviour
 
     private void InitPlayer()
     {
-        // 게임을 플레이 할 플레이어 목록 가져오기
+        // 게임을 플레이하는 플레이어 오브젝트 목록
         List<GameObject> playerList = new List<GameObject>();
 
-        playerDatas.Add(LocalPlayerData.Instance);
+        for(int i = 0; i < playerDatas.Count; i++)
+        {
+            PlayerData playerData = playerDatas[i];
 
-        GameData.Instance.InitData(playerDatas);
+            if (playerData.IsPlaying)
+            {
+                GameObject playerObj = SpawnPlayer(playerData, startPoints[i]);
+
+                // 플레이어 오브젝트에 데이터 부여
+                Player player = playerObj.GetComponent<Player>();
+                player.InitPlayerData(playerData);
+
+                // 플레이어 오브젝트 목록에 추가
+                playerList.Add(playerObj);
+            }
+        }
+
+        GameData.Instance.InitData(playerList);
+    }
+
+    private GameObject SpawnPlayer(PlayerData playerData, Vector2 spawnPoint)
+    {
+        if (playerData == LocalPlayerData.Instance.PlayerData)
+        {
+            // 로컬 플레이어 오브젝트 생성
+            GameObject playerObj = Instantiate(localPlayerPrefab, spawnPoint, Quaternion.identity);
+
+            InitLocalPlayer(playerObj);
+
+            return playerObj;
+        }
+        else
+        {
+            // 일반 플레이어 오브젝트 생성
+            GameObject playerObj = Instantiate(playerPrefab, spawnPoint, Quaternion.identity);
+
+            return playerObj;
+        }
+    }
+
+    private void InitLocalPlayer(GameObject localPlayerObj)
+    {
+        // 카메라 설정
+        cameraManager.SetPlayer(localPlayerObj.transform);
     }
 
     /***************************************************************
@@ -63,8 +125,8 @@ public class GameManager : MonoBehaviour
     {
         if (isGameComplete == false)
         {
-            // 남은 시간이 없거나 모든 몬스터를 제거했을 경우
-            if (waveData.RemainTime <= 0 || waveData.MobCount <= 0)
+            // 웨이브 종료 조건을 충족했을 경우
+            if (waveManager.IsWaveEnded)
             {
                 // 다음 웨이브 진행
                 waveData.NextWave();
@@ -80,7 +142,7 @@ public class GameManager : MonoBehaviour
                 waveData.RemainTime -= Time.deltaTime;
 
             // 타이터 UI 업데이터
-            waveUI.UpdateTimer((int)waveData.RemainTime);
+            waveManager.UpdateTimer();
         }
     }
 

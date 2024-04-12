@@ -8,6 +8,9 @@ public class WaveManager : MonoBehaviour
     private float spawnDelay;
     private float curTime;
 
+    [Header("참조 스크립트")]
+    [SerializeField] private WaveUI ui;
+
     // 참조 데이터
     private WaveData waveData;
     private GameData gameData;
@@ -16,16 +19,37 @@ public class WaveManager : MonoBehaviour
     private List<SpawnerManager> spawnerList;
     private Queue<SpawnerManager> spawnerSeq;
 
+    // 웨이브 정보
+    public bool IsWaveEnded
+    {
+        get
+        {
+            // 남은 시간이 없거나, 모든 몬스터를 죽였을 경우
+            bool isTimerEnded = waveData.RemainTime <= 0;
+            bool isKilledAllMob = waveData.MobCount <= 0;
+
+            // 웨이브 종료
+            return isTimerEnded || isKilledAllMob;
+        }
+    }
+
+    public void UpdateTimer()
+    {
+        ui.UpdateTimer((int)waveData.RemainTime);
+    }
+
     private void Start()
     {
         waveData = WaveData.Instance;
         gameData = GameData.Instance;
+    }
 
-        // Init Spawner
+    public void InitSpawner()
+    {
         spawnerList = new List<SpawnerManager>();
         spawnerSeq = new Queue<SpawnerManager>();
 
-        foreach(GameObject obj in gameData.PlayerList)
+        foreach (GameObject obj in gameData.PlayerList)
         {
             SpawnerManager spawner = obj.GetComponentInChildren<SpawnerManager>();
 
@@ -33,6 +57,12 @@ public class WaveManager : MonoBehaviour
                 spawnerList.Add(spawner);
         }
     }
+
+    /***************************************************************
+    * [ 몬스터 스폰 ]
+    * 
+    * 웨이브 진행에 따른 몬스터 스폰
+    ***************************************************************/
 
     private void Update()
     {

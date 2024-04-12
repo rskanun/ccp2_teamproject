@@ -1,7 +1,7 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-public class LocalPlayerData : PlayerData
+public class LocalPlayerData : ScriptableObject
 {
     // 저장 파일 위치
     private const string FILE_DIRECTORY = "Assets/Resources/Objects/Player";
@@ -48,5 +48,19 @@ public class LocalPlayerData : PlayerData
 #endif
             return _instance;
         }
+    }
+
+    [Header("로컬 플레이어 정보")]
+    [ReadOnly]
+    [SerializeField]
+    private PlayerData _playerData;
+    public PlayerData PlayerData
+    {
+        get { return _playerData; }
+    }
+
+    public void InitPlayerData(PlayerData localPlayerData)
+    {
+        _playerData = localPlayerData;
     }
 }

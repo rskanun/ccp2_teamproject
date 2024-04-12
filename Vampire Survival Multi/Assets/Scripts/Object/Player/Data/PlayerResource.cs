@@ -1,20 +1,21 @@
-﻿using UnityEditor;
+﻿using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
-public class PlayerOption : ScriptableObject
+public class PlayerResource : ScriptableObject
 {
     // 저장 파일 위치
     private const string FILE_DIRECTORY = "Assets/Resources/Option";
-    private const string FILE_PATH = "Assets/Resources/Option/PlayerOption.asset";
+    private const string FILE_PATH = "Assets/Resources/Option/PlayerResource.asset";
 
-    private static PlayerOption _instance;
-    public static PlayerOption Instance
+    private static PlayerResource _instance;
+    public static PlayerResource Instance
     {
         get
         {
             if (_instance != null) return _instance;
 
-            _instance = Resources.Load<PlayerOption>("Option/PlayerOption");
+            _instance = Resources.Load<PlayerResource>("Option/PlayerResource");
 
 #if UNITY_EDITOR
             if (_instance == null)
@@ -37,17 +38,43 @@ public class PlayerOption : ScriptableObject
                 }
 
                 // Resource.Load가 실패했을 경우
-                _instance = AssetDatabase.LoadAssetAtPath<PlayerOption>(FILE_PATH);
+                _instance = AssetDatabase.LoadAssetAtPath<PlayerResource>(FILE_PATH);
 
                 if (_instance == null)
                 {
-                    _instance = CreateInstance<PlayerOption>();
+                    _instance = CreateInstance<PlayerResource>();
                     AssetDatabase.CreateAsset(_instance, FILE_PATH);
                 }
             }
 #endif
             return _instance;
         }
+    }
+
+    [Header("플레이어 리소스")]
+    [SerializeField]
+    private GameObject _playerPrefab;
+    public GameObject PlayerPrefab
+    {
+        get { return _playerPrefab; }
+    }
+
+    [SerializeField]
+    private GameObject _localPlayerPrefab;
+    public GameObject LocalPlayerPrefab
+    {
+        get { return _localPlayerPrefab;  }
+    }
+
+    [SerializeField]
+    private List<PlayerData> _playerDatas;
+    public List<PlayerData> PlayerDatas
+    {
+        get { return _playerDatas; }
+    }
+    public int maxPlayerNum
+    {
+        get { return _playerDatas.Count; }
     }
 
     [Header("플레이어 공통 옵션")]

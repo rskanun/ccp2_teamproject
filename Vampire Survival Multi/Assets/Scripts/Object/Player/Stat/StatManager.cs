@@ -14,37 +14,14 @@ public class StatManager : MonoBehaviour
     // 임시 스텟 UI
     [SerializeField] private TextMeshProUGUI testStatInfo;
 
-    [Header("참조 스크립트")]
-    [SerializeField] private HealthUI healthUI;
-
     // 플레이어 스텟
-    private LocalPlayerData playerStat;
+    private PlayerData playerStat;
 
     private void Start()
     {
-        playerStat = LocalPlayerData.Instance;
+        playerStat = LocalPlayerData.Instance.PlayerData;
 
         InitStat();
-        InitHP(); // 초기 HP값 설정
-    }
-
-    /***************************************************************
-     * [ 체력 설정 ]
-     * 
-     * 초기 체력 설정 및 체력 변화에 따른 스텟 변경
-     ***************************************************************/
-
-    private void InitHP()
-    {
-        playerStat.HP = playerStat.MaxHP;
-    }
-
-    public void UpdateHP()
-    {
-        float currentHP = playerStat.HP;
-        float maxHP = playerStat.MaxHP;
-
-        healthUI.UpdateHP(currentHP, maxHP);
     }
 
     /***************************************************************

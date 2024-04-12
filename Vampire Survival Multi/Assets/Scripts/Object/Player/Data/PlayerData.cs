@@ -3,16 +3,33 @@
 [CreateAssetMenu(menuName = "Game Object/Player/Player Data", fileName = "PlayerData")]
 public class PlayerData : ScriptableObject
 {
-    [Header("클래스 데이터")]
+    [Header("플레이어 정보")]
+    [SerializeField] 
+    private bool _isPlaying;
+    public bool IsPlaying
+    {
+        get { return _isPlaying; }
+        set { _isPlaying = value; }
+    }
+
+    [ReadOnly]
+    [SerializeField]
+    private Vector3 _position;
+    public Vector3 Position
+    {
+        get { return _position; }
+        set { _position = value; }
+    }
+
+    [Header("클래스")]
     [SerializeField]
     private ClassData _classData;
     public ClassData Class
     {
         get { return _classData; }
-        set { _classData = value; }
     }
 
-    [Header("플레이어 현재 스텟")]
+    [Header("현재 스텟")]
     [ReadOnly]
     [SerializeField]
     private float _currentHP;
@@ -96,17 +113,20 @@ public class PlayerData : ScriptableObject
         }
     }
 
-    [Header("플레이어 좌표")]
-    [ReadOnly]
-    [SerializeField]
-    private Vector3 _position;
-    public Vector3 Position
-    {
-        get { return _position; }
-        set { _position = value; }
-    }
-
     [Header("이벤트")]
     [SerializeField]
     private GameEvent hpEvent;
+
+    public void InitData(ClassData playerClass)
+    {
+        // 직업 설정
+        _classData = playerClass;
+
+        // 스텟 초기화
+        _currentHP = playerClass.HP;
+        _currentMaxHP = playerClass.HP;
+        _currentSTR = playerClass.STR;
+        _currentDEF = playerClass.DEF;
+        _currentAGI = playerClass.AGI;
+    }
 }

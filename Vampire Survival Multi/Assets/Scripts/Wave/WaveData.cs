@@ -95,7 +95,8 @@ public class WaveData : ScriptableObject
 
         // 소환할 몬스터 목록 추가
         List<GameObject> mobList = resource.GetWaveMobs(startLevel);
-        AddMobs(mobList);
+
+        _waveMobs = new Queue<GameObject>(mobList);
     }
 
     public void NextWave()
@@ -106,12 +107,16 @@ public class WaveData : ScriptableObject
 
         if (maxLevel > _waveLevel)
         {
+            // 웨이브 레벨 증가
             int currentLevel = ++_waveLevel;
 
+            // 웨이브 정보 갱신
             _remainTime = resource.GetWaveTime(currentLevel);
             _mobCount += resource.GetWaveMobs(currentLevel).Count;
 
+            // 소환할 몬스터 목록 추가
             List<GameObject> mobList = resource.GetWaveMobs(currentLevel);
+
             AddMobs(mobList);
         }
         else

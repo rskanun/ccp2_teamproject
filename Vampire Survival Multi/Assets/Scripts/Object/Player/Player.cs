@@ -2,16 +2,16 @@
 
 public class Player : MonoBehaviour
 {
-    [Header("플레이어 데이터")]
-    [SerializeField] private PlayerData status;
+    // 해당 플레이어 옵션
+    private PlayerData status;
 
     // 플레이어 공통 옵션
-    private PlayerOption playerOption;
+    private PlayerResource playerOption;
     private float curDuration;
 
     private void Start()
     {
-        playerOption = PlayerOption.Instance;
+        playerOption = PlayerResource.Instance;
     }
 
     private void Update()
@@ -20,6 +20,11 @@ public class Player : MonoBehaviour
         {
             curDuration -= Time.deltaTime;
         }
+    }
+
+    public void InitPlayerData(PlayerData initData)
+    {
+        status = initData;
     }
 
     /***************************************************************
