@@ -41,11 +41,15 @@ public class PlayerPanelUI : MonoBehaviour
 
     public void OnAddPlayer()
     {
+        _currentState = PanelState.InOther;
+
         UpdateInOtherUI();
     }
 
     public void OnRemovePlayer()
     {
+        _currentState = PanelState.Nobody;
+
         UpdateInNobodyUI();
     }
 

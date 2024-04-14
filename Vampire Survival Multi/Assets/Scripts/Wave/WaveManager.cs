@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using DG.Tweening.Core.Easing;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class WaveManager : MonoBehaviour
@@ -16,8 +17,46 @@ public class WaveManager : MonoBehaviour
     private GameData gameData;
 
     // 스포너 정보
-    private List<SpawnerManager> spawnerList;
-    private Queue<SpawnerManager> spawnerSeq;
+    private Queue<SpawnerManager> _spawnerSeq;
+    private Queue<SpawnerManager> SpawnerSeq
+    {
+        get
+        {
+            // 스포너 순서가 전부 돌면 다시 재정렬
+            if (_spawnerSeq == null || _spawnerSeq.Count <= 0)
+            {
+                List<SpawnerManager> newList = SuffleSeq(SpawnerList);
+
+                _spawnerSeq = new Queue<SpawnerManager>(newList);
+            }
+
+            return _spawnerSeq;
+        }
+    }
+
+    private List<SpawnerManager> _spawnerList;
+    private List <SpawnerManager> SpawnerList
+    {
+        get
+        {
+            if (_spawnerList == null || _spawnerList.Count <= 0)
+            {
+                _spawnerList = new List<SpawnerManager>();
+                _spawnerSeq = new Queue<SpawnerManager>();
+
+                // Init Spawner List
+                foreach (GameObject obj in gameData.PlayerList)
+                {
+                    SpawnerManager spawner = obj.GetComponentInChildren<SpawnerManager>();
+
+                    if (spawner != null)
+                        _spawnerList.Add(spawner);
+                }
+            }
+
+            return _spawnerList;
+        }
+    }
 
     // 웨이브 정보
     public bool IsWaveEnded
@@ -44,20 +83,6 @@ public class WaveManager : MonoBehaviour
         gameData = GameData.Instance;
     }
 
-    public void InitSpawner()
-    {
-        spawnerList = new List<SpawnerManager>();
-        spawnerSeq = new Queue<SpawnerManager>();
-
-        foreach (GameObject obj in gameData.PlayerList)
-        {
-            SpawnerManager spawner = obj.GetComponentInChildren<SpawnerManager>();
-
-            if (spawner != null)
-                spawnerList.Add(spawner);
-        }
-    }
-
     /***************************************************************
     * [ 몬스터 스폰 ]
     * 
@@ -66,14 +91,17 @@ public class WaveManager : MonoBehaviour
 
     private void Update()
     {
-        if (curTime <= 0)
+        if (waveData.IsRunning)
         {
-            SpawnMob();
+            if (curTime <= 0)
+            {
+                SpawnMob();
 
-            curTime = spawnDelay;
+                curTime = spawnDelay;
+            }
+            else
+                curTime -= Time.deltaTime;
         }
-        else
-            curTime -= Time.deltaTime;
     }
 
     private void SpawnMob()
@@ -89,15 +117,7 @@ public class WaveManager : MonoBehaviour
             // 스폰 가능한 스포너가 나올 때까지 반복
             while(isSpawnable == false)
             {
-                // 스포너 순서가 전부 돌면 다시 재정렬
-                if (spawnerSeq.Count <= 0)
-                {
-                    List<SpawnerManager> newList = SuffleSeq(spawnerList);
-
-                    spawnerSeq = new Queue<SpawnerManager>(newList);
-                }
-
-                spawner = spawnerSeq.Dequeue();
+                spawner = SpawnerSeq.Dequeue();
                 isSpawnable = spawner.IsSpawnable;
             }
             

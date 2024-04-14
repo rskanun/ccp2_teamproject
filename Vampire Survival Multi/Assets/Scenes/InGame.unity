@@ -699,7 +699,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ee751701aa2f03447bf5c4de60972f01, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  selectWindow: {fileID: 1237297167284556986, guid: b57024afd7ba1ed4d856805dac4bbb28, type: 3}
+  selectPrefab: {fileID: 1237297167284556986, guid: b57024afd7ba1ed4d856805dac4bbb28, type: 3}
   container: {fileID: 56621916}
   selectCount: 3
 --- !u!114 &729920376

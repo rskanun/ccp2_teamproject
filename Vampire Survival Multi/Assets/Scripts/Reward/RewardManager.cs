@@ -1,17 +1,18 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class RewardManager : MonoBehaviour
 {
     [Header("사용 오브젝트")]
-    [SerializeField] private GameObject selectWindow;
+    [SerializeField] private GameObject selectPrefab;
     [SerializeField] private GameObject container;
 
     [Header("아이템 선택 관련 변수")]
     [SerializeField] private int selectCount;
 
     // 생성된 아이템 선택창
-    private List<GameObject> selectPrefabs = new List<GameObject>();
+    private List<GameObject> selectWindows = new List<GameObject>();
 
     // 획득할 보상 수
     private int rewardCount = 0;
@@ -27,7 +28,6 @@ public class RewardManager : MonoBehaviour
 
             OpenWindow();
         }
-        
     }
 
     private void OpenWindow()
@@ -36,27 +36,41 @@ public class RewardManager : MonoBehaviour
         ItemData[] selectableItems = GetRandomItems(selectCount);
 
         // 아이템 선택창 띄우기
+        List<GameObject> items = new List<GameObject>();
+
         for (int i = 0; i <selectCount; i++)
         {
             container.SetActive(true);
 
             // 아이템 선택창 생성
-            GameObject prefeb = Instantiate(selectWindow, container.transform);
-
-            selectPrefabs.Add(prefeb);
+            GameObject prefeb = Instantiate(selectPrefab, container.transform);
 
             // 선택된 아이템 띄우기
             SelectedItem selectedItem = prefeb.GetComponent<SelectedItem>();
             ItemData item = selectableItems[i];
 
             selectedItem.SetItem(item);
+
+            items.Add(prefeb);
         }
+
+        selectWindows = items;
+
+        // 첫번째 요소 선택 상태로 전환
+        SelectObject(selectWindows[0]);
+    }
+
+    private void SelectObject(GameObject SelectedItem)
+    {
+        Button button = SelectedItem.GetComponent<Button>();
+
+        button.Select();
     }
 
     public void CloseWindow()
     {
         // 아이템 선택창 지우기
-        foreach(GameObject prefab in selectPrefabs)
+        foreach(GameObject prefab in selectWindows)
         {
             Destroy(prefab);
         }

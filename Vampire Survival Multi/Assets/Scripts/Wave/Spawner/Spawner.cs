@@ -86,7 +86,6 @@ public class Spawner : MonoBehaviour
 
         Vector2 pivot = transform.position;
         Vector2 spawnPos = pivot + new Vector2(randomX, randomY);
-        Debug.Log(pivot + "/" + spawnPos);
 
         Instantiate(mob, spawnPos, Quaternion.identity);
     }

@@ -51,13 +51,7 @@ public class GameData : ScriptableObject
         }
     }
 
-    [Header("이벤트")]
-    [SerializeField] private GameEvent expEvent;
-    [SerializeField] private GameEvent levelUpEvent;
-
-    [Header("참가 플레이어 목록")]
-    [SerializeField]
-    [ReadOnly]
+    // 참가 플레이어 목록
     private List<GameObject> _playerList;
     public List<GameObject> PlayerList
     {
@@ -86,6 +80,10 @@ public class GameData : ScriptableObject
         get { return _level; }
     }
 
+    [Header("이벤트")]
+    [SerializeField] private GameEvent expEvent;
+    [SerializeField] private GameEvent levelUpEvent;
+
     public void InitData(List<GameObject> players)
     {
         InitPlayer(players);
@@ -94,7 +92,7 @@ public class GameData : ScriptableObject
 
     private void InitPlayer(List<GameObject> players)
     {
-        _playerList = players;
+        _playerList = new List<GameObject>(players);
     }
 
     private void InitLevel()

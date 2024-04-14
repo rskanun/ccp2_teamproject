@@ -39,23 +39,20 @@ public class GameManager : MonoBehaviour
 
         // 장비 초기 셋팅
         PlayerEquip.Instance.InitEquips();
+
+        // 게임 시작
+        GameStart();
     }
 
     private void InitGameData()
     {
         // 플레이어 데이터 초기화
         InitPlayer();
-
-        
     }
 
-    private void InitWave()
+    private void GameStart()
     {
-        // 웨이브 데이터 초기화
-        waveData.InitData();
-
-        // 스포너 설정
-        waveManager.InitSpawner();
+        waveData.IsRunning = true;
     }
 
     /***************************************************************
