@@ -52,6 +52,7 @@ public class GameManager : MonoBehaviour
 
     private void GameStart()
     {
+        // 웨이브 시작
         waveData.IsRunning = true;
     }
 
@@ -122,9 +123,16 @@ public class GameManager : MonoBehaviour
     {
         if (isGameComplete == false)
         {
-            // 웨이브 종료 조건을 충족했을 경우
-            if (waveManager.IsWaveEnded)
+            // 남은 시간이 없거나, 모든 몬스터를 죽였을 경우
+            if (waveData.RemainTime <= 0 || waveData.MobCount <= 0)
             {
+                // 시간이 남은 경우
+                if (waveData.RemainTime > 0)
+                {
+                    // 클리어 보상
+                    OnWaveClear();
+                }
+
                 // 다음 웨이브 진행
                 waveData.NextWave();
 
@@ -132,7 +140,7 @@ public class GameManager : MonoBehaviour
                 if (waveData.WaveLevel <= 0)
                 {
                     // 게임 종료
-                    OnComplete();
+                    OnGameClear();
                 }
             }
             else
@@ -143,7 +151,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void OnComplete()
+    private void OnWaveClear()
+    {
+        Debug.Log("Wave Clear");
+    }
+
+    private void OnGameClear()
     {
         isGameComplete = true;
 

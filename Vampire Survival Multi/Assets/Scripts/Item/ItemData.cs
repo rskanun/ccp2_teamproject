@@ -33,12 +33,24 @@ public class ItemData : ScriptableObject
     {
         get { return _addHP; }
     }
+    [SerializeField]
+    private float _hpPercent;
+    public float MultiplyHP
+    {
+        get { return _hpPercent; }
+    }
 
     [SerializeField]
     private int _addSTR;
     public int IncreasedSTR
     {
         get { return _addSTR; }
+    }
+    [SerializeField]
+    private float _strPercent;
+    public float MultiplySTR
+    {
+        get { return _strPercent; }
     }
 
     [SerializeField]
@@ -47,11 +59,23 @@ public class ItemData : ScriptableObject
     {
         get { return _addDEF; }
     }
+    [SerializeField]
+    private float _defPercent;
+    public float MultiplyDEF
+    {
+        get { return _defPercent; }
+    }
 
     [SerializeField]
     private int _addAGI;
     public int IncreasedAGI
     {
         get { return _addAGI; }
+    }
+    [SerializeField]
+    private float _agiPercent;
+    public float MultiplyAGI
+    {
+        get { return _agiPercent; }
     }
 }

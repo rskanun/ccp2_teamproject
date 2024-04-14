@@ -88,7 +88,7 @@ public class WaveData : ScriptableObject
         get { return _mobCount; }
         set { _mobCount = value; }
     }
-     
+
     // 소환할 몬스터 목록
     private Queue<GameObject> _waveMobs;
 

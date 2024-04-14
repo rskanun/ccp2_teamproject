@@ -58,20 +58,6 @@ public class WaveManager : MonoBehaviour
         }
     }
 
-    // 웨이브 정보
-    public bool IsWaveEnded
-    {
-        get
-        {
-            // 남은 시간이 없거나, 모든 몬스터를 죽였을 경우
-            bool isTimerEnded = waveData.RemainTime <= 0;
-            bool isKilledAllMob = waveData.MobCount <= 0;
-
-            // 웨이브 종료
-            return isTimerEnded || isKilledAllMob;
-        }
-    }
-
     public void UpdateTimer()
     {
         ui.UpdateTimer((int)waveData.RemainTime);
