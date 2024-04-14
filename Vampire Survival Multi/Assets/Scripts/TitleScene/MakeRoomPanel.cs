@@ -29,10 +29,6 @@ public class MakeRoomPanel : MonoBehaviour
         passwordInputField.onValueChanged.AddListener(delegate { OnInputFieldValueChanged(passwordInputField, maxPasswordLimit); });
     }
 
-    void Update()
-    {
-        
-    }
     public void closeMakeRoomPanel()        //방 만들기 패널 닫기
     {
         makeRoomPanel.SetActive(false);

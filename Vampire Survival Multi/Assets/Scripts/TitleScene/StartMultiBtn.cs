@@ -5,15 +5,6 @@ using UnityEngine;
 public class StartMultiBtn : MonoBehaviour
 {
     public GameObject multiPanel;
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
 
     public void showMultiPanel()
     {

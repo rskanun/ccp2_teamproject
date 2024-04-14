@@ -7,16 +7,6 @@ public class CharacterSettingPanel : MonoBehaviour
     public GameObject characterSettingPanel;
     public GameObject baseSkillDetailPanel;
     public GameObject passiveSkillDetailPanel;
-    void Start()
-    {
-        
-    }
-
-
-    void Update()
-    {
-        
-    }
 
     public void closeCharacterSettingPanel()
     {

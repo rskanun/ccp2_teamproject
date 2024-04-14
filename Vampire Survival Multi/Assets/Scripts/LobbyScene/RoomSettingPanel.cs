@@ -7,16 +7,6 @@ public class RoomSettingPanel : MonoBehaviour
 {
     public GameObject roomSettingPanel;
     public Button[] buttons;
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
-
     public void closeRoomSettingPanel()
     {
         roomSettingPanel.SetActive(false);

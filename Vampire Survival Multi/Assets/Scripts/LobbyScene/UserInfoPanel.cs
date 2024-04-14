@@ -7,15 +7,6 @@ public class UserInfoPanel : MonoBehaviour
     public GameObject userMenuPanel;
     public GameObject askGiveAdminPanel;
     public GameObject askKickUserPanel;
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
     public void toggleUserMenuPanel()       //누르면 유저 메뉴 패널 여닫기
     {
         userMenuPanel.SetActive(!userMenuPanel.activeSelf);
