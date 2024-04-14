@@ -9,15 +9,7 @@ public class SceneController : MonoBehaviour
     public GameObject characterSettingPanel;
     public GameObject roomSettingPanel;
     public Button[] buttons;
-    void Start()
-    {
-        
-    }
-
-    void Update()
-    {
-        
-    }
+   
     public void openCharacterSettingPanel()     //캐릭터 패널 열기
     {
         characterSettingPanel.SetActive(true);

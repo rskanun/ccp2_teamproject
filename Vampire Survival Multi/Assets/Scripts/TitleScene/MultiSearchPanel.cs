@@ -25,12 +25,6 @@ public class MultiSearchPanel : MonoBehaviour
         }
 
     }
-
-    void Update()
-    {
-        
-    }
-
     public void openMakeRoomPanel()     //방 만들기 패널 열기
     {
         makeRoomPanel.SetActive(true);

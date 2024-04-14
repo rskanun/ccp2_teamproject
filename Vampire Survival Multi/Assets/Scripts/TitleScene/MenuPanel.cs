@@ -7,14 +7,6 @@ public class MenuPanel : MonoBehaviour
 {
     public GameObject multiPanel;
     public GameObject settingPanel;
-    void Start()
-    {
-        
-    }
-    void Update()
-    {
-        
-    }
 
     public void openMultiPanel()
     {

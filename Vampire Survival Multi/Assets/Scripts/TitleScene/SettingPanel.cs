@@ -5,14 +5,6 @@ using UnityEngine;
 public class SettingPanel : MonoBehaviour
 {
     public GameObject settingPanel;
-    void Start()
-    {
-        
-    }
-    void Update()
-    {
-        
-    }
 
     public void closeSettingPanel()
     {
