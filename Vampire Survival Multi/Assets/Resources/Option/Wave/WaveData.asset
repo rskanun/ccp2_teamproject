@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9d2f1debb59648343992a1c83d650d58, type: 3}
   m_Name: WaveData
   m_EditorClassIdentifier: 
-  _waveLevel: 0
-  _remainTime: 0
+  _isRunning: 0
+  _waveLevel: 1
+  _remainTime: 4.9916115
+  _mobCount: 1

@@ -6,20 +6,22 @@ public class HUD : MonoBehaviour
     [SerializeField] private HealthUI healthUI;
 
     // 참조 데이터
-    private PlayerData stat;
-
-    private void Start()
+    private PlayerData _stat;
+    private PlayerData Stat
     {
-        stat = LocalPlayerData.Instance.PlayerData;
+        get
+        {
+            if (_stat == null)
+                _stat = LocalPlayerData.Instance.PlayerData;
 
-        // Init HUD
-        UpdateHP();
+            return _stat;
+        }
     }
 
     public void UpdateHP()
     {
-        float currentHP = stat.HP;
-        float maxHP = stat.MaxHP;
+        float currentHP = Stat.HP;
+        float maxHP = Stat.MaxHP;
 
         healthUI.UpdateHP(currentHP, maxHP);
     }

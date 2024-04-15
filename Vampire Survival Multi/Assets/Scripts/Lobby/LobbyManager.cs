@@ -4,7 +4,6 @@ using UnityEngine.SceneManagement;
 
 public class LobbyManager : MonoBehaviour
 {
-    [SerializeField] private ClassData tmpClass;
     [SerializeField] private List<PlayerPanelUI> panels;
 
     // 플레이어 리소스
@@ -27,8 +26,8 @@ public class LobbyManager : MonoBehaviour
 
             if (panel.State != PanelState.Nobody)
             {
-                // 임시 직업 설정(직업 선택 시 직업 설정하도록)
-                playerData.InitData(tmpClass);
+                // 임시 직업 할당(직업 선택 창에서 할당)
+                playerData.TestInitData();
 
                 // 해당 자리의 플레이어 참가 설정
                 playerData.IsPlaying = true;

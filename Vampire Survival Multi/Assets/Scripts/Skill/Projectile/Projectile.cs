@@ -3,11 +3,13 @@
 public class Projectile : MonoBehaviour
 {
     private Vector2 targetPos;
+    private float damageRate;
     private float speed;
 
-    public void CastProjectile(Vector2 targetPos, float speed)
+    public void CastProjectile(Vector2 targetPos, float speed, float damageRate)
     {
         this.targetPos = targetPos;
+        this.damageRate = damageRate;
         this.speed = speed;
     }
 
@@ -35,7 +37,7 @@ public class Projectile : MonoBehaviour
     private void OnDamage(Monster monster)
     {
         PlayerData stat = LocalPlayerData.Instance.PlayerData;
-        float damage = stat.STR;
+        float damage = stat.STR * damageRate;
 
         monster.OnTakeDamage(damage);
     }

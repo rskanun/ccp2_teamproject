@@ -6,8 +6,8 @@ using UnityEngine;
 public class LevelResource : ScriptableObject
 {
     // 저장 파일 위치
-    private const string FILE_DIRECTORY = "Assets/Resources/Option";
-    private const string FILE_PATH = "Assets/Resources/Option/LevelResource.asset";
+    private const string FILE_DIRECTORY = "Assets/Resources/Option/Level";
+    private const string FILE_PATH = "Assets/Resources/Option/Level/LevelResource.asset";
 
     private static LevelResource _instance;
     public static LevelResource Instance
@@ -16,7 +16,7 @@ public class LevelResource : ScriptableObject
         {
             if (_instance != null) return _instance;
 
-            _instance = Resources.Load<LevelResource>("Option/LevelResource");
+            _instance = Resources.Load<LevelResource>("Option/Level/LevelResource");
 
 #if UNITY_EDITOR
             if (_instance == null)

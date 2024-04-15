@@ -5,7 +5,7 @@ public class GameManager : MonoBehaviour
 {
     [Header("참조 스크립트")]
     [SerializeField] private WaveManager waveManager;
-    [SerializeField] private PlayerTracker cameraManager;
+    [SerializeField] private CameraManager cameraManager;
 
     [Header("시작 위치")]
     [SerializeField] private List<Vector2> startPoints;
@@ -17,12 +17,12 @@ public class GameManager : MonoBehaviour
 
     // 참조 데이터
     private WaveData waveData;
-
-    private bool isGameComplete = false;
+    private GameData gameData;
 
     private void Awake()
     {
         waveData = WaveData.Instance;
+        gameData = GameData.Instance;
 
         // Init Player Resource
         PlayerResource resource = PlayerResource.Instance;
@@ -94,7 +94,8 @@ public class GameManager : MonoBehaviour
             // 로컬 플레이어 오브젝트 생성
             GameObject playerObj = Instantiate(localPlayerPrefab, spawnPoint, Quaternion.identity);
 
-            InitLocalPlayer(playerObj);
+            // 카메라 설정
+            cameraManager.InitPlayer(playerObj);
 
             return playerObj;
         }
@@ -107,10 +108,13 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void InitLocalPlayer(GameObject localPlayerObj)
+    private void Update()
     {
-        // 카메라 설정
-        cameraManager.SetPlayer(localPlayerObj.transform);
+        // 웨이브 상태 진행
+        UpdateWaveStatus();
+
+        // 플레이어 상태 체크
+        UpdatePlayersStatus();
     }
 
     /***************************************************************
@@ -119,9 +123,9 @@ public class GameManager : MonoBehaviour
     * 웨이브 진행에 따른 게임 진행 설정
     ***************************************************************/
 
-    private void Update()
+    private void UpdateWaveStatus()
     {
-        if (isGameComplete == false)
+        if (waveData.IsRunning)
         {
             // 남은 시간이 없거나, 모든 몬스터를 죽였을 경우
             if (waveData.RemainTime <= 0 || waveData.MobCount <= 0)
@@ -145,9 +149,6 @@ public class GameManager : MonoBehaviour
             }
             else
                 waveData.RemainTime -= Time.deltaTime;
-
-            // 타이터 UI 업데이터
-            waveManager.UpdateTimer();
         }
     }
 
@@ -156,9 +157,26 @@ public class GameManager : MonoBehaviour
         Debug.Log("Wave Clear");
     }
 
+    private void UpdatePlayersStatus()
+    {
+        if (gameData.IsAllDead && waveData.IsRunning)
+        {
+            OnGameOver();
+        }
+    }
+
+    private void OnGameOver()
+    {
+        waveData.IsRunning = false;
+        Time.timeScale = 0f;
+
+        Debug.Log("Game Over...");
+    }
+
     private void OnGameClear()
     {
-        isGameComplete = true;
+        waveData.IsRunning = false;
+        Time.timeScale = 0f;
 
         // 웨이브를 최종 클리어 했을 시
         Debug.Log("Clear");

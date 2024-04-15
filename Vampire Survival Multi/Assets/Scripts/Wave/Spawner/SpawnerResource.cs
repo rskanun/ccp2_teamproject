@@ -4,8 +4,8 @@ using UnityEngine;
 public class SpawnerResource : ScriptableObject
 {
     // 저장 파일 위치
-    private const string FILE_DIRECTORY = "Assets/Resources/Option";
-    private const string FILE_PATH = "Assets/Resources/Option/SpawnerResource.asset";
+    private const string FILE_DIRECTORY = "Assets/Resources/Option/Wave";
+    private const string FILE_PATH = "Assets/Resources/Option/Wave/SpawnerResource.asset";
 
     private static SpawnerResource _instance;
     public static SpawnerResource Instance
@@ -14,7 +14,7 @@ public class SpawnerResource : ScriptableObject
         {
             if (_instance != null) return _instance;
 
-            _instance = Resources.Load<SpawnerResource>("Option/SpawnerResource");
+            _instance = Resources.Load<SpawnerResource>("Option/Wave/SpawnerResource");
 
 #if UNITY_EDITOR
             if (_instance == null)

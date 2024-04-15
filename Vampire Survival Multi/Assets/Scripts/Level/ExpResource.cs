@@ -12,8 +12,8 @@ public class ExpResource : ScriptableObject
     }
 
     // 저장 파일 위치
-    private const string FILE_DIRECTORY = "Assets/Resources/Option";
-    private const string FILE_PATH = "Assets/Resources/Option/ExpResource.asset";
+    private const string FILE_DIRECTORY = "Assets/Resources/Option/Level";
+    private const string FILE_PATH = "Assets/Resources/Option/Level/ExpResource.asset";
 
     private static ExpResource _instance;
     public static ExpResource Instance
@@ -22,7 +22,7 @@ public class ExpResource : ScriptableObject
         {
             if (_instance != null) return _instance;
 
-            _instance = Resources.Load<ExpResource>("Option/ExpResource");
+            _instance = Resources.Load<ExpResource>("Option/Level/ExpResource");
 
 #if UNITY_EDITOR
             if (_instance == null)

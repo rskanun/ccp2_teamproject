@@ -6,8 +6,8 @@ using UnityEngine;
 public class WaveData : ScriptableObject
 {
     // 저장 파일 위치
-    private const string FILE_DIRECTORY = "Assets/Resources/Option";
-    private const string FILE_PATH = "Assets/Resources/Option/WaveData.asset";
+    private const string FILE_DIRECTORY = "Assets/Resources/Option/Wave";
+    private const string FILE_PATH = "Assets/Resources/Option/Wave/WaveData.asset";
 
     private static WaveData _instance;
     public static WaveData Instance
@@ -16,7 +16,7 @@ public class WaveData : ScriptableObject
         {
             if (_instance != null) return _instance;
 
-            _instance = Resources.Load<WaveData>("Option/WaveData");
+            _instance = Resources.Load<WaveData>("Option/Wave/WaveData");
 
 #if UNITY_EDITOR
             if (_instance == null)
@@ -53,7 +53,6 @@ public class WaveData : ScriptableObject
     }
 
     [Header("현재 웨이브 정보")]
-    [ReadOnly]
     [SerializeField]
     private bool _isRunning;
     public bool IsRunning

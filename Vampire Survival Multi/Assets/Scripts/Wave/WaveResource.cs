@@ -19,8 +19,8 @@ public class WaveResource : ScriptableObject
     }
 
     // 저장 파일 위치
-    private const string FILE_DIRECTORY = "Assets/Resources/Option";
-    private const string FILE_PATH = "Assets/Resources/Option/WaveResource.asset";
+    private const string FILE_DIRECTORY = "Assets/Resources/Option/Wave";
+    private const string FILE_PATH = "Assets/Resources/Option/Wave/WaveResource.asset";
 
     private static WaveResource _instance;
     public static WaveResource Instance
@@ -29,7 +29,7 @@ public class WaveResource : ScriptableObject
         {
             if (_instance != null) return _instance;
 
-            _instance = Resources.Load<WaveResource>("Option/WaveResource");
+            _instance = Resources.Load<WaveResource>("Option/Wave/WaveResource");
 
 #if UNITY_EDITOR
             if (_instance == null)

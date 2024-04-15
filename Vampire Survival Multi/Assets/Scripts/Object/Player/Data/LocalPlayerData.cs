@@ -4,8 +4,8 @@ using UnityEngine;
 public class LocalPlayerData : ScriptableObject
 {
     // 저장 파일 위치
-    private const string FILE_DIRECTORY = "Assets/Resources/Objects/Player";
-    private const string FILE_PATH = "Assets/Resources/Objects/Player/LocalPlayerData.asset";
+    private const string FILE_DIRECTORY = "Assets/Resources/Objects/Player/Data";
+    private const string FILE_PATH = "Assets/Resources/Objects/Player/Data/LocalPlayerData.asset";
 
     private static LocalPlayerData _instance;
     public static LocalPlayerData Instance
@@ -14,7 +14,7 @@ public class LocalPlayerData : ScriptableObject
         {
             if (_instance != null) return _instance;
 
-            _instance = Resources.Load<LocalPlayerData>("Objects/Player/LocalPlayerData");
+            _instance = Resources.Load<LocalPlayerData>("Objects/Player/Data/LocalPlayerData");
 
 #if UNITY_EDITOR
             if (_instance == null)

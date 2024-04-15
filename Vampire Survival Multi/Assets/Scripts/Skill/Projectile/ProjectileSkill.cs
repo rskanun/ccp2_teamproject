@@ -3,8 +3,11 @@
 [CreateAssetMenu(menuName = "Skill/NonTarget/Projectile", fileName = "Projectile SKill")]
 public class ProjectileSkill : Skill
 {
-    [Header("스킬 정보")]
+    [Header("발사체")]
     [SerializeField] private GameObject projectilePrefab;
+
+    [Header("스킬 정보")]
+    [SerializeField] private float damageRate;
     [SerializeField] private float distance;
     [SerializeField] private float speed;
 
@@ -24,6 +27,6 @@ public class ProjectileSkill : Skill
         // 투사체 발사
         Projectile projectile = projectileObj.GetComponent<Projectile>();
 
-        projectile.CastProjectile(targetPos, speed);
+        projectile.CastProjectile(targetPos, speed, damageRate);
     }
 }

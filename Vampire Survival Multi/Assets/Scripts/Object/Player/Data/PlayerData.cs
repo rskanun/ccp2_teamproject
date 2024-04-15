@@ -46,7 +46,7 @@ public class PlayerData : ScriptableObject
                 _currentHP = value;
 
             // 이벤트 알림
-            hpEvent.NotifyUpdate();
+            _hpEvent.NotifyUpdate();
         }
     }
 
@@ -64,7 +64,7 @@ public class PlayerData : ScriptableObject
                 _currentMaxHP = value;
 
             // 이벤트 알림
-            hpEvent.NotifyUpdate();
+            _hpEvent.NotifyUpdate();
         }
     }
 
@@ -115,7 +115,11 @@ public class PlayerData : ScriptableObject
 
     [Header("이벤트")]
     [SerializeField]
-    private GameEvent hpEvent;
+    private GameEvent _hpEvent;
+    public GameEvent HPEvent
+    {
+        get { return _hpEvent; }
+    }
 
     public void InitData(ClassData playerClass)
     {
@@ -123,10 +127,19 @@ public class PlayerData : ScriptableObject
         _classData = playerClass;
 
         // 스텟 초기화
-        _currentHP = playerClass.HP;
         _currentMaxHP = playerClass.HP;
         _currentSTR = playerClass.STR;
         _currentDEF = playerClass.DEF;
         _currentAGI = playerClass.AGI;
+    }
+
+    // 직업 선택 창을 거치지 않고 직업 할당
+    public void TestInitData()
+    {
+        // 현재 직업을 토대로 스텟 초기화
+        _currentMaxHP = _classData.HP;
+        _currentSTR = _classData.STR;
+        _currentDEF = _classData.DEF;
+        _currentAGI = _classData.AGI;
     }
 }

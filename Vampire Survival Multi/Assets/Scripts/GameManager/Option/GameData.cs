@@ -51,11 +51,30 @@ public class GameData : ScriptableObject
         }
     }
 
-    // 참가 플레이어 목록
+    [Header("참가 플레이어 정보")]
     private List<GameObject> _playerList;
     public List<GameObject> PlayerList
     {
         get { return _playerList; }
+    }
+
+    [ReadOnly]
+    [SerializeField]
+    private List<GameObject> _deadPlayerList;
+    public List<GameObject> DeadPlayerList
+    {
+        get { return _deadPlayerList; }
+    }
+
+    public bool IsAllDead
+    {
+        get
+        {
+            int playerCount = _playerList.Count;
+            int deadPlayerCount = _deadPlayerList.Count;
+
+            return playerCount == deadPlayerCount;
+        }
     }
 
     [Header("레벨 정보")]
@@ -93,6 +112,7 @@ public class GameData : ScriptableObject
     private void InitPlayer(List<GameObject> players)
     {
         _playerList = new List<GameObject>(players);
+        _deadPlayerList = new List<GameObject>();
     }
 
     private void InitLevel()
@@ -131,5 +151,15 @@ public class GameData : ScriptableObject
             // 경험치 변경 이벤트
             expEvent.NotifyUpdate();
         }
+    }
+
+    public void AddDeadList(GameObject player)
+    {
+        _deadPlayerList.Add(player);
+    }
+
+    public void ReviveAllPlayer()
+    {
+        _deadPlayerList.Clear();
     }
 }

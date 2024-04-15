@@ -3,7 +3,8 @@
 public class Player : MonoBehaviour
 {
     // 해당 플레이어 옵션
-    private PlayerData status;
+    private PlayerData playerData;
+    private bool isDead = false;
 
     // 플레이어 공통 옵션
     private PlayerResource playerOption;
@@ -12,6 +13,23 @@ public class Player : MonoBehaviour
     private void Start()
     {
         playerOption = PlayerResource.Instance;
+    }
+
+    private void OnEnable()
+    {
+        // Reset HP
+        if (isDead)
+        {
+            Debug.Log("dead?");
+            playerData.HP = playerData.MaxHP;
+
+            isDead = false;
+        }
+    }
+
+    private void OnDisable()
+    {
+        isDead = true;
     }
 
     private void Update()
@@ -24,7 +42,8 @@ public class Player : MonoBehaviour
 
     public void InitPlayerData(PlayerData initData)
     {
-        status = initData;
+        playerData = initData;
+        playerData.HP = playerData.MaxHP;
     }
 
     /***************************************************************
@@ -39,10 +58,14 @@ public class Player : MonoBehaviour
         if (curDuration <= 0)
         {
             // 공격 받았을 때
-            status.HP -= Mathf.Abs(damage);
+            float dmg = Mathf.Abs(damage);
+            float def = playerData.DEF;
+            float lastDamage = dmg / (dmg + def) * dmg;
+
+            playerData.HP -= lastDamage;
             curDuration = playerOption.NoDamageDuration;
 
-            if (status.HP <= 0)
+            if (playerData.HP <= 0)
             {
                 // hp 값이 0이하면 죽음 처리
                 OnDead();
@@ -52,8 +75,14 @@ public class Player : MonoBehaviour
 
     private void OnDead()
     {
-        // 플레이어가 죽었을 때
-    }
+        // 게임 데이터에 플레이어 값 저장
+        GameData gameData = GameData.Instance;
+
+        gameData.AddDeadList(gameObject);
+
+        // 플레이어 오브젝트 비활성화
+        gameObject.SetActive(false);
+    }  
 
     public void OnKilled()
     {

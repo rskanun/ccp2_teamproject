@@ -1,12 +1,16 @@
 using UnityEngine;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IControlState
 {
+    [Header("이벤트")]
+    [SerializeField] private GameEvent deadEvent;
+    [SerializeField] private GameEvent reviveEvent;
+
     // 참조 컴포넌트
     private Rigidbody2D rigid;
 
     // 참조 스크립터블 오브젝트
-    private PlayerData status;
+    private PlayerData playerData;
 
     // 이동 변수
     private Vector2 moveVec;
@@ -18,13 +22,13 @@ public class PlayerController : MonoBehaviour
     private void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
-        status = LocalPlayerData.Instance.PlayerData;
+        playerData = LocalPlayerData.Instance.PlayerData;
 
         // Init Position In PlayerData
-        status.Position = transform.position;
+        playerData.Position = transform.position;
 
         // Init Skill
-        ClassData classData = status.Class;
+        ClassData classData = playerData.Class;
 
         normalAttack = classData.NormalAttack;
         skill = classData.ClassSkill;
@@ -32,9 +36,6 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        // 키 입력 받기
-        OnControlKeyPressed();
-
         // 기본 공격
         normalAttack.OnUseSkill();
 
@@ -48,13 +49,28 @@ public class PlayerController : MonoBehaviour
         skill.CooldownSkill();
     }
 
+    private void OnEnable()
+    {
+        // Set Control State
+        ControlContext.Instance.SetState(this);
+
+        // Notify Revive Event
+        reviveEvent.NotifyUpdate();
+    }
+
+    private void OnDisable()
+    {
+        // Notify Dead Event
+        deadEvent.NotifyUpdate();
+    }
+
     /***************************************************************
     * [ 키 입력 ]
     * 
     * 키 입력에 따른 행동 조정
     ***************************************************************/
 
-    private void OnControlKeyPressed()
+    public void OnControlKeyPressed()
     {
         OnMoveKeyPressed();
         OnSkillKeyPressed();
@@ -70,20 +86,20 @@ public class PlayerController : MonoBehaviour
 
     private void OnSkillKeyPressed()
     {
-
+        if (Input.GetButtonDown("Skill"))
+        {
+            skill.OnUseSkill();
+        }
     }
 
     private void FixedUpdate()
     {
         // 키 입력에 따른 플레이어 움직임
-        Vector2 movement = moveVec.normalized * status.AGI * Time.deltaTime;
+        Vector2 movement = moveVec.normalized * playerData.AGI * Time.deltaTime;
 
         rigid.MovePosition(rigid.position + movement);
 
         // 플레이어 좌표 갱신
-        status.Position = transform.position;
+        playerData.Position = transform.position;
     }
-
-
-
 }

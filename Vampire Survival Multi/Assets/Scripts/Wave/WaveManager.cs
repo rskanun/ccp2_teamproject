@@ -9,9 +9,6 @@ public class WaveManager : MonoBehaviour
     private float spawnDelay;
     private float curTime;
 
-    [Header("참조 스크립트")]
-    [SerializeField] private WaveUI ui;
-
     // 참조 데이터
     private WaveData waveData;
     private GameData gameData;
@@ -56,11 +53,6 @@ public class WaveManager : MonoBehaviour
 
             return _spawnerList;
         }
-    }
-
-    public void UpdateTimer()
-    {
-        ui.UpdateTimer((int)waveData.RemainTime);
     }
 
     private void Start()

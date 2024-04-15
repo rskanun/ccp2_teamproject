@@ -14,7 +14,14 @@ public class WaveUI : MonoBehaviour
         waveData = WaveData.Instance;
     }
 
-    public void UpdateTimer(int time)
+    private void Update()
+    {
+        int time = (int)waveData.RemainTime;
+
+        UpdateTimer(time);
+    }
+
+    private void UpdateTimer(int time)
     {
         int min = time / 60;
         int sec = time % 60;

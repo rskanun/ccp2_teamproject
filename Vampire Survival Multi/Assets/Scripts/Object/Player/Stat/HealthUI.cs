@@ -1,16 +1,10 @@
-﻿using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class HealthUI : MonoBehaviour
 {
     [Header("참조 컴포넌트")]
     [SerializeField] private Transform hpTranceform;
     [SerializeField] private SpriteRenderer hpBar;
-
-    [Header("구간별 HP 색깔")]
-    [SerializeField] private Color greenZone;
-    [SerializeField] private Color yellowZone;
-    [SerializeField] private Color redZone;
 
     // HP 구간 수치
     private float yellowLine = 0.5f;
@@ -26,8 +20,8 @@ public class HealthUI : MonoBehaviour
 
     private void SetHpColor(float percent)
     {
-        if (percent <= redLine) hpBar.color = redZone;
-        else if (percent <= yellowLine) hpBar.color = yellowZone;
-        else hpBar.color = greenZone;
+        if (percent <= redLine) hpBar.color = Color.red;
+        else if (percent <= yellowLine) hpBar.color = Color.yellow;
+        else hpBar.color = Color.green;
     }
 }

@@ -5,8 +5,8 @@ using UnityEngine;
 public class PlayerEquip : ScriptableObject
 {
     // 저장 파일 위치
-    private const string FILE_DIRECTORY = "Assets/Resources/Objects/Player";
-    private const string FILE_PATH = "Assets/Resources/Objects/Player/PlayerEquip.asset";
+    private const string FILE_DIRECTORY = "Assets/Resources/Objects/Player/Data";
+    private const string FILE_PATH = "Assets/Resources/Objects/Player/Data/PlayerEquip.asset";
 
     private static PlayerEquip _instance;
     public static PlayerEquip Instance
@@ -15,7 +15,7 @@ public class PlayerEquip : ScriptableObject
         {
             if (_instance != null) return _instance;
 
-            _instance = Resources.Load<PlayerEquip>("Objects/Player/PlayerEquip");
+            _instance = Resources.Load<PlayerEquip>("Objects/Player/Data/PlayerEquip");
 
 #if UNITY_EDITOR
             if (_instance == null)
