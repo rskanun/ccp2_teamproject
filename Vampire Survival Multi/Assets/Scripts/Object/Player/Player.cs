@@ -73,6 +73,18 @@ public class Player : MonoBehaviour
         }
     }
 
+    public void OnAttack(Monster monster, float damageRate)
+    {
+        float damage = playerData.STR * damageRate;
+
+        monster.OnTakeDamage(this, damage);
+    }
+
+    public void OnAttacked(float lastDamage)
+    {
+
+    }
+
     private void OnDead()
     {
         // 게임 데이터에 플레이어 값 저장

@@ -100,16 +100,46 @@ public class PlayerData : ScriptableObject
 
     [ReadOnly]
     [SerializeField]
-    private float _currentAGI;
-    public float AGI
+    private float _currentAttackSpeed;
+    public float AttackSpeed
     {
-        get { return _currentAGI; }
+        get { return _currentAttackSpeed; }
+        set
+        {
+            if (value <= 0)
+                _currentAttackSpeed = 1;
+            else
+                _currentAttackSpeed = value;
+        }
+    }
+
+    [ReadOnly]
+    [SerializeField]
+    private float _currentSpeed;
+    public float Speed
+    {
+        get { return _currentSpeed; }
         set
         {
             if (value < 0)
-                _currentAGI = 0;
+                _currentSpeed = 0;
             else
-                _currentAGI = value;
+                _currentSpeed = value;
+        }
+    }
+
+    [ReadOnly]
+    [SerializeField]
+    private float _currentLifeSteal;
+    public float LifeSteal
+    {
+        get { return _currentLifeSteal; }
+        set
+        {
+            if (value < 0)
+                _currentAttackSpeed = 0;
+            else
+                _currentAttackSpeed = value;
         }
     }
 
@@ -130,7 +160,7 @@ public class PlayerData : ScriptableObject
         _currentMaxHP = playerClass.HP;
         _currentSTR = playerClass.STR;
         _currentDEF = playerClass.DEF;
-        _currentAGI = playerClass.AGI;
+        _currentSpeed = playerClass.Speed;
     }
 
     // 직업 선택 창을 거치지 않고 직업 할당
@@ -140,6 +170,6 @@ public class PlayerData : ScriptableObject
         _currentMaxHP = _classData.HP;
         _currentSTR = _classData.STR;
         _currentDEF = _classData.DEF;
-        _currentAGI = _classData.AGI;
+        _currentSpeed = _classData.Speed;
     }
 }

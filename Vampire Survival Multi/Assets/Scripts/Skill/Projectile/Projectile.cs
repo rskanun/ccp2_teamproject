@@ -3,12 +3,14 @@
 public class Projectile : MonoBehaviour
 {
     private Vector2 targetPos;
+    private Player caster;
     private float damageRate;
     private float speed;
 
-    public void CastProjectile(Vector2 targetPos, float speed, float damageRate)
+    public void CastProjectile(Vector2 targetPos, Player caster, float speed, float damageRate)
     {
         this.targetPos = targetPos;
+        this.caster = caster;
         this.damageRate = damageRate;
         this.speed = speed;
     }
@@ -30,15 +32,7 @@ public class Projectile : MonoBehaviour
             // 닿은 오브젝트가 몬스터이면 데미지
             Monster monster = collision.GetComponent<Monster>();
 
-            OnDamage(monster);
+            caster.OnAttack(monster, damageRate);
         }
-    }
-
-    private void OnDamage(Monster monster)
-    {
-        PlayerData stat = LocalPlayerData.Instance.PlayerData;
-        float damage = stat.STR * damageRate;
-
-        monster.OnTakeDamage(damage);
     }
 }

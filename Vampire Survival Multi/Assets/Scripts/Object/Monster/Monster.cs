@@ -47,17 +47,23 @@ public class Monster : MonoBehaviour
         player.OnTakeDamage(damage);
     }
 
-    public void OnTakeDamage(float damage)
+    public void OnTakeDamage(Player attackPlayer, float damage)
     {
-        _currentHP -= Mathf.Abs(damage);
+        // 공격 받았을 때
+        float dmg = Mathf.Abs(damage);
+        float def = data.DEF;
+        float lastDamage = dmg / (dmg + def) * dmg;
+
+        _currentHP -= lastDamage;
+        attackPlayer.OnAttacked(lastDamage);
 
         if (_currentHP <= 0)
         {
-            OnDead();
+            OnDead(attackPlayer);
         }
     }
 
-    protected virtual void OnDead()
+    protected virtual void OnDead(Player killPlayer)
     {
         Destroy(gameObject);
 
@@ -67,6 +73,9 @@ public class Monster : MonoBehaviour
         // 경험치 획득
         int exp = ExpResource.Instance.GetExp();
         GameData.Instance.AddExp(exp);
+
+        // 플레이어에게 킬 알림
+        killPlayer.OnKilled();
     }
 
     /***************************************************************

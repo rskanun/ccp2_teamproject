@@ -7,11 +7,11 @@ public abstract class Skill : ScriptableObject
     private float cooldown;
     private float curCooldown;
 
-    public void OnUseSkill()
+    public void OnUseSkill(Player caster)
     {
         if (IsUseabled())
         {
-            CastSkill();
+            CastSkill(caster);
 
             // 스킬 사용 후 쿨다운
             curCooldown = cooldown;
@@ -29,5 +29,5 @@ public abstract class Skill : ScriptableObject
             curCooldown -= Time.deltaTime;
     }
 
-    protected abstract void CastSkill();
+    protected abstract void CastSkill(Player caster);
 }

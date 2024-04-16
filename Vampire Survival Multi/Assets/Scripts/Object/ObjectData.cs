@@ -23,7 +23,6 @@ public class ObjectData : ScriptableObject
     * [ 근력 (Strength) ]
     * 
     * 오브젝트의 근력 수치로 물리 공격력에 영향을 끼친다.
-    * 근력 1당 1의 데미지를 준다.
     ****************************************************************/
     public float STR
     {
@@ -36,7 +35,6 @@ public class ObjectData : ScriptableObject
     * [ 방어력 (Defensive) ]
     * 
     * 오브젝트의 방어력 수치로 받는 데미지에 영향을 끼친다.
-    * 방어력 1당 1의 데미지를 줄인다.
     ****************************************************************/
     public float DEF
     {
@@ -44,14 +42,14 @@ public class ObjectData : ScriptableObject
     }
 
     [SerializeField]
-    private float _agility;
+    private float _speed;
     /***************************************************************
-    * [ 민첩 (Agility) ]
+    * [ 이동속도 (Speed) ]
     * 
-    * 오브젝트의 민첩 수치로 이동속도에 영향을 끼친다.
+    * 오브젝트가 움직이는 속도에 영향을 끼친다.
     ****************************************************************/
-    public float AGI
+    public float Speed
     {
-        get { return _agility; }
+        get { return _speed;; }
     }
 }

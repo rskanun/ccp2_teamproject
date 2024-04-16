@@ -67,9 +67,14 @@ public class StatManager : MonoBehaviour
         stat.hp = classData.HP;
         stat.str = classData.STR;
         stat.def = classData.DEF;
-        stat.agi = classData.AGI;
+        stat.agi = classData.Speed;
 
         return stat;
+    }
+
+    private void ApplyStat(StatData stat)
+    {
+
     }
 
     private void SetStat(StatData stat)
@@ -77,7 +82,7 @@ public class StatManager : MonoBehaviour
         playerStat.MaxHP = stat.hp;
         playerStat.STR = stat.str;
         playerStat.DEF = stat.def;
-        playerStat.AGI = stat.agi;
+        playerStat.Speed = stat.agi;
 
         testStatInfo.text =
             "<Status>" +

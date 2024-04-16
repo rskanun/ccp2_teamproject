@@ -290,9 +290,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hpTranceform: {fileID: 7577828922781184037}
   hpBar: {fileID: 7577828922781184039}
-  greenZone: {r: 0, g: 1, b: 0, a: 1}
-  yellowZone: {r: 1, g: 1, b: 0, a: 1}
-  redZone: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &7577828923092235419
 GameObject:
   m_ObjectHideFlags: 0
@@ -339,7 +336,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -24.5}
+  m_Offset: {x: 0, y: -24.55}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -467,7 +464,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -20.5, y: 0}
+  m_Offset: {x: -20.55, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -625,7 +622,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 24.5}
+  m_Offset: {x: 0, y: 24.55}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -698,7 +695,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 20.5, y: 0}
+  m_Offset: {x: 20.55, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}

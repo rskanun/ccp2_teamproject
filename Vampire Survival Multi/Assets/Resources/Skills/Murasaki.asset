@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 75d88db7275025e4fa697b413e7541c1, type: 3}
-  m_Name: Test Skill
+  m_Name: Murasaki
   m_EditorClassIdentifier: 
   cooldown: 5
   projectilePrefab: {fileID: 660804144596147880, guid: 1976ee57926b5014882611fcfd9092e1, type: 3}

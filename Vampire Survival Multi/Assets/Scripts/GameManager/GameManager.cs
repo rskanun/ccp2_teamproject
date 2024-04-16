@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using UnityEditor.SearchService;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -130,8 +132,8 @@ public class GameManager : MonoBehaviour
             // 남은 시간이 없거나, 모든 몬스터를 죽였을 경우
             if (waveData.RemainTime <= 0 || waveData.MobCount <= 0)
             {
-                // 시간이 남은 경우
-                if (waveData.RemainTime > 0)
+                // 최종 웨이브가 아니고, 시간이 남은 경우
+                if (waveData.RemainTime > 0 && waveData.IsLastWave == false)
                 {
                     // 클리어 보상
                     OnWaveClear();
@@ -140,8 +142,8 @@ public class GameManager : MonoBehaviour
                 // 다음 웨이브 진행
                 waveData.NextWave();
 
-                // 만약 최종 웨이브 다음으로 넘어갈 경우
-                if (waveData.WaveLevel <= 0)
+                // 만약 웨이브가 종료된 경우
+                if (waveData.IsRunning == false)
                 {
                     // 게임 종료
                     OnGameClear();
@@ -168,17 +170,16 @@ public class GameManager : MonoBehaviour
     private void OnGameOver()
     {
         waveData.IsRunning = false;
-        Time.timeScale = 0f;
 
         Debug.Log("Game Over...");
+        SceneManager.LoadScene("TmpLobby");
     }
 
     private void OnGameClear()
     {
-        waveData.IsRunning = false;
-        Time.timeScale = 0f;
-
         // 웨이브를 최종 클리어 했을 시
         Debug.Log("Clear");
+
+        SceneManager.LoadScene("TmpLobby");
     }
 }

@@ -69,7 +69,17 @@ public class WaveData : ScriptableObject
         get { return _waveLevel; }
     }
 
-    
+    public bool IsLastWave
+    {
+        get
+        {
+            WaveResource resource = WaveResource.Instance;
+
+            return _waveLevel >= resource.MaxLevel;
+        }
+    }
+
+
     [ReadOnly]
     [SerializeField]
     private float _remainTime;
@@ -141,8 +151,9 @@ public class WaveData : ScriptableObject
         }
         else
         {
-            // 최종 웨이브 이후엔 level 값을 0으로 초기화하여 끝났음을 알림
-            _waveLevel = 0;
+            // 최종 웨이브 이후엔 웨이브 종료
+            _isRunning = false;
+            _waveMobs = null;
         }
     }
 

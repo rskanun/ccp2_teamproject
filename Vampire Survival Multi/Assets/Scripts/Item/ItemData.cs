@@ -78,4 +78,18 @@ public class ItemData : ScriptableObject
     {
         get { return _agiPercent; }
     }
+
+    [SerializeField]
+    private float _attackSpeed;
+    public float AttackSpeed
+    {
+        get { return _attackSpeed; }
+    }
+
+    [SerializeField]
+    private float _lifeSteal;
+    public float ListSteal
+    {
+        get { return _lifeSteal; }
+    }
 }

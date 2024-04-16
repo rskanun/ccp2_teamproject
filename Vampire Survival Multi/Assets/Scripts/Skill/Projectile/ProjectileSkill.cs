@@ -11,7 +11,7 @@ public class ProjectileSkill : Skill
     [SerializeField] private float distance;
     [SerializeField] private float speed;
 
-    protected override void CastSkill()
+    protected override void CastSkill(Player caster)
     {
         GameObject projectileObj = Instantiate(projectilePrefab);
 
@@ -27,6 +27,6 @@ public class ProjectileSkill : Skill
         // 투사체 발사
         Projectile projectile = projectileObj.GetComponent<Projectile>();
 
-        projectile.CastProjectile(targetPos, speed, damageRate);
+        projectile.CastProjectile(targetPos, caster, speed, damageRate);
     }
 }

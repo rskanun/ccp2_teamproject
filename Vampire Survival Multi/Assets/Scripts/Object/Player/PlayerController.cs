@@ -1,5 +1,6 @@
 using UnityEngine;
 
+[RequireComponent(typeof(Player))]
 public class PlayerController : MonoBehaviour, IControlState
 {
     [Header("이벤트")]
@@ -8,6 +9,7 @@ public class PlayerController : MonoBehaviour, IControlState
 
     // 참조 컴포넌트
     private Rigidbody2D rigid;
+    private Player player;
 
     // 참조 스크립터블 오브젝트
     private PlayerData playerData;
@@ -22,6 +24,7 @@ public class PlayerController : MonoBehaviour, IControlState
     private void Start()
     {
         rigid = GetComponent<Rigidbody2D>();
+        player = GetComponent<Player>();
         playerData = LocalPlayerData.Instance.PlayerData;
 
         // Init Position In PlayerData
@@ -37,7 +40,7 @@ public class PlayerController : MonoBehaviour, IControlState
     private void Update()
     {
         // 기본 공격
-        normalAttack.OnUseSkill();
+        normalAttack.OnUseSkill(player);
 
         // 기본 공격 및 스킬 쿨다운
         CooldownSkills();
@@ -88,14 +91,14 @@ public class PlayerController : MonoBehaviour, IControlState
     {
         if (Input.GetButtonDown("Skill"))
         {
-            skill.OnUseSkill();
+            skill.OnUseSkill(player);
         }
     }
 
     private void FixedUpdate()
     {
         // 키 입력에 따른 플레이어 움직임
-        Vector2 movement = moveVec.normalized * playerData.AGI * Time.deltaTime;
+        Vector2 movement = moveVec.normalized * playerData.Speed * Time.deltaTime;
 
         rigid.MovePosition(rigid.position + movement);
 
