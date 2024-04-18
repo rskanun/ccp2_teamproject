@@ -76,8 +76,8 @@ public class PlayerData : ScriptableObject
         get { return _currentSTR; }
         set
         {
-            if (value < 0)
-                _currentSTR = 0;
+            if (value <= 0)
+                _currentSTR = 1;
             else
                 _currentSTR = value;
         }
@@ -107,7 +107,7 @@ public class PlayerData : ScriptableObject
         set
         {
             if (value <= 0)
-                _currentAttackSpeed = 1;
+                _currentAttackSpeed = 0.1f;
             else
                 _currentAttackSpeed = value;
         }
@@ -121,8 +121,8 @@ public class PlayerData : ScriptableObject
         get { return _currentSpeed; }
         set
         {
-            if (value < 0)
-                _currentSpeed = 0;
+            if (value <= 0)
+                _currentSpeed = 0.1f;
             else
                 _currentSpeed = value;
         }

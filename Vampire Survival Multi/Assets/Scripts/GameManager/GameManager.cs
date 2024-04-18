@@ -112,11 +112,11 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        // 웨이브 상태 진행
-        UpdateWaveStatus();
-
         // 플레이어 상태 체크
         UpdatePlayersStatus();
+
+        // 웨이브 상태 진행
+        UpdateWaveStatus();
     }
 
     /***************************************************************
@@ -157,6 +157,15 @@ public class GameManager : MonoBehaviour
     private void OnWaveClear()
     {
         Debug.Log("Wave Clear");
+
+
+    }
+
+    private void OnRevive()
+    {
+        
+        
+        gameData.ReviveAllPlayer();
     }
 
     private void UpdatePlayersStatus()
