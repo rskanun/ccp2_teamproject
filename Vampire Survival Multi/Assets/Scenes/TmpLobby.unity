@@ -4667,17 +4667,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f7076c8639caec48993ac9903dd995d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tmpClass: {fileID: 11400000, guid: 016fdf86795781b4882c0830a17518aa, type: 2}
   panels:
   - {fileID: 310480795}
   - {fileID: 1666420565}
   - {fileID: 1311540332}
   - {fileID: 1493672724}
-  playerDatas:
-  - {fileID: 11400000, guid: 785c5833db865de4da5748d193412e65, type: 2}
-  - {fileID: 11400000, guid: 29e7c2ac4b2e4ad4798d82dd70a16df8, type: 2}
-  - {fileID: 11400000, guid: 23b7f5cf479d1d54884545fb1287db21, type: 2}
-  - {fileID: 11400000, guid: 3f1c87287d03de8498ed4cdd571f63e3, type: 2}
 --- !u!4 &1876118634
 Transform:
   m_ObjectHideFlags: 0
