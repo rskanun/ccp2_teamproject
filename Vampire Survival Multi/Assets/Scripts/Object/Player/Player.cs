@@ -73,16 +73,11 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void OnAttack(Monster monster, float damageRate)
+    public void OnAttack(Monster monster, float damage)
     {
-        float damage = playerData.STR * damageRate;
+        float lastDamage = monster.OnTakeDamage(this, damage);
 
-        monster.OnTakeDamage(this, damage);
-    }
-
-    public void OnAttacked(float lastDamage)
-    {
-
+        playerData.HP += lastDamage * playerData.LifeSteal;
     }
 
     private void OnDead()

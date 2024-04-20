@@ -259,8 +259,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -778.17, y: 81}
-  m_SizeDelta: {x: 283.6522, y: 133.6522}
+  m_AnchoredPosition: {x: -778.17, y: -45}
+  m_SizeDelta: {x: 283.6522, y: 167.0992}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &139704517
 MonoBehaviour:
@@ -4367,8 +4367,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -820, y: 406}
-  m_SizeDelta: {x: 200, y: 209.3484}
+  m_AnchoredPosition: {x: -759.20044, y: 362.94244}
+  m_SizeDelta: {x: 321.5992, y: 295.4636}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1241899399
 MonoBehaviour:
@@ -4398,7 +4398,12 @@ MonoBehaviour:
 
     DEF : 1
 
-    AGI : 1'
+    Speed : 1
+
+    Attack
+    Speed : 1
+
+    Life Steal : 1'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -4493,7 +4498,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1241899402}
         m_TargetAssemblyTypeName: StatManager, Assembly-CSharp
-        m_MethodName: UpdateStat
+        m_MethodName: EquipItem
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5445,7 +5450,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -778.17, y: 220.6742}
+  m_AnchoredPosition: {x: -778.17, y: 130}
   m_SizeDelta: {x: 283.6522, y: 133.6522}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1797504071

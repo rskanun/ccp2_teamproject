@@ -9,11 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 75d88db7275025e4fa697b413e7541c1, type: 3}
+  m_Script: {fileID: 11500000, guid: 1e9b2202ca50cf344844d102a69797a5, type: 3}
   m_Name: Murasaki
   m_EditorClassIdentifier: 
-  cooldown: 5
-  projectilePrefab: {fileID: 660804144596147880, guid: 1976ee57926b5014882611fcfd9092e1, type: 3}
-  damageRate: 10
-  distance: 10
+  _name: 
+  _sprite: {fileID: 0}
+  _description: 
+  _distance: 20
+  _cooldown: 5
   speed: 7
+  damageValue: 100
+  damageRate: 10
+  projectilePrefab: {fileID: 660804144596147880, guid: 1976ee57926b5014882611fcfd9092e1, type: 3}

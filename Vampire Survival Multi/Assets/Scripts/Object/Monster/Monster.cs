@@ -47,7 +47,7 @@ public class Monster : MonoBehaviour
         player.OnTakeDamage(damage);
     }
 
-    public void OnTakeDamage(Player attackPlayer, float damage)
+    public float OnTakeDamage(Player attackPlayer, float damage)
     {
         // 공격 받았을 때
         float dmg = Mathf.Abs(damage);
@@ -55,12 +55,13 @@ public class Monster : MonoBehaviour
         float lastDamage = dmg / (dmg + def) * dmg;
 
         _currentHP -= lastDamage;
-        attackPlayer.OnAttacked(lastDamage);
 
         if (_currentHP <= 0)
         {
             OnDead(attackPlayer);
         }
+
+        return lastDamage;
     }
 
     protected virtual void OnDead(Player killPlayer)

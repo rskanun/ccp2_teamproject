@@ -3,14 +3,6 @@ using UnityEngine;
 
 public class StatManager : MonoBehaviour
 {
-    private class StatData
-    {
-        public float hp;
-        public float str;
-        public float def;
-        public float agi;
-    }
-
     // 임시 스텟 UI
     [SerializeField] private TextMeshProUGUI testStatInfo;
 
@@ -21,74 +13,93 @@ public class StatManager : MonoBehaviour
     {
         playerStat = LocalPlayerData.Instance.PlayerData;
 
-        InitStat();
+        // 임시 UI 업데이트
+        UpdateTmpUI();
     }
 
     /***************************************************************
      * [ 스테이터스 설정 ]
      * 
-     * 플레이어의 스테이터스(체력, 근력, 민첩, 방어력) 설정
+     * 상황에 따른 플레이어의 스테이터스(체력, 근력, 민첩, 방어력) 설정
      ***************************************************************/
 
-    private void InitStat()
+    public void EquipItem()
     {
-        // 기초 스텟 가져오기
-        StatData stat = GetStat();
-
-        // 스텟 적용
-        SetStat(stat);
-    }
-
-    public void UpdateStat()
-    {
-        // 기초 스텟 가져오기
-        StatData stat = GetStat();
-
         // 적용 스텟 계산
-        foreach (ItemData item in PlayerEquip.Instance.EquipItems)
-        {
-            stat.hp += item.IncreasedHP;
-            stat.str += item.IncreasedSTR;
-            stat.def += item.IncreasedDEF;
-            stat.agi += item.IncreasedAGI;
-        }
+        ItemData item = PlayerEquip.Instance.LastItem;
 
-        // 플레이어 스텟에 적용
-        SetStat(stat);
+        playerStat.MaxHP = GetEquipHP(item);
+        playerStat.STR = GetEquipSTR(item);
+        playerStat.DEF = GetEquipDEF(item);
+        playerStat.AttackSpeed = GetEquipAttackSpeed(item);
+        playerStat.MoveSpeed = GetEquipMoveSpeed(item);
+        playerStat.LifeSteal = GetEquipLifeSteal(item);
+
+        // 임시 UI 업데이트
+        UpdateTmpUI();
     }
 
-    private StatData GetStat()
+    private float GetEquipHP(ItemData item)
     {
-        ClassData classData = playerStat.Class;
+        float hp = playerStat.MaxHP;
 
-        // 기초 스텟 가져오기
-        StatData stat = new StatData();
+        hp = hp + item.HP;
+        hp = hp + (hp * item.PercentHP);
 
-        stat.hp = classData.HP;
-        stat.str = classData.STR;
-        stat.def = classData.DEF;
-        stat.agi = classData.Speed;
-
-        return stat;
+        return hp;
     }
 
-    private void ApplyStat(StatData stat)
+    private float GetEquipSTR(ItemData item)
     {
+        float str = playerStat.STR;
 
+        str = str + item.STR;
+        str = str + (str * item.PercentSTR);
+
+        return str;
     }
 
-    private void SetStat(StatData stat)
+    private float GetEquipDEF(ItemData item)
     {
-        playerStat.MaxHP = stat.hp;
-        playerStat.STR = stat.str;
-        playerStat.DEF = stat.def;
-        playerStat.Speed = stat.agi;
+        float def = playerStat.DEF;
 
+        def = def + item.DEF;
+        def = def + (def * item.PercentDEF);
+
+        return def;
+    }
+
+    private float GetEquipAttackSpeed(ItemData item)
+    {
+        float speed = 100.0f / (100 + item.AttackSpeed) * playerStat.AttackSpeed;
+
+        return speed;
+    }
+
+    private float GetEquipMoveSpeed(ItemData item)
+    {
+        float originSpeed = playerStat.Class.MoveSpeed;
+        float speed = playerStat.MoveSpeed + (originSpeed * item.MoveSpeed);
+
+        return speed;
+    }
+
+    private float GetEquipLifeSteal(ItemData item)
+    {
+        float lifeSteal = playerStat.LifeSteal + item.ListSteal;
+
+        return lifeSteal;
+    }
+
+    private void UpdateTmpUI()
+    {
         testStatInfo.text =
             "<Status>" +
-            "\r\nHP : " + stat.hp +
-            "\r\nSTR : " + stat.str +
-            "\r\nDEF : " + stat.def +
-            "\r\nAGI : " + stat.agi;
+            "\r\nHP : " + playerStat.MaxHP +
+            "\r\nSTR : " + playerStat.STR +
+            "\r\nDEF : " + playerStat.DEF +
+            "\r\nSpeed : " + playerStat.MoveSpeed +
+            "\r\nAttack Speed : " + playerStat.AttackSpeed +
+            "\r\nLife Steal : " + playerStat.LifeSteal;
     }
 }

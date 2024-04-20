@@ -58,6 +58,15 @@ public class PlayerEquip : ScriptableObject
     {
         get { return _equipItems; }
     }
+    public ItemData LastItem
+    {
+        get
+        {
+            int index = _equipItems.Count - 1;
+
+            return _equipItems[index];
+        }
+    }
 
     [Header("이벤트")]
     [SerializeField] private GameEvent equipEvent;

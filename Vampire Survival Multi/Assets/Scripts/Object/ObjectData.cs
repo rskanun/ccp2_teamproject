@@ -42,14 +42,14 @@ public class ObjectData : ScriptableObject
     }
 
     [SerializeField]
-    private float _speed;
+    private float _moveSpeed;
     /***************************************************************
     * [ 이동속도 (Speed) ]
     * 
     * 오브젝트가 움직이는 속도에 영향을 끼친다.
     ****************************************************************/
-    public float Speed
+    public float MoveSpeed
     {
-        get { return _speed;; }
+        get { return _moveSpeed;; }
     }
 }

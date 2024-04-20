@@ -59,6 +59,8 @@ public class WaveManager : MonoBehaviour
     {
         waveData = WaveData.Instance;
         gameData = GameData.Instance;
+
+        waveData.InitData();
     }
 
     /***************************************************************

@@ -28,55 +28,49 @@ public class ItemData : ScriptableObject
 
     [Header("아이템 효과")]
     [SerializeField]
-    private int _addHP;
-    public int IncreasedHP
+    private int _healthPoint;
+    public int HP
     {
-        get { return _addHP; }
+        get { return _healthPoint; }
     }
     [SerializeField]
-    private float _hpPercent;
-    public float MultiplyHP
+    private float _percentHP;
+    public float PercentHP
     {
-        get { return _hpPercent; }
-    }
-
-    [SerializeField]
-    private int _addSTR;
-    public int IncreasedSTR
-    {
-        get { return _addSTR; }
-    }
-    [SerializeField]
-    private float _strPercent;
-    public float MultiplySTR
-    {
-        get { return _strPercent; }
+        get { return _percentHP / 100; }
     }
 
     [SerializeField]
-    private int _addDEF;
-    public int IncreasedDEF
+    private int _strength;
+    public int STR
     {
-        get { return _addDEF; }
+        get { return _strength; }
     }
     [SerializeField]
-    private float _defPercent;
-    public float MultiplyDEF
+    private float _percentSTR;
+    public float PercentSTR
     {
-        get { return _defPercent; }
+        get { return _percentSTR / 100; }
     }
 
     [SerializeField]
-    private int _addAGI;
-    public int IncreasedAGI
+    private int _defensive;
+    public int DEF
     {
-        get { return _addAGI; }
+        get { return _defensive; }
     }
     [SerializeField]
-    private float _agiPercent;
-    public float MultiplyAGI
+    private float _percentDEF;
+    public float PercentDEF
     {
-        get { return _agiPercent; }
+        get { return _percentDEF / 100; }
+    }
+
+    [SerializeField]
+    private float _moveSpeed;
+    public float MoveSpeed
+    {
+        get { return _moveSpeed / 100; }
     }
 
     [SerializeField]
@@ -90,6 +84,6 @@ public class ItemData : ScriptableObject
     private float _lifeSteal;
     public float ListSteal
     {
-        get { return _lifeSteal; }
+        get { return _lifeSteal / 100; }
     }
 }

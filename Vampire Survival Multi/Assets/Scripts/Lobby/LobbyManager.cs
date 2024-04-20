@@ -46,6 +46,6 @@ public class LobbyManager : MonoBehaviour
             }
         }
 
-        SceneManager.LoadScene("InGame");
+        SceneLoadManager.LoadScene("InGame");
     }
 }

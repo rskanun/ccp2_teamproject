@@ -18,8 +18,10 @@ public class PlayerController : MonoBehaviour, IControlState
     private Vector2 moveVec;
 
     // 스킬 변수
-    private Skill normalAttack;
+    private Skill autoAttack;
+    private float attackCooldown;
     private Skill skill;
+    private float skillCooldown;
 
     private void Start()
     {
@@ -30,26 +32,45 @@ public class PlayerController : MonoBehaviour, IControlState
         // Init Position In PlayerData
         playerData.Position = transform.position;
 
-        // Init Skill
+        // Init Skill & Normal Attack
+        InitSkill();
+    }
+
+    private void InitSkill()
+    {
         ClassData classData = playerData.Class;
 
-        normalAttack = classData.NormalAttack;
+        autoAttack = classData.AutoAttack;
+        attackCooldown = 0;
+
         skill = classData.ClassSkill;
+        skillCooldown = 0;
     }
 
     private void Update()
     {
         // 기본 공격
-        normalAttack.OnUseSkill(player);
+        OnNormalAttack();
 
         // 기본 공격 및 스킬 쿨다운
         CooldownSkills();
     }
 
+    private void OnNormalAttack()
+    {
+        if (attackCooldown <= 0)
+        {
+            autoAttack.UseSkill(player);
+
+            // 공격 후 쿨다운 적용
+            attackCooldown = autoAttack.Cooldown;
+        }
+    }
+
     private void CooldownSkills()
     {
-        normalAttack.CooldownSkill();
-        skill.CooldownSkill();
+        attackCooldown -= Time.deltaTime;
+        skillCooldown -= Time.deltaTime;
     }
 
     private void OnEnable()
@@ -63,8 +84,11 @@ public class PlayerController : MonoBehaviour, IControlState
 
     private void OnDisable()
     {
-        // Notify Dead Event
-        deadEvent.NotifyUpdate();
+        if (WaveData.Instance.IsRunning)
+        {
+            // Notify Dead Event
+            deadEvent.NotifyUpdate();
+        }
     }
 
     /***************************************************************
@@ -91,14 +115,20 @@ public class PlayerController : MonoBehaviour, IControlState
     {
         if (Input.GetButtonDown("Skill"))
         {
-            skill.OnUseSkill(player);
+            if (skillCooldown <= 0)
+            {
+                skill.UseSkill(player);
+
+                // 스킬 사용 후 쿨다운 적용
+                skillCooldown = skill.Cooldown;
+            }
         }
     }
 
     private void FixedUpdate()
     {
         // 키 입력에 따른 플레이어 움직임
-        Vector2 movement = moveVec.normalized * playerData.Speed * Time.deltaTime;
+        Vector2 movement = moveVec.normalized * playerData.MoveSpeed * Time.deltaTime;
 
         rigid.MovePosition(rigid.position + movement);
 

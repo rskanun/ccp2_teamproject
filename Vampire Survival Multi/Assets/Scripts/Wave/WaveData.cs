@@ -101,19 +101,7 @@ public class WaveData : ScriptableObject
     // 소환할 몬스터 목록
     private Queue<GameObject> _waveMobs;
 
-    public GameObject GetMob()
-    {
-        if (_waveMobs == null) InitData();
-
-        if (_waveMobs.Count > 0)
-        {
-            return _waveMobs.Dequeue();
-        }
-        else
-            return null;
-    }
-
-    private void InitData()
+    public void InitData()
     {
         WaveResource resource = WaveResource.Instance;
 
@@ -127,6 +115,16 @@ public class WaveData : ScriptableObject
         List<GameObject> mobList = resource.GetWaveMobs(startLevel);
 
         _waveMobs = new Queue<GameObject>(mobList);
+    }
+
+    public GameObject GetMob()
+    {
+        if (_waveMobs.Count > 0)
+        {
+            return _waveMobs.Dequeue();
+        }
+        else
+            return null;
     }
 
     public void NextWave()
@@ -153,7 +151,6 @@ public class WaveData : ScriptableObject
         {
             // 최종 웨이브 이후엔 웨이브 종료
             _isRunning = false;
-            _waveMobs = null;
         }
     }
 
