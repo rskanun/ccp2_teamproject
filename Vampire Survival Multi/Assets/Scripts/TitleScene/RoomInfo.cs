@@ -1,26 +1,34 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class RoomInfo : MonoBehaviour
 {
-    public GameObject askEnterPanel;
-    public TextMeshProUGUI isPrivateTxt;
+    public GameObject askEnterPanel;        //방 입장 확인 패널
+    public TextMeshProUGUI isPrivateTxt;    //방 공개 여부 텍스트
+    public TextMeshProUGUI passwordTxt;    //방 비번 텍스트
+
     private string publicTxt = "공개";
+    public static string selectedIsPrivateTxt;
+    public static string selectedPW;
 
-
-    private void Awake()
+    void Awake()
     {
+        //패널의 위치 잡기
         askEnterPanel.transform.position = new Vector3(0f, 0f, askEnterPanel.transform.position.z);
     }
-    public void enterRoom()         //방 진입 물어보기
+
+    //방 진입 물어보기
+    public void enterRoom()
     {
         GameObject multiSearchPanel = GameObject.Find("MultiSearchPanel");
         GameObject newAskEnterPanel = Instantiate(askEnterPanel, multiSearchPanel.transform);
-        newAskEnterPanel.SetActive(true);
+        selectedIsPrivateTxt = isPrivateTxt.text;
+        selectedPW = passwordTxt.text;
 
         if (isPrivateTxt.text.Equals(publicTxt))
         {

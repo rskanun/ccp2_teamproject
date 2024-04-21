@@ -15,5 +15,5 @@ MonoBehaviour:
   roomName: "\uBC29\uC81C \uC608\uC2DC1"
   maxPeopleNum: 4
   isPrivate: 1
-  password: 1234
+  password: 12345
   roomCode: asdf

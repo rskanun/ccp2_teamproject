@@ -24,5 +24,17 @@ public class RoomData : ScriptableObject
     [SerializeField]
     private string roomCode;
     public string RoomCode { get { return roomCode; } }
+    public RoomData(string roomName,
+                    string password,
+                    int maxPeopleNum,
+                    bool isPrivate,
+                    string roomCode)
+    {
+        this.roomName = roomName;
+        this.password = password;
+        this.maxPeopleNum = maxPeopleNum;
+        this.isPrivate = isPrivate;
+        this.roomCode = roomCode;
+    }
 
 }

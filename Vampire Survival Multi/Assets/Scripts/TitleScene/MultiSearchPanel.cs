@@ -5,6 +5,7 @@ using UnityEditorInternal.Profiling.Memory.Experimental;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
+using Button = UnityEngine.UI.Button;
 
 public enum RoomType { Room1, Room2 };
 
@@ -17,6 +18,12 @@ public class MultiSearchPanel : MonoBehaviour
     public GameObject roomPrefab;
     [SerializeField]
     private List<RoomData> roomDatas;
+
+    public TMP_InputField roomSearchBar;
+    public Button multiExitBtn;
+    public Button txtDeleteBtn;
+    public Button makeRoomBtn;
+
     void Start()
     {
         for (int i = 0; i < roomDatas.Count; i++)
@@ -28,6 +35,10 @@ public class MultiSearchPanel : MonoBehaviour
     public void openMakeRoomPanel()     //방 만들기 패널 열기
     {
         makeRoomPanel.SetActive(true);
+        multiExitBtn.interactable = false;
+        txtDeleteBtn.interactable = false;
+        makeRoomBtn.interactable = false;
+        roomSearchBar.interactable = false;
     }
     public void closeMultiSearchPanel()     //멀티 방 찾기 패널 닫기
     {
