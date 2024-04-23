@@ -1,16 +1,14 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
+using UnityEngine;
 
 public class PhotonManager : MonoBehaviourPunCallbacks
 {
     // 서버 관련 변수
     private string gameVersion = "1.0.0a";
 
-    // ui
-    private PhotonUI ui;
-
-    public delegate void OnConnectedServer();
-    private event OnConnectedServer connectedCallBack;
+    [Header("참조 스크립트")]
+    [SerializeField] private PhotonUI ui;
 
     private void Awake()
     {
@@ -23,10 +21,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     * 매치메이킹 서버 접속
     ***************************************************************/
 
-    public void ConnectServer(OnConnectedServer listener = null)
+    public void ConnectServer()
     {
-        connectedCallBack = listener;
-
         if (PhotonNetwork.IsConnected == false)
         {
             // 연결 알림창 띄우기
@@ -46,16 +42,17 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public override void OnDisconnected(DisconnectCause cause)
     {
-        ui.SetConnectiongPanel(false);
-        ui.SetDisconnectedAlert(true);
+        if (cause != DisconnectCause.ApplicationQuit)
+        {
+            ui.SetConnectiongPanel(false);
+            ui.SetDisconnectedAlert(true);
+        }
+            
     }
 
     public override void OnJoinedLobby()
     {
         // 연결 알림창 제거
         ui.SetConnectiongPanel(false);
-
-        // 연결 후 이벤트 실행
-        connectedCallBack?.Invoke();
     }
 }

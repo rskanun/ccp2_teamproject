@@ -16,21 +16,11 @@ public class RoomUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI playerCount;
     [SerializeField] private TextMeshProUGUI roomType;
 
-    public void InitRoom(RoomInfo room)
+    public void InitRoom(RoomData room)
     {
-        title.text = (string)room.CustomProperties["RoomName"];
-        maxPlayer.text = room.MaxPlayers.ToString();
-        playerCount.text = room.PlayerCount.ToString();
-        roomType.text = RoomTypeToString((RoomType)room.CustomProperties["RoomType"]);
-    }
-
-    private string RoomTypeToString(RoomType type)
-    {
-        switch (type)
-        {
-            case RoomType.Public: return "공개";
-            case RoomType.Private: return "비공개";
-            default: return "";
-        }
+        title.text = room.title;
+        maxPlayer.text = room.maxPlayer.ToString();
+        playerCount.text = room.playerCount.ToString();
+        roomType.text = room.type;
     }
 }
