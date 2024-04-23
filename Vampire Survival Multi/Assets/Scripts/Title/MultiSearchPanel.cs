@@ -1,3 +1,4 @@
+/*
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -44,9 +45,9 @@ public class MultiSearchPanel : MonoBehaviour
     {
         multiSearchPanel.SetActive(false);
     }
-    public Room MakeRoom(RoomType type)
+    public Room2 MakeRoom(RoomType type)
     {
-        var newRoom = Instantiate(roomPrefab, scrollView.content).GetComponent<Room>();
+        var newRoom = Instantiate(roomPrefab, scrollView.content).GetComponent<Room2>();
         newRoom.roomData = roomDatas[(int)type];
         newRoom.name = newRoom.roomData.RoomName;
         newRoom.transform.Find("RoomNameTxt").GetComponent<TMP_Text>().text = newRoom.roomData.RoomName;
@@ -64,3 +65,6 @@ public class MultiSearchPanel : MonoBehaviour
         return newRoom;
     }
 }
+
+
+ */

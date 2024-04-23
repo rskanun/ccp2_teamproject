@@ -1,4 +1,5 @@
-using System;
+/*
+ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -158,9 +159,9 @@ public class MultiGameController : MonoBehaviour
     }
 
     //열거형 roomType에 있던 방들을 리스트에 보이게 하여 방을 생성
-    public Room makeRoom(RoomType type)
+    public Room2 makeRoom(RoomType type)
     {
-        var newRoom = Instantiate(roomPrefab, scrollView.content).GetComponent<Room>();
+        var newRoom = Instantiate(roomPrefab, scrollView.content).GetComponent<Room2>();
         newRoom.roomData = roomDatas[(int)type];
         newRoom.name = newRoom.roomData.RoomName;
         newRoom.transform.Find("RoomNameTxt").GetComponent<TMP_Text>().text = newRoom.roomData.RoomName;
@@ -254,3 +255,5 @@ public class MultiGameController : MonoBehaviour
     }
 
 }
+
+ */

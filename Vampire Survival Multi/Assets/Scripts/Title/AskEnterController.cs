@@ -34,8 +34,8 @@ public class AskEnterController : MonoBehaviour
     {
         string tryPw = tryPasswordTxt.text.Replace("\u200B", "");
 
-        string pw = RoomInfo.selectedPW;
-        string isPrivate = RoomInfo.selectedIsPrivateTxt;
+        string pw = RoomInfo2.selectedPW;
+        string isPrivate = RoomInfo2.selectedIsPrivateTxt;
 
         if (isPrivate.Equals(publicTxt))  // 공개일 경우
         { 
