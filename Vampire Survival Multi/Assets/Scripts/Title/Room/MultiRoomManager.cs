@@ -22,7 +22,7 @@ public class MultiRoomManager : MonoBehaviourPunCallbacks
         }
         else
         {
-            PhotonNetwork.JoinLobby();
+            photonManager.JoinLobby();
         }
     }
 
@@ -79,5 +79,22 @@ public class MultiRoomManager : MonoBehaviourPunCallbacks
             // 비밀번호가 걸리지 않은 방은 바로 입장
             PhotonNetwork.JoinRoom(id);
         }
+    }
+
+    public void OnClickSearch()
+    {
+        // 검색창에 입력된 단어를 토대로 방 검색
+        string keyword = ui.GetSearchKeyword();
+
+        SearchRoom(keyword);
+    }
+
+    private void SearchRoom(string keyword)
+    {
+        // keyword가 포함된 방 목록 검색
+        string sqlQuery = $"SELECT * FROM PhotonRoomProperties WHERE RoomName LIKE '%{keyword}%'";
+        TypedLobby lobby = PhotonNetwork.CurrentLobby;
+
+        PhotonNetwork.GetCustomRoomList(lobby, sqlQuery);
     }
 }

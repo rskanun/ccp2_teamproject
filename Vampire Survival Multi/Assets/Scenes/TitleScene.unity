@@ -3868,9 +3868,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MultiGameController, Assembly-CSharp
-        m_MethodName: deleteTxt
+      - m_Target: {fileID: 670519611}
+        m_TargetAssemblyTypeName: MultiRoomUI, Assembly-CSharp
+        m_MethodName: ClearSearchField
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6476,8 +6476,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ui: {fileID: 670519611}
-  passwordManager: {fileID: 0}
-  createManager: {fileID: 0}
+  passwordManager: {fileID: 1159374858}
+  createManager: {fileID: 1720772184}
   photonManager: {fileID: 487612931}
 --- !u!114 &670519611
 MonoBehaviour:
@@ -6494,6 +6494,7 @@ MonoBehaviour:
   roomContainer: {fileID: 1951912404}
   roomList: {fileID: 937338684}
   createPanel: {fileID: 1720772179}
+  searchField: {fileID: 722135789}
   roomPrefab: {fileID: 3962696872524587850, guid: 3d4bdd070bb20a9408adafa85306ce79, type: 3}
 --- !u!224 &670519612
 RectTransform:
@@ -6815,7 +6816,6 @@ GameObject:
   - component: {fileID: 722135788}
   - component: {fileID: 722135792}
   - component: {fileID: 722135791}
-  - component: {fileID: 722135790}
   - component: {fileID: 722135789}
   m_Layer: 5
   m_Name: RoomSearchBar
@@ -6906,7 +6906,7 @@ MonoBehaviour:
   m_CharacterValidation: 0
   m_RegexValue: 
   m_GlobalPointSize: 14
-  m_CharacterLimit: 0
+  m_CharacterLimit: 12
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls: []
@@ -6946,20 +6946,6 @@ MonoBehaviour:
   m_isRichTextEditingAllowed: 0
   m_LineLimit: 0
   m_InputValidator: {fileID: 0}
---- !u!114 &722135790
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 722135787}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0af5dd2b887ca634c80b04b6366b9ab0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  roomSearchBar: {fileID: 722135789}
-  txtDeleteBtn: {fileID: 358184661}
 --- !u!114 &722135791
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21527,9 +21513,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: MultiGameController, Assembly-CSharp
-        m_MethodName: searchRoom
+      - m_Target: {fileID: 670519610}
+        m_TargetAssemblyTypeName: MultiRoomManager, Assembly-CSharp
+        m_MethodName: OnClickSearch
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

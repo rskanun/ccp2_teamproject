@@ -35,6 +35,8 @@ public class PasswordManager : MonoBehaviour
     public void OnCheckHandler()
     {
         checkedCallback?.Invoke();
+
         ui.SetPasswordPanel(false);
+        ui.ClearInputField();
     }
 }

@@ -22,4 +22,9 @@ public class PasswordUI : MonoBehaviour
     {
         return passwordInput.text;
     }
+
+    public void ClearInputField()
+    {
+        passwordInput.text = "";
+    }
 }

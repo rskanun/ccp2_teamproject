@@ -796,9 +796,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: RoomInfo, Assembly-CSharp
-        m_MethodName: enterRoom
+      - m_Target: {fileID: 3099785287003835683}
+        m_TargetAssemblyTypeName: RoomManager, Assembly-CSharp
+        m_MethodName: OnEnterHandler
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -977,8 +977,9 @@ GameObject:
   - component: {fileID: 3897596875360439684}
   - component: {fileID: 3897596875360439691}
   - component: {fileID: 1340026052078566158}
+  - component: {fileID: 3099785287003835683}
   m_Layer: 5
-  m_Name: RoomInfo
+  m_Name: Room Object
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1077,3 +1078,16 @@ MonoBehaviour:
   maxPlayer: {fileID: 3962696870680305408}
   playerCount: {fileID: 3962696871504529022}
   roomType: {fileID: 3962696871327332152}
+--- !u!114 &3099785287003835683
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3962696872524587850}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ee049334ef289f41b5cccea2dd425be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ui: {fileID: 1340026052078566158}

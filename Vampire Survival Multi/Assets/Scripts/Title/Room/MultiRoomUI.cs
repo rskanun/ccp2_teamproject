@@ -1,4 +1,5 @@
 ﻿using Photon.Realtime;
+using TMPro;
 using UnityEngine;
 
 public class MultiRoomUI : MonoBehaviour
@@ -7,6 +8,7 @@ public class MultiRoomUI : MonoBehaviour
     [SerializeField] private GameObject roomContainer;
     [SerializeField] private GameObject roomList;
     [SerializeField] private GameObject createPanel;
+    [SerializeField] private TMP_InputField searchField;
 
     [Header("생성될 방 프리팹")]
     [SerializeField] private GameObject roomPrefab;
@@ -29,6 +31,16 @@ public class MultiRoomUI : MonoBehaviour
         RoomManager room = roomObj.GetComponent<RoomManager>();
         room.InitRoomInfo(info);
         room.SetClickHandler(listener);
+    }
+
+    public string GetSearchKeyword()
+    {
+        return searchField.text;
+    }
+
+    public void ClearSearchField()
+    {
+        searchField.text = "";
     }
 
     /***************************************************************
