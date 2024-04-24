@@ -1,4 +1,5 @@
 ﻿using Photon.Realtime;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
@@ -13,24 +14,43 @@ public class MultiRoomUI : MonoBehaviour
     [Header("생성될 방 프리팹")]
     [SerializeField] private GameObject roomPrefab;
 
+    // 방 오브젝트 목록
+    private List<GameObject> roomObjList = new List<GameObject>();
+
     /***************************************************************
     * [ 방 목록 ]
     * 
     * 방 목록에 관한 UI 함수
     ***************************************************************/
 
-    public void SetRoomList(bool isActive)
+    public void SetActiveRoomList(bool isActive)
     {
         roomList.SetActive(isActive);
     }
 
     public void AddRoomObj(RoomInfo info, RoomManager.SelectedCallback listener)
     {
+        // 방 정보를 표시하는 오브젝트 소환
         GameObject roomObj = Instantiate(roomPrefab, roomContainer.transform);
 
         RoomManager room = roomObj.GetComponent<RoomManager>();
         room.InitRoomInfo(info);
         room.SetClickHandler(listener);
+
+        // 해당 오브젝트를 목록에 저장
+        roomObjList.Add(roomObj);
+    }
+
+    public void RemoveRoomObjs()
+    {
+        foreach (GameObject roomObj in roomObjList)
+        {
+            // 방 오브젝트 파괴
+            Destroy(roomObj);
+        }
+
+        // 리스트 초기화
+        roomObjList.Clear();
     }
 
     public string GetSearchKeyword()

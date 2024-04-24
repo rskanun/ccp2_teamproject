@@ -13,23 +13,29 @@ public class MultiRoomManager : MonoBehaviourPunCallbacks
     [SerializeField] private PasswordManager passwordManager;
     [SerializeField] private CreateRoomManager createManager;
     [SerializeField] private PhotonManager photonManager;
+    [SerializeField] private ErrorManager errorManager;
+
+    // 방 리스트
+    private Dictionary<string, RoomInfo> cachedRoomList;
 
     public void OnClickMultiPlay()
     {
         if (PhotonNetwork.IsConnected == false)
         {
+            // 서버 연결
             photonManager.ConnectServer();
         }
         else
         {
-            photonManager.JoinLobby();
+            // 이미 서버에 접속되어 있으면 로비 바로 입장
+            PhotonNetwork.JoinLobby();
         }
     }
 
     public override void OnJoinedLobby()
     {
         // 로비에 있을 때에만 방 목록 보이기
-        ui.SetRoomList(true);
+        ui.SetActiveRoomList(true);
     }
 
     public void OnExit()
@@ -39,8 +45,11 @@ public class MultiRoomManager : MonoBehaviourPunCallbacks
 
     public override void OnLeftLobby()
     {
-        // 로비에서 나가면 방 목록 제거
-        ui.SetRoomList(false);
+        // 방 목록 비활성화
+        ui.SetActiveRoomList(false);
+
+        // 방 정보를 표시하던 오브젝트 제거
+        ui.RemoveRoomObjs();
     }
 
     public override void OnJoinedRoom()
@@ -52,7 +61,7 @@ public class MultiRoomManager : MonoBehaviourPunCallbacks
     /***************************************************************
     * [ 방 목록 ]
     * 
-    * 현재 개설된 방 목록 표시 및 입장 이벤트
+    * 현재 개설된 방 목록 표시
     ***************************************************************/
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
@@ -61,7 +70,62 @@ public class MultiRoomManager : MonoBehaviourPunCallbacks
         {
             ui.AddRoomObj(room, (id, roomPassword) => OnEnterRoom(id, roomPassword));
         }
+
+        // 캐시에 방 목록 업데이트
+        UpdateCachedRoomList(roomList);
     }
+
+    private void UpdateCachedRoomList(List<RoomInfo> roomList)
+    {
+        if (cachedRoomList == null)
+            cachedRoomList = new Dictionary<string, RoomInfo>();
+
+        foreach(RoomInfo room in roomList)
+        {
+            string title = (string)room.CustomProperties["RoomName"];
+
+            if (room.RemovedFromList)
+            {
+                // 목록에서 삭제되었다면 캐시에서도 삭제
+                cachedRoomList.Remove(title);
+            }
+            else
+            {
+                cachedRoomList[title] = room;
+            }
+        }
+    }
+
+    public void OnClickSearch()
+    {
+        // 검색창에 입력된 단어를 토대로 방 검색
+        string keyword = ui.GetSearchKeyword();
+
+        SearchRoom(keyword);
+    }
+
+    private void SearchRoom(string keyword)
+    {
+        // 기존 오브젝트 초기화
+        ui.RemoveRoomObjs();
+
+        foreach (string title in cachedRoomList.Keys)
+        {
+            // 키워드가 포함된 방만 생성
+            if (title.Contains(keyword))
+            {
+                RoomInfo room = cachedRoomList[title];
+
+                ui.AddRoomObj(room, (id, roomPassword) => OnEnterRoom(id, roomPassword));
+            }
+        }
+    }
+
+    /***************************************************************
+    * [ 방 접속 ]
+    * 
+    * 현재 개설된 방 목록 중에 하나 접속
+    ***************************************************************/
 
     public void OnEnterRoom(string id, string roomPassword)
     {
@@ -81,20 +145,14 @@ public class MultiRoomManager : MonoBehaviourPunCallbacks
         }
     }
 
-    public void OnClickSearch()
+    public void OnEnterRoom(string code)
     {
-        // 검색창에 입력된 단어를 토대로 방 검색
-        string keyword = ui.GetSearchKeyword();
-
-        SearchRoom(keyword);
+        // 코드를 통한 방 입장
+        PhotonNetwork.JoinRoom(code);
     }
 
-    private void SearchRoom(string keyword)
+    public override void OnJoinRoomFailed(short returnCode, string message)
     {
-        // keyword가 포함된 방 목록 검색
-        string sqlQuery = $"SELECT * FROM PhotonRoomProperties WHERE RoomName LIKE '%{keyword}%'";
-        TypedLobby lobby = PhotonNetwork.CurrentLobby;
-
-        PhotonNetwork.GetCustomRoomList(lobby, sqlQuery);
+        errorManager.AlertError(returnCode, message);
     }
 }

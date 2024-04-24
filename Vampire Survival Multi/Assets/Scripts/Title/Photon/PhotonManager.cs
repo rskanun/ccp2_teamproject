@@ -7,8 +7,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
     // 서버 관련 변수
     private string gameVersion = "1.0.0a";
 
-    private TypedLobby lobby = new TypedLobby("lobby1", LobbyType.SqlLobby);
-
     [Header("참조 스크립트")]
     [SerializeField] private PhotonUI ui;
 
@@ -38,13 +36,8 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
-        JoinLobby();
-    }
-
-    public void JoinLobby()
-    {
         // 로비 접속
-        PhotonNetwork.JoinLobby(lobby);
+        PhotonNetwork.JoinLobby();
     }
 
     public override void OnDisconnected(DisconnectCause cause)
@@ -59,8 +52,6 @@ public class PhotonManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinedLobby()
     {
-        TypedLobby lobby = PhotonNetwork.CurrentLobby;
-        Debug.Log(lobby.Name + "/" + lobby.Type);
         // 연결 알림창 제거
         ui.SetConnectiongPanel(false);
     }
