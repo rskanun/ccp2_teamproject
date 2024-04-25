@@ -32,16 +32,14 @@ public class PlayerPanelManager : MonoBehaviourPun, IPunObservable
 
     public void InitUI()
     {
-        // Init UI
-        ui.SetActiveCharacter(false);
-        ui.SetActivePlayerMenu(false);
-        ui.SetActivePlayerName(false);
-        ui.SetClassName("");
+        OnExitPlayer();
     }
 
     [PunRPC]
     public void SetInfo(Photon.Realtime.Player player)
     {
+        _isExist = true;
+
         // 본인인 경우 클래스 초기 설정
         if (player.IsLocal)
         {
@@ -53,17 +51,34 @@ public class PlayerPanelManager : MonoBehaviourPun, IPunObservable
         }
 
         // UI 설정
+        OnEnterPlayer();
+    }
+
+    private void OnEnterPlayer()
+    {
         if (PhotonNetwork.IsMasterClient)
         {
-            // 방장은 캐릭터 이미지와 해당 플레이어의 메뉴 활성화
+            // 방장은 해당 플레이어 조작 메뉴 포함 전부 활성화
             ui.SetActiveCharacter(true);
+            ui.SetActivePlayerName(true);
             ui.SetActivePlayerMenu(true);
         }
         else
         {
-            // 방장 외엔 캐릭터 이미지만 활성화
+            // 방장 외엔 메뉴 외 전부 활성화
             ui.SetActiveCharacter(true);
+            ui.SetActivePlayerName(true);
+            ui.SetActivePlayerMenu(false);
         }
+    }
+
+    private void OnExitPlayer()
+    {
+        // UI 초기화
+        ui.SetActiveCharacter(false);
+        ui.SetActivePlayerName(false);
+        ui.SetActivePlayerMenu(false);
+        ui.SetClassName("");
     }
 
     private void SetInitClass()
@@ -89,18 +104,25 @@ public class PlayerPanelManager : MonoBehaviourPun, IPunObservable
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        Debug.Log("serialize");
         if (stream.IsWriting)
         {
-            stream.SendNext(classData.name);
+            string className = (classData != null) ? classData.Name : "";
+
             stream.SendNext(_isExist);
+            stream.SendNext(className);
         }
         else
         {
-            string className = (string)stream.ReceiveNext();
-            ui.SetClassName(className);
-
             _isExist = (bool)stream.ReceiveNext();
+
+            // 해당 패널에 플레이어가 존재하면 UI 설정
+            if (_isExist)
+            {
+                string className = (string)stream.ReceiveNext();
+
+                ui.SetClassName(className);
+                OnEnterPlayer();
+            }
         }
     }
 }

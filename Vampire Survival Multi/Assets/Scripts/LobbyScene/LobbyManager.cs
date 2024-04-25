@@ -25,24 +25,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         UpdateReadyOrStartButton();
 
         // Init Panel
-        myPanelManager = Test();
+        myPanelManager = GetEmptyPanel();
         myPanelManager.SetInfo(PhotonNetwork.LocalPlayer);
-    }
-
-    private PlayerPanelManager Test()
-    {
-        int i = 0;
-        foreach (PlayerPanelManager panel in playerPanels)
-        {
-            if (panel.IsExist == false)
-            {
-                Debug.Log(i);
-                return panel;
-            }
-            i++;
-        }
-
-        return null;
     }
 
     private PlayerPanelManager GetEmptyPanel()
