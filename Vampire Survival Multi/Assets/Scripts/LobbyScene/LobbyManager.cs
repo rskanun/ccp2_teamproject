@@ -25,45 +25,11 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         UpdateReadyOrStartButton();
 
         // Init Panel
-        myPanelManager = GetEmptyPanel();
-        myPanelManager.SetInfo(PhotonNetwork.LocalPlayer);
-    }
-
-    private PlayerPanelManager GetEmptyPanel()
-    {
-        Room room = PhotonNetwork.CurrentRoom;
-        Hashtable properties = room.CustomProperties;
-
-        // 가장 앞에 있는 패널에 자리 지정
-        for (int i = 0; i < room.MaxPlayers; i++)
+        if (PhotonNetwork.IsMasterClient)
         {
-            string key = "IsExist" + i;
-            if (properties.ContainsKey(key))
-            {
-                bool isExist = (bool)properties[key];
-
-                // 해당 패널에 플레이어가 없으면 상태 바꾸기
-                if (isExist == false)
-                {
-                    properties[key] = true;
-                    room.SetCustomProperties(properties);
-
-                    // 해당 패널을 리턴
-                    return playerPanels[i];
-                }
-            }
-            else
-            {
-                // 해당 값이 등록되어 있지 않다면 등록
-                properties[key] = true;
-                room.SetCustomProperties(properties);
-
-                // 해당 패널을 리턴
-                return playerPanels[i];
-            }
+            // 나머지는 방장이 할당
+            SetMyPanelManager(playerPanels[0]);
         }
-
-        return null;
     }
 
     private void SetPlayerPanel(int num)
@@ -72,7 +38,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         {
             PlayerPanelManager panel = playerPanels[i];
 
-            panel.InitUI();
+            panel.OnExitPlayer();
 
             if (i < num) playerPanels[i].IsClosed = false;
             else playerPanels[i].IsClosed = true;
@@ -83,6 +49,38 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         if (PhotonNetwork.IsMasterClient) ui.ChangeToStartButton();
         else ui.ChangeToReadyButton();
+    }
+
+    public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
+    {
+        PlayerPanelManager manager = GetEmptyPanel();
+
+        photonView.RPC(nameof(SetMyPanelManager), newPlayer, manager);
+    }
+
+    public override void OnLeftRoom()
+    {
+        myPanelManager.OnExitPlayer();
+    }
+
+    private PlayerPanelManager GetEmptyPanel()
+    {
+        foreach (PlayerPanelManager manager in  playerPanels)
+        {
+            if (manager.IsExist == false)
+            {
+                return manager;
+            }
+        }
+
+        return null;
+    }
+
+    [PunRPC]
+    private void SetMyPanelManager(PlayerPanelManager manager)
+    {
+        myPanelManager = manager;
+        myPanelManager.SetInfo(PhotonNetwork.LocalPlayer);
     }
 
     /***************************************************************

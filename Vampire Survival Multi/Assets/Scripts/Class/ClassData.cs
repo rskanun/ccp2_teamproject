@@ -39,4 +39,9 @@ public class ClassData : ObjectData
     {
         get { return _name; }
     }
+
+    public int ID
+    {
+        get { return GetHashCode(); }
+    }
 }

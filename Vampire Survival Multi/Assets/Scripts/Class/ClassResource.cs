@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -63,5 +64,18 @@ public class ClassResource : ScriptableObject
 
             return _classList;
         }
+    }
+
+    public ClassData FindClass(int id)
+    {
+        foreach (ClassData classData in ClassList)
+        {
+            if (classData.GetHashCode() == id)
+            {
+                return classData;
+            }
+        }
+
+        return null;
     }
 }

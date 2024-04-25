@@ -30,11 +30,6 @@ public class PlayerPanelManager : MonoBehaviourPun, IPunObservable
         get { return _isExist; }
     }
 
-    public void InitUI()
-    {
-        OnExitPlayer();
-    }
-
     [PunRPC]
     public void SetInfo(Photon.Realtime.Player player)
     {
@@ -43,7 +38,7 @@ public class PlayerPanelManager : MonoBehaviourPun, IPunObservable
         // 본인인 경우 클래스 초기 설정
         if (player.IsLocal)
         {
-            // 마지막으로 했던 클래스로 설정
+            // 클래스 목록 중 가장 처음 클래스 등록
             SetInitClass();
 
             // 다른 사람들도 적용
@@ -54,7 +49,7 @@ public class PlayerPanelManager : MonoBehaviourPun, IPunObservable
         OnEnterPlayer();
     }
 
-    private void OnEnterPlayer()
+    public void OnEnterPlayer()
     {
         if (PhotonNetwork.IsMasterClient)
         {
@@ -72,8 +67,10 @@ public class PlayerPanelManager : MonoBehaviourPun, IPunObservable
         }
     }
 
-    private void OnExitPlayer()
+    public void OnExitPlayer()
     {
+        _isExist = false;
+
         // UI 초기화
         ui.SetActiveCharacter(false);
         ui.SetActivePlayerName(false);
@@ -106,22 +103,26 @@ public class PlayerPanelManager : MonoBehaviourPun, IPunObservable
     {
         if (stream.IsWriting)
         {
-            string className = (classData != null) ? classData.Name : "";
-
             stream.SendNext(_isExist);
-            stream.SendNext(className);
+            stream.SendNext(classData);
         }
         else
         {
             _isExist = (bool)stream.ReceiveNext();
 
-            // 해당 패널에 플레이어가 존재하면 UI 설정
+            // 플레이어가 존재하는 패널일 경우
             if (_isExist)
             {
-                string className = (string)stream.ReceiveNext();
+                // 클래스 데이터 씌우기
+                classData = (ClassData)stream.ReceiveNext();
 
-                ui.SetClassName(className);
+                SetClass(classData);
                 OnEnterPlayer();
+            }
+            else
+            {
+                // 플레이어가 없다면 UI 초기화
+                OnExitPlayer();
             }
         }
     }
