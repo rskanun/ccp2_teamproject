@@ -104,7 +104,7 @@ public class PlayerPanelManager : MonoBehaviourPun, IPunObservable
         if (stream.IsWriting)
         {
             stream.SendNext(_isExist);
-            stream.SendNext(classData);
+            stream.SendNext(classData.ID);
         }
         else
         {
@@ -114,7 +114,8 @@ public class PlayerPanelManager : MonoBehaviourPun, IPunObservable
             if (_isExist)
             {
                 // 클래스 데이터 씌우기
-                classData = (ClassData)stream.ReceiveNext();
+                int id = (int)stream.ReceiveNext();
+                classData = ClassResource.Instance.FindClass(id);
 
                 SetClass(classData);
                 OnEnterPlayer();

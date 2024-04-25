@@ -28,7 +28,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         if (PhotonNetwork.IsMasterClient)
         {
             // 나머지는 방장이 할당
-            SetMyPanelManager(playerPanels[0]);
+            SetMyPanelManager(0);
         }
     }
 
@@ -53,9 +53,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
     {
-        PlayerPanelManager manager = GetEmptyPanel();
+        int index = GetEmptyPanelIndex();
 
-        photonView.RPC(nameof(SetMyPanelManager), newPlayer, manager);
+        photonView.RPC(nameof(SetMyPanelManager), newPlayer, index);
     }
 
     public override void OnLeftRoom()
@@ -63,22 +63,26 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         myPanelManager.OnExitPlayer();
     }
 
-    private PlayerPanelManager GetEmptyPanel()
+    private int GetEmptyPanelIndex()
     {
-        foreach (PlayerPanelManager manager in  playerPanels)
+        for (int i = 0; i <= playerPanels.Count; i++)
         {
+            PlayerPanelManager manager = playerPanels[i];
+
             if (manager.IsExist == false)
             {
-                return manager;
+                return i;
             }
         }
 
-        return null;
+        return -1;
     }
 
     [PunRPC]
-    private void SetMyPanelManager(PlayerPanelManager manager)
+    private void SetMyPanelManager(int index)
     {
+        PlayerPanelManager manager = playerPanels[index];
+
         myPanelManager = manager;
         myPanelManager.SetInfo(PhotonNetwork.LocalPlayer);
     }
