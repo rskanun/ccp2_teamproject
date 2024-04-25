@@ -26,7 +26,13 @@ public class PlayerData : ScriptableObject
     private ClassData _classData;
     public ClassData Class
     {
-        get { return _classData; }
+        get
+        {
+            if (_classData == null)
+                _classData = ClassResource.Instance.ClassList[0];
+
+            return _classData;
+        }
     }
 
     [Header("현재 스텟")]

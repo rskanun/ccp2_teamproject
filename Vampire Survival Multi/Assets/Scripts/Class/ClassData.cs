@@ -31,4 +31,12 @@ public class ClassData : ObjectData
     {
         get { return _skill; }
     }
+
+    [Header("클래스 정보")]
+    [SerializeField]
+    private string _name;
+    public string Name
+    {
+        get { return _name; }
+    }
 }

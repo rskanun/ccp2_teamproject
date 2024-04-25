@@ -15,6 +15,14 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         ui = GetComponent<PhotonUI>();
     }
 
+    private void Start()
+    {
+        if (PhotonNetwork.InRoom || PhotonNetwork.InLobby)
+        {
+            PhotonNetwork.LeaveLobby();
+        }
+    }
+
     /***************************************************************
     * [ 멀티 접속 ]
     * 
