@@ -70,7 +70,7 @@ public class ClassResource : ScriptableObject
     {
         foreach (ClassData classData in ClassList)
         {
-            if (classData.GetHashCode() == id)
+            if (classData.ID == id)
             {
                 return classData;
             }

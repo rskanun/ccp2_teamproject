@@ -40,8 +40,10 @@ public class ClassData : ObjectData
         get { return _name; }
     }
 
+    [SerializeField]
+    private int _id;
     public int ID
     {
-        get { return GetHashCode(); }
+        get { return _id; }
     }
 }

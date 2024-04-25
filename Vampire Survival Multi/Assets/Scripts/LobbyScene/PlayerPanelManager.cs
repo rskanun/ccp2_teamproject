@@ -103,8 +103,11 @@ public class PlayerPanelManager : MonoBehaviourPun, IPunObservable
     {
         if (stream.IsWriting)
         {
+            int id = (classData != null) ? classData.ID : -1;
+            Debug.Log($"${gameObject.name}:${id}");
+
             stream.SendNext(_isExist);
-            stream.SendNext(classData.ID);
+            stream.SendNext(id);
         }
         else
         {
@@ -116,6 +119,7 @@ public class PlayerPanelManager : MonoBehaviourPun, IPunObservable
                 // 클래스 데이터 씌우기
                 int id = (int)stream.ReceiveNext();
                 classData = ClassResource.Instance.FindClass(id);
+                Debug.Log($"${gameObject.name}:${id}");
 
                 SetClass(classData);
                 OnEnterPlayer();
