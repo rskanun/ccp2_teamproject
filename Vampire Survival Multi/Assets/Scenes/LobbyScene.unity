@@ -4364,6 +4364,7 @@ GameObject:
   - component: {fileID: 523227421}
   - component: {fileID: 523227420}
   - component: {fileID: 523227422}
+  - component: {fileID: 523227423}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -4423,6 +4424,28 @@ MonoBehaviour:
   kickConfirm: {fileID: 1408181074}
   roomCodeText: {fileID: 716269536}
   readyOrStartText: {fileID: 2041230547}
+--- !u!114 &523227423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 523227419}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 5
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &547651985
 GameObject:
   m_ObjectHideFlags: 0
