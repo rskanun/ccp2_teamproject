@@ -31,12 +31,15 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     private PlayerPanelManager Test()
     {
+        int i = 0;
         foreach (PlayerPanelManager panel in playerPanels)
         {
             if (panel.IsExist == false)
             {
+                Debug.Log(i);
                 return panel;
             }
+            i++;
         }
 
         return null;

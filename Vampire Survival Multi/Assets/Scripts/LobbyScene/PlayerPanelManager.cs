@@ -3,7 +3,7 @@ using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerPanelUI))]
-public class PlayerPanelManager : MonoBehaviourPun
+public class PlayerPanelManager : MonoBehaviourPun, IPunObservable
 {
     [Header("참조 스크립트")]
     [SerializeField] private PlayerPanelUI ui;
@@ -89,6 +89,7 @@ public class PlayerPanelManager : MonoBehaviourPun
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
+        Debug.Log("serialize");
         if (stream.IsWriting)
         {
             stream.SendNext(classData.name);
