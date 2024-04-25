@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class LobbyManager : MonoBehaviourPunCallbacks, IPunObservable
+public class LobbyManager : MonoBehaviourPunCallbacks
 {
     [Header("참조 스크립트")]
     [SerializeField] private LobbyUI ui;
@@ -25,11 +25,24 @@ public class LobbyManager : MonoBehaviourPunCallbacks, IPunObservable
         UpdateReadyOrStartButton();
 
         // Init Panel
-        myPanelManager = InitMyPanel();
-        myPanelManager.SetPlayer(PhotonNetwork.LocalPlayer);
+        myPanelManager = Test();
+        myPanelManager.SetInfo(PhotonNetwork.LocalPlayer);
     }
 
-    private PlayerPanelManager InitMyPanel()
+    private PlayerPanelManager Test()
+    {
+        foreach (PlayerPanelManager panel in playerPanels)
+        {
+            if (panel.IsExist == false)
+            {
+                return panel;
+            }
+        }
+
+        return null;
+    }
+
+    private PlayerPanelManager GetEmptyPanel()
     {
         Room room = PhotonNetwork.CurrentRoom;
         Hashtable properties = room.CustomProperties;
@@ -45,7 +58,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks, IPunObservable
                 // 해당 패널에 플레이어가 없으면 상태 바꾸기
                 if (isExist == false)
                 {
-                    Debug.Log(i);
                     properties[key] = true;
                     room.SetCustomProperties(properties);
 
@@ -55,7 +67,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks, IPunObservable
             }
             else
             {
-                Debug.Log(i);
                 // 해당 값이 등록되어 있지 않다면 등록
                 properties[key] = true;
                 room.SetCustomProperties(properties);
@@ -109,20 +120,5 @@ public class LobbyManager : MonoBehaviourPunCallbacks, IPunObservable
     public void OnClickExitGame()
     {
         Application.Quit();
-    }
-
-
-    /***************************************************************
-    * [ 데이터 동기화 ]
-    * 
-    * 방 상태 동기화
-    ***************************************************************/
-
-    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
-    {
-        if (stream.IsWriting)
-        {
-
-        }
     }
 }

@@ -34,6 +34,7 @@ public class PlayerPanelUI : MonoBehaviour
     [PunRPC]
     public void SetClassName(string name)
     {
+        Debug.Log($"${gameObject.name}: ${name}");
         className.text = name;
     }
 }

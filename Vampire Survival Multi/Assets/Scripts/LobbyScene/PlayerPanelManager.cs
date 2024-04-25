@@ -9,7 +9,6 @@ public class PlayerPanelManager : MonoBehaviourPun
     [SerializeField] private PlayerPanelUI ui;
 
     // 플레이어 정보
-    private Photon.Realtime.Player player;
     private ClassData classData;
 
     // 패널 정보
@@ -25,9 +24,10 @@ public class PlayerPanelManager : MonoBehaviourPun
         }
     }
 
+    private bool _isExist;
     public bool IsExist
     {
-        get { return player != null; }
+        get { return _isExist; }
     }
 
     public void InitUI()
@@ -40,15 +40,16 @@ public class PlayerPanelManager : MonoBehaviourPun
     }
 
     [PunRPC]
-    public void SetPlayer(Photon.Realtime.Player player)
+    public void SetInfo(Photon.Realtime.Player player)
     {
-        this.player = player;
-
         // 본인인 경우 클래스 초기 설정
         if (player.IsLocal)
         {
             // 마지막으로 했던 클래스로 설정
             SetInitClass();
+
+            // 다른 사람들도 적용
+            photonView.RPC(nameof(SetInfo), RpcTarget.Others, player);
         }
 
         // UI 설정
@@ -63,9 +64,6 @@ public class PlayerPanelManager : MonoBehaviourPun
             // 방장 외엔 캐릭터 이미지만 활성화
             ui.SetActiveCharacter(true);
         }
-
-        // 다른 사람들도 적용
-        photonView.RPC(nameof(SetPlayer), RpcTarget.Others, player);
     }
 
     private void SetInitClass()
@@ -81,5 +79,27 @@ public class PlayerPanelManager : MonoBehaviourPun
 
         // 결정한 직업 이름 설정
         photonView.RPC(nameof(ui.SetClassName), RpcTarget.All, classData.Name);
+    }
+
+    /***************************************************************
+    * [ 데이터 동기화 ]
+    * 
+    * 패널 상태 동기화
+    ***************************************************************/
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(classData.name);
+            stream.SendNext(_isExist);
+        }
+        else
+        {
+            string className = (string)stream.ReceiveNext();
+            ui.SetClassName(className);
+
+            _isExist = (bool)stream.ReceiveNext();
+        }
     }
 }
