@@ -41,7 +41,7 @@ public class MultiRoomUI : MonoBehaviour
         roomObjList.Add(roomObj);
     }
 
-    public void RemoveRoomObjs()
+    public void RemoveAllRooms()
     {
         foreach (GameObject roomObj in roomObjList)
         {

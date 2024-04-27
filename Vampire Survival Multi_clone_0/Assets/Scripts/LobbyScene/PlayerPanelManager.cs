@@ -65,14 +65,14 @@ public class PlayerPanelManager : MonoBehaviourPun
         }
 
         // UI 설정
-        SetActivePlayer(player);
+        SetActivePlayer();
     }
 
-    public void SetActivePlayer(Photon.Realtime.Player player)
+    public void SetActivePlayer()
     {
-        if (IsClosed == false)
+        if (IsExist && IsClosed == false)
         {
-            if (PhotonNetwork.IsMasterClient && !player.IsLocal)
+            if (PhotonNetwork.IsMasterClient && !JoinPlayer.IsLocal)
             {
                 // 방장은 해당 플레이어 조작 메뉴 포함 전부 활성화
                 ui.SetActiveCharacter(true);
@@ -95,7 +95,6 @@ public class PlayerPanelManager : MonoBehaviourPun
 
     public void OnExitPlayer()
     {
-        Debug.Log(gameObject.name);
         // 해당 패널을 모든 플레이어에 대해 초기화
         photonView.RPC(nameof(ResetPanel), RpcTarget.All);
     }
@@ -124,17 +123,25 @@ public class PlayerPanelManager : MonoBehaviourPun
 
     public void SetClass(ClassData classData)
     {
-        this.classData = classData;
-
-        // 결정한 직업 이름 설정
-        photonView.RPC(nameof(SelectedClass), RpcTarget.MasterClient, classData.Name);
+        // 결정한 직업을 방장을 통해 설정
+        photonView.RPC(nameof(SelectedClass), RpcTarget.MasterClient, classData.ID);
     }
 
     [PunRPC]
-    private void SelectedClass(string className)
+    private void SelectedClass(int classID)
     {
-        // 해당 직업 이름을 모든 플레이어의 해당 패널에 설정
-        photonView.RPC(nameof(SetClassName), RpcTarget.All, className);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            // 다른 사람들도 적용시키기
+            photonView.RPC(nameof(SelectedClass), RpcTarget.Others, classID);
+        }
+
+        // 해당 직업 번호를 토대로 직업 찾기
+        ClassData classData = ClassResource.Instance.FindClass(classID);
+
+        // 직업 적용
+        this.classData = classData;
+        SetClassName(classData.Name);
     }
 
     [PunRPC]
@@ -149,19 +156,19 @@ public class PlayerPanelManager : MonoBehaviourPun
     * 패널 상태 동기화
     ***************************************************************/
 
-    public void SendData(Photon.Realtime.Player player)
+    public void SendData(Photon.Realtime.Player sendPlayer, Photon.Realtime.Player panelPlayer)
     {
         // 본인의 패널이 아닌 플레이어가 존재하는 패널만 동기화
-        if (IsExist && this._joinPlayer != player)
+        if (IsExist && _joinPlayer != sendPlayer)
         {
-            photonView.RPC(nameof(ReceiveData), player, player, classData.Name);
+            photonView.RPC(nameof(ReceiveData), sendPlayer, panelPlayer, classData.ID);
         }
     }
 
     [PunRPC]
-    private void ReceiveData(Photon.Realtime.Player player, string className)
+    private void ReceiveData(Photon.Realtime.Player player, int classID)
     {
         SetPanelInfo(player);
-        ui.SetClassName(className);
+        SelectedClass(classID);
     }
 }

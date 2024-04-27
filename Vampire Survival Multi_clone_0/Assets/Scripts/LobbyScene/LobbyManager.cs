@@ -1,5 +1,4 @@
-﻿using ExitGames.Client.Photon;
-using Photon.Pun;
+﻿using Photon.Pun;
 using Photon.Realtime;
 using System.Collections.Generic;
 using UnityEngine;
@@ -95,8 +94,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             // 이전 방장을 패널에서 삭제
             RemovePlayer(masterClient);
 
-            // 플레이어 메뉴 활성화
+            // 방장 전용 UI로 변경
             SetActivePlayerMenu();
+            UpdateReadyOrStartButton();
 
             // 방장 넘기기
             masterClient = newMasterClient;
@@ -136,7 +136,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         // 모든 패널 동기화
         foreach (PlayerPanelManager manager in playerPanels)
         {
-            manager.SendData(newPlayer);
+            Photon.Realtime.Player panelPlayer = manager.JoinPlayer;
+
+            manager.SendData(newPlayer, panelPlayer);
         }
     }
 
@@ -145,7 +147,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         Debug.Log("Set Player Menu");
         foreach (PlayerPanelManager manager in playerPanels)
         {
-            manager.SetActivePlayer(PhotonNetwork.LocalPlayer);
+            manager.SetActivePlayer();
         }
     }
 
