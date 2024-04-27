@@ -46,6 +46,14 @@ MonoBehaviour:
   - SetClassName
   - SetInfo
   - SetMyPanelManager
+  - ReceiveData
+  - Test
+  - OnEnterPlayer
+  - OnExitPlayer
+  - ResetPlayerPanel
+  - SetPanelInfo
+  - SelectedClass
+  - ResetPanel
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

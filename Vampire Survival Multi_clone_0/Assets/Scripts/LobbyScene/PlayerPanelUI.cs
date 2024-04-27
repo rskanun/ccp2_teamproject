@@ -1,5 +1,4 @@
-﻿using Photon.Pun;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 
 public class PlayerPanelUI : MonoBehaviour
@@ -19,6 +18,7 @@ public class PlayerPanelUI : MonoBehaviour
     public void SetActiveCharacter(bool isActive)
     {
         playerCharacter.SetActive(isActive);
+        playerName.SetActive(isActive);
     }
 
     public void SetActivePlayerMenu(bool isActive)
@@ -26,12 +26,6 @@ public class PlayerPanelUI : MonoBehaviour
         playerMenu.SetActive(isActive);
     }
 
-    public void SetActivePlayerName(bool isActive)
-    {
-        playerName.SetActive(isActive);
-    }
-
-    [PunRPC]
     public void SetClassName(string name)
     {
         className.text = name;
