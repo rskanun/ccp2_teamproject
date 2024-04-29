@@ -24,10 +24,10 @@ public abstract class Skill : ScriptableObject
     }
 
     [SerializeField]
-    private Sprite _sprite;
-    public Sprite Sprite
+    private Sprite _icon;
+    public Sprite Icon
     {
-        get { return _sprite; }
+        get { return _icon; }
     }
 
     [SerializeField]

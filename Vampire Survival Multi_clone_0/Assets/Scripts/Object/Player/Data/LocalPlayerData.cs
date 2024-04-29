@@ -59,8 +59,39 @@ public class LocalPlayerData : ScriptableObject
         get { return _playerData; }
     }
 
+    [SerializeField]
+    private ClassData _classData;
+    public ClassData Class
+    {
+        get
+        {
+            if (_classData == null)
+            {
+                ClassData initClass = ClassResource.Instance.ClassList[0];
+
+                SetClass(initClass);
+            }
+
+            return _classData;
+        }
+    }
+
+    [Header("이벤트")]
+    [SerializeField] private GameEvent classEvent;
+
     public void InitPlayerData(PlayerData localPlayerData)
     {
         _playerData = localPlayerData;
+
+        // 해당 플레이어 데이터에 기본 스텟 적용
+        _playerData.InitData(Class);
+    }
+
+    public void SetClass(ClassData classData)
+    {
+        _classData = classData;
+
+        // 이벤트 알림
+        classEvent.NotifyUpdate();
     }
 }

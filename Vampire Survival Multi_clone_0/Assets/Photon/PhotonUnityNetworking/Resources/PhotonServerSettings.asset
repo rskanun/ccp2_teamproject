@@ -54,6 +54,17 @@ MonoBehaviour:
   - SetPanelInfo
   - SelectedClass
   - ResetPanel
+  - ReceiveClosedData
+  - ReceiveRoomData
+  - SetPlayerClass
+  - SetReadyState
+  - SetReadyThisPanel
+  - SetAdmin
+  - SetThisAdminPanel
+  - ReceiveReadyData
+  - SetReadyPlayer
+  - UpdateStartActive
+  - InitClassData
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

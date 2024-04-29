@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour, IControlState
 
     // 참조 스크립터블 오브젝트
     private PlayerData playerData;
+    private ClassData classData;
 
     // 이동 변수
     private Vector2 moveVec;
@@ -38,12 +39,10 @@ public class PlayerController : MonoBehaviour, IControlState
 
     private void InitSkill()
     {
-        ClassData classData = playerData.Class;
-
-        autoAttack = classData.AutoAttack;
+        autoAttack = classData.PassiveSkill;
         attackCooldown = 0;
 
-        skill = classData.ClassSkill;
+        skill = classData.ActiveSkill;
         skillCooldown = 0;
     }
 

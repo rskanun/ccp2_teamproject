@@ -1,4 +1,5 @@
-﻿using Photon.Pun;
+﻿using ExitGames.Client.Photon;
+using Photon.Pun;
 using UnityEngine;
 
 [RequireComponent(typeof(PlayerPanelUI))]
@@ -6,14 +7,26 @@ public class PlayerPanelManager : MonoBehaviourPun
 {
     [Header("참조 스크립트")]
     [SerializeField] private PlayerPanelUI ui;
+    [SerializeField] private Confirm confirm;
 
-    // 플레이어 정보
-    private ClassData classData;
+    // 방 정보
     private Photon.Realtime.Player _joinPlayer;
     public Photon.Realtime.Player JoinPlayer
     {
         get { return _joinPlayer; }
     }
+
+    private bool _isReady;
+    public bool IsReady
+    {
+        get { return _isReady; }
+        set
+        {
+            _isReady = value;
+
+            ui.SetReadyPanel(value);
+        }
+    }    
 
     // 패널 정보
     private bool _isClosed;
@@ -33,13 +46,6 @@ public class PlayerPanelManager : MonoBehaviourPun
         get { return _joinPlayer != null; }
     }
 
-    public void InitUI()
-    {
-        ui.SetActiveCharacter(false);
-        ui.SetActivePlayerMenu(false);
-        ui.SetClassName("");
-    }
-
     /***************************************************************
     * [ 패널 입장 ]
     * 
@@ -57,15 +63,15 @@ public class PlayerPanelManager : MonoBehaviourPun
     {
         _joinPlayer = player;
 
-        // 본인인 경우 클래스 초기 설정
         if (player.IsLocal)
         {
-            // 클래스 목록 중 가장 처음 클래스 등록
-            SetInitClass();
+            // 직업명 설정
+            UpdateClass();
         }
 
         // UI 설정
         SetActivePlayer();
+        UpdateAdminPanel();
     }
 
     public void SetActivePlayer()
@@ -76,13 +82,13 @@ public class PlayerPanelManager : MonoBehaviourPun
             {
                 // 방장은 해당 플레이어 조작 메뉴 포함 전부 활성화
                 ui.SetActiveCharacter(true);
-                ui.SetActivePlayerMenu(true);
+                ui.SetActivePlayerMenuBtn(true);
             }
             else
             {
                 // 방장 외엔 플레이터 정보 활성화
                 ui.SetActiveCharacter(true);
-                ui.SetActivePlayerMenu(false);
+                ui.SetActivePlayerMenuBtn(false);
             }
         }
     }
@@ -103,9 +109,50 @@ public class PlayerPanelManager : MonoBehaviourPun
     private void ResetPanel()
     {
         _joinPlayer = null;
+        _isReady = false;
 
         // UI 초기화
-        InitUI();
+        ui.SetActiveCharacter(false);
+        ui.SetActivePlayerMenuBtn(false);
+        ui.SetAdminPanel(false);
+        ui.SetReadyPanel(false);
+        ui.SetClassName("");
+    }
+
+    /***************************************************************
+    * [ 방장 설정 ]
+    * 
+    * 방장을 나타내는 패널 설정
+    ***************************************************************/
+
+    public void UpdateAdminPanel()
+    {
+        photonView.RPC(nameof(SetThisAdminPanel), RpcTarget.MasterClient);
+    }
+
+    [PunRPC]
+    private void SetThisAdminPanel()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC(nameof(SetThisAdminPanel), RpcTarget.Others);
+        }
+
+        if (JoinPlayer.IsMasterClient)
+        {
+            _isReady = false; // 준비 해제
+
+            // 방장의 패널일 경우 방장 마크 활성화
+            ui.SetReadyPanel(false);
+            ui.SetAdminPanel(true);
+        }
+        else
+        {
+            _isReady = false; // 준비 해제
+
+            // 방장의 패널이 아닌 경우 방장 마크 비화성화
+            ui.SetAdminPanel(false);
+        }
     }
 
     /***************************************************************
@@ -114,34 +161,19 @@ public class PlayerPanelManager : MonoBehaviourPun
     * 해당 패널의 플레이어의 직업 할당
     ***************************************************************/
 
-    private void SetInitClass()
+    public void UpdateClass()
     {
-        ClassData initClass = ClassResource.Instance.ClassList[0];
+        ClassData classData = LocalPlayerData.Instance.Class;
 
-        SetClass(initClass);
-    }
-
-    public void SetClass(ClassData classData)
-    {
-        // 결정한 직업을 방장을 통해 설정
-        photonView.RPC(nameof(SelectedClass), RpcTarget.MasterClient, classData.ID);
+        // 직업 변경 사실을 방장에게 알림
+        photonView.RPC(nameof(SetPlayerClass), RpcTarget.MasterClient, classData.Name);
     }
 
     [PunRPC]
-    private void SelectedClass(int classID)
+    private void SetPlayerClass(string className)
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            // 다른 사람들도 적용시키기
-            photonView.RPC(nameof(SelectedClass), RpcTarget.Others, classID);
-        }
-
-        // 해당 직업 번호를 토대로 직업 찾기
-        ClassData classData = ClassResource.Instance.FindClass(classID);
-
-        // 직업 적용
-        this.classData = classData;
-        SetClassName(classData.Name);
+        // 모든 사람들에게 해당 패널 플레이어의 직업 적용
+        photonView.RPC(nameof(SetClassName), RpcTarget.All, className);
     }
 
     [PunRPC]
@@ -151,24 +183,119 @@ public class PlayerPanelManager : MonoBehaviourPun
     }
 
     /***************************************************************
+    * [ 유저 메뉴 ]
+    * 
+    * 해당 패널의 유저 강퇴 및 방장 양도
+    ***************************************************************/
+
+    public void ActiveDelegateConfirm()
+    {
+        // Confirm 띄우기
+        string msg = "해당 유저에게 방장을 양도하시겠습니까?";
+
+        confirm.OnActive(msg, OnDelegateAdmin);
+
+        // 기존 플레이어 메뉴 닫기
+        ui.TogglePlayerMenu();
+    }
+
+    private void OnDelegateAdmin()
+    {
+        // 사람이 존재하는 패널이고, 넘기는 사람이 방장일 경우 작동
+        if (IsExist && PhotonNetwork.IsMasterClient)
+        {
+            // 해당 패널 주인에게 방장 권한을 넘기기
+            PhotonNetwork.SetMasterClient(JoinPlayer);
+        }
+    }
+
+    public void ActiveKickConfirm()
+    {
+        // Confirm 띄우기
+        string msg = "해당 유저를 강제 추방하시겠습니까?";
+
+        confirm.OnActive(msg, OnKickedPlayer);
+
+        // 기존 플레이어 메뉴 닫기
+        ui.TogglePlayerMenu();
+    }
+
+    private void OnKickedPlayer()
+    {
+        if (IsExist && PhotonNetwork.IsMasterClient)
+        {
+            // 플레이어에게 퇴장 상태를 부여
+            Hashtable hashtable = new Hashtable() { { "IsKicked", true } };
+
+            JoinPlayer.SetCustomProperties(hashtable);
+        }
+    }
+
+    /***************************************************************
+    * [ 게임 준비 ]
+    * 
+    * 게임 준비 패널 설정
+    ***************************************************************/
+
+    public void SetReadyState(bool isReady)
+    {
+        photonView.RPC(nameof(SetReadyThisPanel), RpcTarget.MasterClient, isReady);
+    }
+
+    [PunRPC]
+    private void SetReadyThisPanel(bool isReady)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC(nameof(SetReadyThisPanel), RpcTarget.Others, isReady);
+        }
+
+        // 준비 상태 설정
+        IsReady = isReady;
+    }
+
+    /***************************************************************
     * [ 데이터 동기화 ]
     * 
     * 패널 상태 동기화
     ***************************************************************/
 
-    public void SendData(Photon.Realtime.Player sendPlayer, Photon.Realtime.Player panelPlayer)
+    public void SendRoomData(Photon.Realtime.Player sendPlayer, Photon.Realtime.Player panelPlayer)
     {
         // 본인의 패널이 아닌 플레이어가 존재하는 패널만 동기화
-        if (IsExist && _joinPlayer != sendPlayer)
+        if (IsExist && JoinPlayer != sendPlayer)
         {
-            photonView.RPC(nameof(ReceiveData), sendPlayer, panelPlayer, classData.ID);
+            string className = ui.GetClassName();
+
+            photonView.RPC(nameof(ReceiveRoomData), sendPlayer, panelPlayer, className);
         }
+
+        // 방 닫힘 여부 동기화
+        photonView.RPC(nameof(ReceiveClosedData), sendPlayer, IsClosed);
+        photonView.RPC(nameof(ReceiveReadyData), sendPlayer, IsReady);
+    }
+
+    public void UpdateRoomData()
+    {
+        photonView.RPC(nameof(ReceiveClosedData), RpcTarget.Others, IsClosed);
     }
 
     [PunRPC]
-    private void ReceiveData(Photon.Realtime.Player player, int classID)
+    private void ReceiveRoomData(Photon.Realtime.Player player, string className)
     {
         SetPanelInfo(player);
-        SelectedClass(classID);
+        SetClassName(className);
+    }
+
+    [PunRPC]
+    private void ReceiveClosedData(bool isClosed)
+    {
+        IsClosed = isClosed;
+    }
+
+    [PunRPC]
+    private void ReceiveReadyData(bool isReady)
+    {
+        IsReady = isReady;
     }
 }

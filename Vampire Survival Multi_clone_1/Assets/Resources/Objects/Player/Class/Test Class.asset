@@ -18,6 +18,8 @@ MonoBehaviour:
   _moveSpeed: 4
   _attackSpeed: 1
   _lifeSteal: 0
-  _autoAttack: {fileID: 11400000, guid: a063eb3a3d5c3884ebf20b7ebb630a0b, type: 2}
-  _skill: {fileID: 11400000, guid: 56669873005adbc4ba810c11b07c8945, type: 2}
+  _passiveSkill: {fileID: 11400000, guid: a063eb3a3d5c3884ebf20b7ebb630a0b, type: 2}
+  _activeSkill: {fileID: 11400000, guid: 56669873005adbc4ba810c11b07c8945, type: 2}
+  _id: 0
   _name: "\uB354\uBBF8 \uD074\uB798\uC2A4"
+  _icon: {fileID: 21300014, guid: d79edf18a76e2654a9ac99f15de8b2b3, type: 3}

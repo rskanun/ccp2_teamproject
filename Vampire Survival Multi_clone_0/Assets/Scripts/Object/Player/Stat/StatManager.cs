@@ -78,7 +78,9 @@ public class StatManager : MonoBehaviour
 
     private float GetEquipMoveSpeed(ItemData item)
     {
-        float originSpeed = playerStat.Class.MoveSpeed;
+        ClassData classData = LocalPlayerData.Instance.Class;
+
+        float originSpeed = classData.MoveSpeed;
         float speed = playerStat.MoveSpeed + (originSpeed * item.MoveSpeed);
 
         return speed;

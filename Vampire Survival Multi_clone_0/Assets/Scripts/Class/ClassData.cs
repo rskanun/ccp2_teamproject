@@ -19,20 +19,27 @@ public class ClassData : ObjectData
 
     [Header("공격 및 스킬")]
     [SerializeField]
-    private Skill _autoAttack;
-    public Skill AutoAttack
+    private Skill _passiveSkill;
+    public Skill PassiveSkill
     {
-        get { return _autoAttack; }
+        get { return _passiveSkill; }
     }
 
     [SerializeField]
-    private Skill _skill;
-    public Skill ClassSkill
+    private Skill _activeSkill;
+    public Skill ActiveSkill
     {
-        get { return _skill; }
+        get { return _activeSkill; }
     }
 
     [Header("클래스 정보")]
+    [SerializeField]
+    private int _id;
+    public int ID
+    {
+        get { return _id; }
+    }
+
     [SerializeField]
     private string _name;
     public string Name
@@ -41,9 +48,9 @@ public class ClassData : ObjectData
     }
 
     [SerializeField]
-    private int _id;
-    public int ID
+    private Sprite _icon;
+    public Sprite Icon
     {
-        get { return _id; }
+        get { return _icon; }
     }
 }
