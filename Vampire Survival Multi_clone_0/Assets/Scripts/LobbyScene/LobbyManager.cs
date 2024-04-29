@@ -18,6 +18,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     // 해당 방의 호스트
     private Photon.Realtime.Player masterClient;
 
+    // 방 정보
+    private Room room;
+
     /***************************************************************
     * [ 방 입장 ]
     * 
@@ -26,18 +29,21 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        room = PhotonNetwork.CurrentRoom;
+
         // 방장 설정
         masterClient = PhotonNetwork.MasterClient;
 
         // 로비 기본 UI 처리
         InitLobbyUI();
 
-        // 첫 번째 자리에 플레이어 할당
         if (PhotonNetwork.IsMasterClient)
         {
-            // 나머지는 OnPlayerEnteredRoom에서 방장이 할당
-            SetMyPanelManager(0);
-            myPanelManager.SetPanelInfo(PhotonNetwork.LocalPlayer);
+            // 비활성화 패널 설정
+            SetClosedPanel(room.MaxPlayers);
+
+            // 입장 이벤트 실행
+            OnPlayerEnteredRoom(PhotonNetwork.LocalPlayer);
         }
     }
 
@@ -48,6 +54,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         {
             // 빈 패널에 플레이어 할당
             SetPlayerPanel(newPlayer);
+
+            // 현재 패널 정보 동기화
+            SynchroPanel(newPlayer);
+
+            // 시작 여부 업데이트
+            UpdateStartActive();
         }
     }
 
@@ -62,9 +74,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
         // 모든 플레이어에게 해당 패널 설정
         manager.OnJoinPlayer(newPlayer);
-
-        // 현재 패널 정보 동기화
-        SynchroPanel(newPlayer);
     }
 
     /***************************************************************
@@ -77,7 +86,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         if (masterClient.IsLocal)
         {
-            RemovePlayer(otherPlayer);
+            LeavePlayer(otherPlayer);
+
+            // 시작 여부 업데이트
+            UpdateStartActive();
         }
     }
 
@@ -92,18 +104,48 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         // 새로운 방장은 이전 방장의 권한을 받아 UI 수정
         if (newMasterClient.IsLocal)
         {
-            // 이전 방장을 패널에서 삭제
-            RemovePlayer(masterClient);
+            if (IsPlayerInRoom(masterClient) == false)
+            {
+                // 이미 나간 방장일 경우 패널에서 삭제
+                LeavePlayer(masterClient);
+            }
 
-            // 플레이어 메뉴 활성화
-            SetActivePlayerMenu();
-
-            // 방장 넘기기
+            // 방장 넘겨받기
             masterClient = newMasterClient;
+
+            // 방장 전용 UI로 변경
+            ReloadUI();
+
+            // 시작 여부 업데이트
+            UpdateStartActive();
+        }
+        else
+        {
+            Photon.Realtime.Player formerAdmin = masterClient;
+
+            // 새 방장 설정
+            masterClient = newMasterClient;
+
+            if (formerAdmin.IsLocal)
+            {
+                // 이전 방장인 경우 UI 새로 불러오기
+                ReloadUI();
+            }
         }
     }
 
-    private void RemovePlayer(Photon.Realtime.Player removePlayer)
+    private bool IsPlayerInRoom(Photon.Realtime.Player checkPlayer)
+    {
+        foreach (Photon.Realtime.Player player in PhotonNetwork.PlayerList)
+        {
+            if (player == checkPlayer)
+                return true;
+        }
+
+        return false;
+    }
+
+    private void LeavePlayer(Photon.Realtime.Player removePlayer)
     {
         foreach (PlayerPanelManager manager in playerPanels)
         {
@@ -114,6 +156,46 @@ public class LobbyManager : MonoBehaviourPunCallbacks
                 manager.OnExitPlayer();
             }
         }
+    }
+
+    public override void OnPlayerPropertiesUpdate(Photon.Realtime.Player targetPlayer, Hashtable changedProps)
+    {
+        if (targetPlayer.IsLocal)
+        {
+            // 본인에게 강퇴 상태가 있을 경우 방 나가기
+            bool isKicked = (changedProps["IsKicked"] != null) ?
+                (bool)changedProps["IsKicked"] : false;
+
+            if (isKicked)
+            {
+                // 강퇴 상태 비활성화
+                Hashtable hashtable = new Hashtable() { { "IsKicked", false } };
+
+                PhotonNetwork.SetPlayerCustomProperties(hashtable);
+                PhotonNetwork.LeaveRoom(); // 방 나가기
+            }
+        }
+    }
+
+    /***************************************************************
+    * [ 방 설정 ]
+    * 
+    * 방 설정 변경에 따른 UI 변화
+    ***************************************************************/
+
+    public void UpdateRoomSetting()
+    {
+        UpdateMaxPlayer();
+    }
+
+    private void UpdateMaxPlayer()
+    {
+        int maxPlayer = room.MaxPlayers;
+
+        SetClosedPanel(maxPlayer);
+
+        // 변경 내역 전체 알림
+        SynchroPanelClosed();
     }
 
     /***************************************************************
@@ -136,16 +218,26 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         // 모든 패널 동기화
         foreach (PlayerPanelManager manager in playerPanels)
         {
-            manager.SendData(newPlayer);
+            Photon.Realtime.Player panelPlayer = manager.JoinPlayer;
+
+            manager.SendRoomData(newPlayer, panelPlayer);
         }
     }
 
     private void SetActivePlayerMenu()
     {
-        Debug.Log("Set Player Menu");
         foreach (PlayerPanelManager manager in playerPanels)
         {
-            manager.SetActivePlayer(PhotonNetwork.LocalPlayer);
+            manager.SetActivePlayer();
+        }
+    }
+
+    private void SynchroPanelClosed()
+    {
+        // 모든 패널 닫힘 상태 동기화
+        foreach (PlayerPanelManager manager in playerPanels)
+        {
+            manager.UpdateRoomData();
         }
     }
 
@@ -158,26 +250,40 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     private void InitLobbyUI()
     {
         // 로비 기본 UI 설정
-        RoomInfo room = PhotonNetwork.CurrentRoom;
-
         ui.SetRoomCode(room.Name);
-        SetPlayerPanel(room.MaxPlayers);
+        UpdateSettingButton();
         UpdateReadyOrStartButton();
     }
 
-    private void SetPlayerPanel(int num)
+    private void SetClosedPanel(int maxPlayer)
     {
-        // 인원수만큼 패널 활성화
-        for (int i = 0; i < playerPanels.Count; i++)
+        // 인원수만큼의 패널만 활성화
+        int openPanel = playerPanels.Count;
+        for (int i = playerPanels.Count - 1; i >= 0; i--)
         {
+            // 뒤에서부터 패널 비활성화
             PlayerPanelManager panel = playerPanels[i];
 
-            // 패널 초기화
-            panel.InitUI();
+            if (panel.IsExist == false && openPanel > maxPlayer)
+            {
+                playerPanels[i].IsClosed = true;
 
-            if (i < num) playerPanels[i].IsClosed = false;
-            else playerPanels[i].IsClosed = true;
+                openPanel--;
+            }
+            else
+            {
+                playerPanels[i].IsClosed = false;
+            }
         }
+    }
+
+    private void ReloadUI()
+    {
+        // 플레이어의 권한에 맞는 UI 다시 적용
+        SetActivePlayerMenu();
+        UpdateSettingButton();
+        UpdateReadyOrStartButton();
+        myPanelManager.UpdateAdminPanel();
     }
 
     private void UpdateReadyOrStartButton()
@@ -185,6 +291,12 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         // 게임준비 버튼 및 시작 버튼 활성화
         if (masterClient.IsLocal) ui.ChangeToStartButton();
         else ui.ChangeToReadyButton();
+    }
+
+    private void UpdateSettingButton()
+    {
+        if (masterClient.IsLocal) ui.SetActiveSettingButton(true);
+        else ui.SetActiveSettingButton(false);
     }
 
     private int GetEmptyPanelIndex()
@@ -201,6 +313,103 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         }
 
         return -1;
+    }
+
+    [PunRPC]
+    private void UpdateStartActive()
+    {
+        Debug.Log("Update Panel");
+        if (GetStartableState())
+        {
+            // 모든 플레이어가 준비상태일 경우 시작 버튼 활성화
+            ui.SetUsableStartButton(true);
+        }
+        else
+        {
+            // 모든 플레이어가 준비상태가 아닐 경우 비활성화
+            ui.SetUsableStartButton(false);
+        }
+    }
+
+    private bool GetStartableState()
+    {
+        foreach (PlayerPanelManager manager in playerPanels)
+        {
+            Debug.Log($"{manager.gameObject.name} Exist: {manager.IsExist}, Ready:{manager.IsReady}");
+            if (manager.IsExist && manager.IsReady == false)
+            {
+                Debug.Log($"{manager.gameObject.name} Master: {manager.JoinPlayer.IsMasterClient}");
+                if (manager.JoinPlayer.IsMasterClient == false)
+                {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+
+    /***************************************************************
+    * [ 직업 변경 ]
+    * 
+    * 사용자의 직업이 변경되었을 시 이벤트
+    ***************************************************************/
+
+    public void OnChangedPlayerClass()
+    {
+        myPanelManager?.UpdateClass();
+    }
+
+    /***************************************************************
+    * [ 게임 시작 ]
+    * 
+    * 게임 준비와 시작
+    ***************************************************************/
+
+    public void OnReady()
+    {
+        // 현재의 반대 상태 적용
+        bool isReady = !myPanelManager.IsReady;
+
+        // 준비 상태 변경
+        myPanelManager.SetReadyState(isReady);
+
+        // 게임 시작 상태 변경
+        photonView.RPC(nameof(UpdateStartActive), masterClient);
+    }
+
+    public void OnStart()
+    {
+        for (int i = 0; i < playerPanels.Count; i++)
+        {
+            PlayerPanelManager manager = playerPanels[i];
+            PlayerData playerData = PlayerResource.Instance.PlayerDatas[i];
+
+            if (manager.IsExist)
+            {
+                // 해당 자리의 플레이어 참가 설정
+                playerData.IsPlaying = true;
+
+                // 플레이어 데이터 할당
+                photonView.RPC(nameof(InitClassData), manager.JoinPlayer, i);
+            }
+            else
+            {
+                // 나머지 플레이어 참가 해제
+                playerData.IsPlaying = false;
+            }
+        }
+
+        SceneLoadManager.LoadScene("InGame");
+    }
+
+    [PunRPC]
+    private void InitClassData(int index)
+    {
+        PlayerData playerData = PlayerResource.Instance.PlayerDatas[index];
+
+        LocalPlayerData localPlayer = LocalPlayerData.Instance;
+        localPlayer.InitPlayerData(playerData);
     }
 
     /***************************************************************

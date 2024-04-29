@@ -21,20 +21,6 @@ public class PlayerData : ScriptableObject
         set { _position = value; }
     }
 
-    [Header("클래스")]
-    [SerializeField]
-    private ClassData _classData;
-    public ClassData Class
-    {
-        get
-        {
-            if (_classData == null)
-                _classData = ClassResource.Instance.ClassList[0];
-
-            return _classData;
-        }
-    }
-
     [Header("현재 스텟")]
     [ReadOnly]
     [SerializeField]
@@ -159,9 +145,6 @@ public class PlayerData : ScriptableObject
 
     public void InitData(ClassData playerClass)
     {
-        // 직업 설정
-        _classData = playerClass;
-
         // 스텟 초기화
         _currentMaxHP = playerClass.HP;
         _currentSTR = playerClass.STR;
@@ -169,17 +152,5 @@ public class PlayerData : ScriptableObject
         _currentAttackSpeed = playerClass.AttackSpeed;
         _currentMoveSpeed = playerClass.MoveSpeed;
         _currentLifeSteal = playerClass.LifeSteal;
-    }
-
-    // 직업 선택 창을 거치지 않고 직업 할당
-    public void TestInitData()
-    {
-        // 현재 직업을 토대로 스텟 초기화
-        _currentMaxHP = _classData.HP;
-        _currentSTR = _classData.STR;
-        _currentDEF = _classData.DEF;
-        _currentAttackSpeed = _classData.AttackSpeed;
-        _currentMoveSpeed = _classData.MoveSpeed;
-        _currentLifeSteal = _classData.LifeSteal;
     }
 }

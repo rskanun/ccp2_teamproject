@@ -49,7 +49,7 @@ public class MultiRoomManager : MonoBehaviourPunCallbacks
         ui.SetActiveRoomList(false);
 
         // 방 정보를 표시하던 오브젝트 제거
-        ui.RemoveRoomObjs();
+        ui.RemoveAllRooms();
     }
 
     public override void OnJoinedRoom()
@@ -66,6 +66,9 @@ public class MultiRoomManager : MonoBehaviourPunCallbacks
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
+        // 기본 오브젝트 삭제
+        ui.RemoveAllRooms();
+
         foreach (RoomInfo room in roomList)
         {
             ui.AddRoomObj(room, (id, roomPassword) => OnEnterRoom(id, roomPassword));
@@ -107,7 +110,7 @@ public class MultiRoomManager : MonoBehaviourPunCallbacks
     private void SearchRoom(string keyword)
     {
         // 기존 오브젝트 초기화
-        ui.RemoveRoomObjs();
+        ui.RemoveAllRooms();
 
         foreach (string title in cachedRoomList.Keys)
         {
