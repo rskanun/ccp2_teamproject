@@ -1,36 +1,54 @@
-﻿using System.Collections;
+﻿using Photon.Pun;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(LoadingUI))]
-public class SceneLoadManager : MonoBehaviour
+public class SceneLoadManager : MonoBehaviourPunCallbacks
 {
     public static string nextScene;
 
-    // 참조 UI
-    private LoadingUI ui;
+    [Header("참조 스크립트")]
+    [SerializeField] private LoadingUI ui;
 
-    private void Awake()
-    {
-        ui = GetComponent<LoadingUI>();
-    }
+    // 로딩 변수
+    private AsyncOperation op;
+    private int playerCount;
+    private int completePlayer;
 
     private void Start()
     {
-        StartCoroutine(LoadScene());
+        playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
+
+        PhotonNetwork.IsMessageQueueRunning = false;
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC(nameof(SetNextScene), RpcTarget.All, nextScene);
+        }
     }
 
-    public static void LoadScene(string sceneName)
+    public static void LoadLevel(string sceneName)
     {
         nextScene = sceneName;
-        SceneManager.LoadScene("Loading");
+
+        PhotonNetwork.LoadLevel("Loading");
+    }
+
+    [PunRPC]
+    private void SetNextScene(string sceneName)
+    {
+        nextScene = sceneName;
+
+        // 씬 로딩 시작
+        StartCoroutine(LoadScene());
     }
 
     private IEnumerator LoadScene()
     {
         yield return new WaitForSeconds(0.6f);
 
-        AsyncOperation op = SceneManager.LoadSceneAsync(nextScene);
+        op = SceneManager.LoadSceneAsync(nextScene);
         op.allowSceneActivation = false;
 
         float timer = 0f;
@@ -56,13 +74,45 @@ public class SceneLoadManager : MonoBehaviour
 
                 if (ui.FillAmount == 1.0f)
                 {
-                    op.allowSceneActivation = true;
+                    OnCompleted();
 
                     yield break;
                 }
             }
 
+            Debug.Log($"Timer: {timer} / Percentage: {percentage}");
+
             yield return null;
         }
+    }
+
+    private void OnCompleted()
+    {
+        PhotonNetwork.AutomaticallySyncScene = false;
+        PhotonNetwork.IsMessageQueueRunning = true;
+
+        photonView.RPC(nameof(LoadingCompleted), RpcTarget.MasterClient);
+    }
+
+    [PunRPC]
+    private void LoadingCompleted()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC(nameof(LoadingCompleted), RpcTarget.Others);
+        }
+
+        completePlayer++;
+
+        if (completePlayer >= playerCount)
+        {
+            LoadNextScene();
+        }
+    }
+
+    private void LoadNextScene()
+    {
+        // 씬 로드
+        op.allowSceneActivation = true;
     }
 }
