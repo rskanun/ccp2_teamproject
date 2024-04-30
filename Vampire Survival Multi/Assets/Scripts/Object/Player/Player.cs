@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
+using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviourPun
 {
     // 해당 플레이어 옵션
     private PlayerData playerData;

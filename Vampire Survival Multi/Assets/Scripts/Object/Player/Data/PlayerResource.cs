@@ -60,13 +60,6 @@ public class PlayerResource : ScriptableObject
     }
 
     [SerializeField]
-    private GameObject _localPlayerPrefab;
-    public GameObject LocalPlayerPrefab
-    {
-        get { return _localPlayerPrefab;  }
-    }
-
-    [SerializeField]
     private List<PlayerData> _playerDatas;
     public List<PlayerData> PlayerDatas
     {

@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
+using UnityEngine;
 
-public class HUD : MonoBehaviour
+public class HUD : MonoBehaviourPun
 {
     [Header("참조 스크립트")]
     [SerializeField] private HealthUI healthUI;
@@ -15,6 +16,14 @@ public class HUD : MonoBehaviour
                 _stat = LocalPlayerData.Instance.PlayerData;
 
             return _stat;
+        }
+    }
+
+    private void Start()
+    {
+        if (photonView.IsMine)
+        {
+            gameObject.SetActive(false);
         }
     }
 

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
+using UnityEngine;
 
 [CreateAssetMenu(menuName = "Game Object/Player/Player Data", fileName = "PlayerData")]
 public class PlayerData : ScriptableObject
@@ -152,5 +153,11 @@ public class PlayerData : ScriptableObject
         _currentAttackSpeed = playerClass.AttackSpeed;
         _currentMoveSpeed = playerClass.MoveSpeed;
         _currentLifeSteal = playerClass.LifeSteal;
+    }
+
+    [PunRPC]
+    public void UpdatePosition(Vector2 pos)
+    {
+        _position = pos;
     }
 }

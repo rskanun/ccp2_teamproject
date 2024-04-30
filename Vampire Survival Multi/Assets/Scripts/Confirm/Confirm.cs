@@ -10,7 +10,7 @@ public class Confirm : MonoBehaviour
     private ConfirmCallback yesCallback;
     private ConfirmCallback noCallback;
 
-    public void OnActive(string msg, ConfirmCallback yesCallback = null, ConfirmCallback noCallback = null)
+    public void Active(string msg, ConfirmCallback yesCallback = null, ConfirmCallback noCallback = null)
     {
         this.yesCallback = () =>
         {

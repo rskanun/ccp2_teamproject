@@ -29,9 +29,10 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        room = PhotonNetwork.CurrentRoom;
+        PhotonNetwork.AutomaticallySyncScene = true;
 
-        // 방장 설정
+        // 방 설정
+        room = PhotonNetwork.CurrentRoom;
         masterClient = PhotonNetwork.MasterClient;
 
         // 로비 기본 UI 처리
@@ -95,6 +96,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public override void OnLeftRoom()
     {
+        PhotonNetwork.AutomaticallySyncScene = false;
+
         // 방을 나갔으면 타이틀로 돌아가기
         SceneManager.LoadScene("TitleScene");
     }
@@ -318,7 +321,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [PunRPC]
     private void UpdateStartActive()
     {
-        Debug.Log("Update Panel");
         if (GetStartableState())
         {
             // 모든 플레이어가 준비상태일 경우 시작 버튼 활성화
@@ -335,10 +337,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         foreach (PlayerPanelManager manager in playerPanels)
         {
-            Debug.Log($"{manager.gameObject.name} Exist: {manager.IsExist}, Ready:{manager.IsReady}");
             if (manager.IsExist && manager.IsReady == false)
             {
-                Debug.Log($"{manager.gameObject.name} Master: {manager.JoinPlayer.IsMasterClient}");
                 if (manager.JoinPlayer.IsMasterClient == false)
                 {
                     return false;
@@ -388,7 +388,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             if (manager.IsExist)
             {
                 // 해당 자리의 플레이어 참가 설정
-                playerData.IsPlaying = true;
+                photonView.RPC(nameof(SetPlayingState), RpcTarget.All, i, true);
 
                 // 플레이어 데이터 할당
                 photonView.RPC(nameof(InitClassData), manager.JoinPlayer, i);
@@ -396,11 +396,19 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             else
             {
                 // 나머지 플레이어 참가 해제
-                playerData.IsPlaying = false;
+                photonView.RPC(nameof(SetPlayingState), RpcTarget.All, i, false);
             }
         }
 
-        SceneLoadManager.LoadScene("InGame");
+        SceneLoadManager.LoadLevel("InGame");
+    }
+
+    [PunRPC]
+    private void SetPlayingState(int index, bool isPlayer)
+    {
+        PlayerData playerData = PlayerResource.Instance.PlayerDatas[index];
+
+        playerData.IsPlaying = isPlayer;
     }
 
     [PunRPC]

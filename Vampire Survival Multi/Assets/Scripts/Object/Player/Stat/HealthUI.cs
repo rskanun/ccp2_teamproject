@@ -3,12 +3,18 @@
 public class HealthUI : MonoBehaviour
 {
     [Header("참조 컴포넌트")]
+    [SerializeField] private GameObject hudObject;
     [SerializeField] private Transform hpTranceform;
     [SerializeField] private SpriteRenderer hpBar;
 
     // HP 구간 수치
     private float yellowLine = 0.5f;
     private float redLine = 0.1f;
+
+    public void SetActiveHUD(bool isActive)
+    {
+        hudObject.SetActive(isActive);
+    }
 
     public void UpdateHP(float currentHP, float maxHP)
     {

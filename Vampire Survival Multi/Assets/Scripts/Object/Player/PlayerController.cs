@@ -1,3 +1,4 @@
+using Photon.Pun;
 using UnityEngine;
 
 [RequireComponent(typeof(Player))]
@@ -6,6 +7,9 @@ public class PlayerController : MonoBehaviour, IControlState
     [Header("이벤트")]
     [SerializeField] private GameEvent deadEvent;
     [SerializeField] private GameEvent reviveEvent;
+
+    [Header("참조 스크립트")]
+    [SerializeField] private CameraManager cameraManager;
 
     // 참조 컴포넌트
     private Rigidbody2D rigid;
@@ -26,11 +30,17 @@ public class PlayerController : MonoBehaviour, IControlState
 
     private void Start()
     {
+        // 카메라 설정
+        cameraManager.InitPlayer(gameObject);
+
         rigid = GetComponent<Rigidbody2D>();
         player = GetComponent<Player>();
+
         playerData = LocalPlayerData.Instance.PlayerData;
+        classData = LocalPlayerData.Instance.Class;
 
         // Init Position In PlayerData
+        
         playerData.Position = transform.position;
 
         // Init Skill & Normal Attack
@@ -75,7 +85,10 @@ public class PlayerController : MonoBehaviour, IControlState
     private void OnEnable()
     {
         // Set Control State
-        ControlContext.Instance.SetState(this);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            ControlContext.Instance.SetState(this);
+        }
 
         // Notify Revive Event
         reviveEvent.NotifyUpdate();
@@ -133,5 +146,11 @@ public class PlayerController : MonoBehaviour, IControlState
 
         // 플레이어 좌표 갱신
         playerData.Position = transform.position;
+    }
+
+    [PunRPC]
+    private void UpdatePlayerPos(Vector2 pos)
+    {
+
     }
 }

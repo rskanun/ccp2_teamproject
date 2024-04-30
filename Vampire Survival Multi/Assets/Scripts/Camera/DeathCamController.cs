@@ -26,7 +26,10 @@ public class DeathCamController : MonoBehaviour, IControlState
         livingPlayers = InitLivingList();
         curPlayer = livingPlayers.Head;
 
-        cameraManager.SetObservePlayer(curPlayer.Value);
+        if (curPlayer != null)
+        {
+            cameraManager.SetObservePlayer(curPlayer.Value);
+        }
     }
 
     private LinkedList<GameObject> InitLivingList()

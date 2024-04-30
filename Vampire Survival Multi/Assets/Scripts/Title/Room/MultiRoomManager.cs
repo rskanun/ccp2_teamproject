@@ -69,13 +69,12 @@ public class MultiRoomManager : MonoBehaviourPunCallbacks
         // 기본 오브젝트 삭제
         ui.RemoveAllRooms();
 
-        foreach (RoomInfo room in roomList)
-        {
-            ui.AddRoomObj(room, (id, roomPassword) => OnEnterRoom(id, roomPassword));
-        }
-
         // 캐시에 방 목록 업데이트
         UpdateCachedRoomList(roomList);
+
+        // 방 목록 생성
+        List<RoomInfo> createRoomList = new List<RoomInfo>(cachedRoomList.Values);
+        CreateRoomList(createRoomList);
     }
 
     private void UpdateCachedRoomList(List<RoomInfo> roomList)
@@ -85,7 +84,7 @@ public class MultiRoomManager : MonoBehaviourPunCallbacks
 
         foreach(RoomInfo room in roomList)
         {
-            string title = (string)room.CustomProperties["RoomName"];
+            string title = room.Name;
 
             if (room.RemovedFromList)
             {
@@ -95,6 +94,17 @@ public class MultiRoomManager : MonoBehaviourPunCallbacks
             else
             {
                 cachedRoomList[title] = room;
+            }
+        }
+    }
+
+    private void CreateRoomList(List<RoomInfo> roomList)
+    {
+        foreach (RoomInfo room in roomList)
+        {
+            if (room.RemovedFromList == false)
+            {
+                ui.AddRoomObj(room, (id, roomPassword) => OnEnterRoom(id, roomPassword));
             }
         }
     }

@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 2982965006663507462}
   - component: {fileID: 3468019756692951181}
+  - component: {fileID: 6511063669891824359}
+  - component: {fileID: 1429019205845403464}
   m_Layer: 0
   m_Name: HUD
   m_TagString: Untagged
@@ -45,7 +47,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 687513cc748b6da42a72d31327959f3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthUI: {fileID: 7577828922781184036}
+  healthUI: {fileID: 6511063669891824359}
+--- !u!114 &6511063669891824359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3959419712128118194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f9f9dfae15985c4388a1964a1f25821, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hudObject: {fileID: 7577828924093604758}
+  hpTranceform: {fileID: 7577828922781184037}
+  hpBar: {fileID: 7577828922781184039}
+--- !u!114 &1429019205845403464
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3959419712128118194}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &6926619970843757291
 GameObject:
   m_ObjectHideFlags: 0
@@ -201,7 +240,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7577828922781184037}
   - component: {fileID: 7577828922781184039}
-  - component: {fileID: 7577828922781184036}
   m_Layer: 0
   m_Name: HP
   m_TagString: Untagged
@@ -276,20 +314,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7577828922781184036
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7577828922781184034}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2f9f9dfae15985c4388a1964a1f25821, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  hpTranceform: {fileID: 7577828922781184037}
-  hpBar: {fileID: 7577828922781184039}
 --- !u!1 &7577828923092235419
 GameObject:
   m_ObjectHideFlags: 0

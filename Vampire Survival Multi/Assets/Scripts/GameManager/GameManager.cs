@@ -1,19 +1,20 @@
-﻿using System.Collections.Generic;
+﻿using Photon.Pun;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviourPunCallbacks
 {
     [Header("참조 스크립트")]
     [SerializeField] private WaveManager waveManager;
     [SerializeField] private CameraManager cameraManager;
+    [SerializeField] private Confirm resultConfirm;
 
     [Header("시작 위치")]
     [SerializeField] private List<Vector2> startPoints;
 
     // 플레이어 리소스
     private GameObject playerPrefab;
-    private GameObject localPlayerPrefab;
     private List<PlayerData> playerDatas;
 
     // 참조 데이터
@@ -29,7 +30,6 @@ public class GameManager : MonoBehaviour
         PlayerResource resource = PlayerResource.Instance;
 
         playerPrefab = resource.PlayerPrefab;
-        localPlayerPrefab = resource.LocalPlayerPrefab;
         playerDatas = resource.PlayerDatas;
     }
 
@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviour
 
             if (playerData.IsPlaying)
             {
-                GameObject playerObj = SpawnPlayer(playerData, startPoints[i]);
+                GameObject playerObj = Instantiate(playerPrefab, startPoints[i], Quaternion.identity);
 
                 // 플레이어 오브젝트에 데이터 부여
                 Player player = playerObj.GetComponent<Player>();
@@ -86,27 +86,6 @@ public class GameManager : MonoBehaviour
         }
 
         GameData.Instance.InitData(playerList);
-    }
-
-    private GameObject SpawnPlayer(PlayerData playerData, Vector2 spawnPoint)
-    {
-        if (playerData == LocalPlayerData.Instance.PlayerData)
-        {
-            // 로컬 플레이어 오브젝트 생성
-            GameObject playerObj = Instantiate(localPlayerPrefab, spawnPoint, Quaternion.identity);
-
-            // 카메라 설정
-            cameraManager.InitPlayer(playerObj);
-
-            return playerObj;
-        }
-        else
-        {
-            // 일반 플레이어 오브젝트 생성
-            GameObject playerObj = Instantiate(playerPrefab, spawnPoint, Quaternion.identity);
-
-            return playerObj;
-        }
     }
 
     private void Update()
@@ -179,15 +158,29 @@ public class GameManager : MonoBehaviour
     {
         waveData.IsRunning = false;
 
-        Debug.Log("Game Over...");
-        SceneManager.LoadScene("TmpLobby");
+        Time.timeScale = 0.0f;
+        resultConfirm.Active("Game Over...", () =>
+        {
+            PhotonNetwork.LeaveRoom();
+
+            Time.timeScale = 1.0f;
+        });
     }
 
     private void OnGameClear()
     {
         // 웨이브를 최종 클리어 했을 시
-        Debug.Log("Clear");
+        Time.timeScale = 0.0f;
+        resultConfirm.Active("Game Clear!!", () =>
+        {
+            PhotonNetwork.LeaveRoom();
 
-        SceneManager.LoadScene("TmpLobby");
+            Time.timeScale = 1.0f;
+        });
+    }
+
+    public override void OnLeftRoom()
+    {
+        SceneManager.LoadScene("TitleScene");
     }
 }

@@ -65,7 +65,8 @@ public class PlayerPanelManager : MonoBehaviourPun
 
         if (player.IsLocal)
         {
-            // 직업명 설정
+            // 직업명 및 로컬 마크 설정
+            ui.SetLocalMark(true);
             UpdateClass();
         }
 
@@ -193,7 +194,7 @@ public class PlayerPanelManager : MonoBehaviourPun
         // Confirm 띄우기
         string msg = "해당 유저에게 방장을 양도하시겠습니까?";
 
-        confirm.OnActive(msg, OnDelegateAdmin);
+        confirm.Active(msg, OnDelegateAdmin);
 
         // 기존 플레이어 메뉴 닫기
         ui.TogglePlayerMenu();
@@ -214,7 +215,7 @@ public class PlayerPanelManager : MonoBehaviourPun
         // Confirm 띄우기
         string msg = "해당 유저를 강제 추방하시겠습니까?";
 
-        confirm.OnActive(msg, OnKickedPlayer);
+        confirm.Active(msg, OnKickedPlayer);
 
         // 기존 플레이어 메뉴 닫기
         ui.TogglePlayerMenu();
