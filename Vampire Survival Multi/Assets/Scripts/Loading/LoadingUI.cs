@@ -8,6 +8,7 @@ public class LoadingUI : MonoBehaviour
     [Header("참조 컴포넌트")]
     [SerializeField] private TextMeshProUGUI percentage;
     [SerializeField] private TextMeshProUGUI loadingTxt;
+    [SerializeField] private TextMeshProUGUI completeTxt;
     [SerializeField] private Image loadingBar;
 
     private string initLoadingTxt = "Loading";
@@ -18,6 +19,11 @@ public class LoadingUI : MonoBehaviour
     public float FillAmount
     {
         get { return loadingBar.fillAmount; }
+    }
+
+    public void SetCompletePlayer(int completePlayer, int playerCount)
+    {
+        completeTxt.text = $"<{completePlayer}/{playerCount}> 준비 완료";
     }
 
     public void UpdateBar(float progress, float timer)

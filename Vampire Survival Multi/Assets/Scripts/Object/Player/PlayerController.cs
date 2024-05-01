@@ -28,7 +28,12 @@ public class PlayerController : MonoBehaviour, IControlState
     {
         rigid = GetComponent<Rigidbody2D>();
         player = GetComponent<Player>();
+
         playerData = LocalPlayerData.Instance.PlayerData;
+        classData = LocalPlayerData.Instance.Class;
+
+        // 장비 초기 셋팅
+        PlayerEquip.Instance.InitEquips();
 
         // Init Position In PlayerData
         playerData.Position = transform.position;

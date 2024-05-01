@@ -65,6 +65,8 @@ public class PlayerPanelManager : MonoBehaviourPun
 
         if (player.IsLocal)
         {
+            ui.SetLocalMark(true);
+
             // 직업명 설정
             UpdateClass();
         }

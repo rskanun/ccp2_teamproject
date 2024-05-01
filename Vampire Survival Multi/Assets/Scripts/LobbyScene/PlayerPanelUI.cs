@@ -14,6 +14,7 @@ public class PlayerPanelUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI className;
 
     [Header("현재 상태 오브젝트")]
+    [SerializeField] private GameObject localMark;
     [SerializeField] private GameObject readyPanel;
     [SerializeField] private GameObject adminPanel;
 
@@ -67,6 +68,11 @@ public class PlayerPanelUI : MonoBehaviour
     * 
     * 현재 플레이어의 상태를 나타내는 오브젝트 설정
     ***************************************************************/
+
+    public void SetLocalMark(bool isActive)
+    {
+        localMark.SetActive(isActive);
+    }
 
     public void SetReadyPanel(bool isActive)
     {

@@ -29,6 +29,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
+        PhotonNetwork.AutomaticallySyncScene = true;
+
         room = PhotonNetwork.CurrentRoom;
 
         // 방장 설정
@@ -95,6 +97,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public override void OnLeftRoom()
     {
+        PhotonNetwork.AutomaticallySyncScene = false;
+
         // 방을 나갔으면 타이틀로 돌아가기
         SceneManager.LoadScene("TitleScene");
     }
@@ -318,7 +322,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     [PunRPC]
     private void UpdateStartActive()
     {
-        Debug.Log("Update Panel");
         if (GetStartableState())
         {
             // 모든 플레이어가 준비상태일 경우 시작 버튼 활성화
@@ -335,10 +338,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         foreach (PlayerPanelManager manager in playerPanels)
         {
-            Debug.Log($"{manager.gameObject.name} Exist: {manager.IsExist}, Ready:{manager.IsReady}");
             if (manager.IsExist && manager.IsReady == false)
             {
-                Debug.Log($"{manager.gameObject.name} Master: {manager.JoinPlayer.IsMasterClient}");
                 if (manager.JoinPlayer.IsMasterClient == false)
                 {
                     return false;
@@ -388,7 +389,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             if (manager.IsExist)
             {
                 // 해당 자리의 플레이어 참가 설정
-                playerData.IsPlaying = true;
+                photonView.RPC(nameof(SetPlayerIsPlaying), RpcTarget.All, i);
 
                 // 플레이어 데이터 할당
                 photonView.RPC(nameof(InitClassData), manager.JoinPlayer, i);
@@ -400,7 +401,15 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             }
         }
 
-        SceneLoadManager.LoadScene("InGame");
+        SceneLoadManager.LoadLevel("InGame");
+    }
+
+    [PunRPC]
+    private void SetPlayerIsPlaying(int index)
+    {
+        PlayerData playerData = PlayerResource.Instance.PlayerDatas[index];
+
+        playerData.IsPlaying = true;
     }
 
     [PunRPC]
@@ -410,6 +419,17 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
         LocalPlayerData localPlayer = LocalPlayerData.Instance;
         localPlayer.InitPlayerData(playerData);
+
+        photonView.RPC(nameof(AsyncClassData), RpcTarget.Others, localPlayer.Class.ID, index);
+    }
+
+    [PunRPC]
+    private void AsyncClassData(int classID, int playerIndex)
+    {
+        ClassData classData = ClassResource.Instance.FindClass(classID);
+        PlayerData playerData = PlayerResource.Instance.PlayerDatas[playerIndex];
+
+        playerData.InitData(classData);
     }
 
     /***************************************************************

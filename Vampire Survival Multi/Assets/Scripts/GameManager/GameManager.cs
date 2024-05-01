@@ -1,12 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using Photon.Pun;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviourPun
 {
     [Header("참조 스크립트")]
     [SerializeField] private WaveManager waveManager;
     [SerializeField] private CameraManager cameraManager;
+    [SerializeField] private Confirm resultConfirm;
 
     [Header("시작 위치")]
     [SerializeField] private List<Vector2> startPoints;
@@ -38,11 +40,11 @@ public class GameManager : MonoBehaviour
         // 게임 데이터 초기화
         InitGameData();
 
-        // 장비 초기 셋팅
-        PlayerEquip.Instance.InitEquips();
-
-        // 게임 시작
-        GameStart();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            // 게임 시작
+            GameStart();
+        }
     }
 
     private void InitGameData()
@@ -76,10 +78,6 @@ public class GameManager : MonoBehaviour
             {
                 GameObject playerObj = SpawnPlayer(playerData, startPoints[i]);
 
-                // 플레이어 오브젝트에 데이터 부여
-                Player player = playerObj.GetComponent<Player>();
-                player.InitPlayerData(playerData);
-
                 // 플레이어 오브젝트 목록에 추가
                 playerList.Add(playerObj);
             }
@@ -98,6 +96,10 @@ public class GameManager : MonoBehaviour
             // 카메라 설정
             cameraManager.InitPlayer(playerObj);
 
+            // 데이터 설정
+            Player player = playerObj.GetComponent<Player>();
+            player.InitPlayerData(playerData);
+
             return playerObj;
         }
         else
@@ -111,11 +113,14 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        // 플레이어 상태 체크
-        UpdatePlayersStatus();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            // 플레이어 상태 체크
+            UpdatePlayersStatus();
 
-        // 웨이브 상태 진행
-        UpdateWaveStatus();
+            // 웨이브 상태 진행
+            UpdateWaveStatus();
+        }
     }
 
     /***************************************************************
@@ -145,12 +150,22 @@ public class GameManager : MonoBehaviour
                 if (waveData.IsRunning == false)
                 {
                     // 게임 종료
-                    OnGameClear();
+                    photonView.RPC(nameof(OnGameClear), RpcTarget.All);
                 }
             }
             else
-                waveData.RemainTime -= Time.deltaTime;
+            {
+                float time = Time.deltaTime;
+
+                photonView.RPC(nameof(PassedWaveTime), RpcTarget.All, time);
+            }
         }
+    }
+
+    [PunRPC]
+    private void PassedWaveTime(float time)
+    {
+        waveData.RemainTime -= time;
     }
 
     private void OnWaveClear()
@@ -179,15 +194,24 @@ public class GameManager : MonoBehaviour
     {
         waveData.IsRunning = false;
 
-        Debug.Log("Game Over...");
-        SceneManager.LoadScene("TmpLobby");
+        Time.timeScale = 0.0f;
+        resultConfirm.OnActive("Game Over...", () =>
+        {
+            SceneManager.LoadScene("TitleScene");
+
+            Time.timeScale = 1.0f;
+        });
     }
 
     private void OnGameClear()
     {
         // 웨이브를 최종 클리어 했을 시
-        Debug.Log("Clear");
+        Time.timeScale = 0.0f;
+        resultConfirm.OnActive("Game Clear!!", () =>
+        {
+            SceneManager.LoadScene("TitleScene");
 
-        SceneManager.LoadScene("TmpLobby");
+            Time.timeScale = 1.0f;
+        });
     }
 }

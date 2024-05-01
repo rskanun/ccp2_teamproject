@@ -20,8 +20,6 @@ public class SceneLoadManager : MonoBehaviourPunCallbacks
     {
         playerCount = PhotonNetwork.CurrentRoom.PlayerCount;
 
-        PhotonNetwork.IsMessageQueueRunning = false;
-
         if (PhotonNetwork.IsMasterClient)
         {
             photonView.RPC(nameof(SetNextScene), RpcTarget.All, nextScene);
@@ -80,8 +78,6 @@ public class SceneLoadManager : MonoBehaviourPunCallbacks
                 }
             }
 
-            Debug.Log($"Timer: {timer} / Percentage: {percentage}");
-
             yield return null;
         }
     }
@@ -89,7 +85,6 @@ public class SceneLoadManager : MonoBehaviourPunCallbacks
     private void OnCompleted()
     {
         PhotonNetwork.AutomaticallySyncScene = false;
-        PhotonNetwork.IsMessageQueueRunning = true;
 
         photonView.RPC(nameof(LoadingCompleted), RpcTarget.MasterClient);
     }
@@ -103,6 +98,7 @@ public class SceneLoadManager : MonoBehaviourPunCallbacks
         }
 
         completePlayer++;
+        ui.SetCompletePlayer(completePlayer, playerCount);
 
         if (completePlayer >= playerCount)
         {
@@ -114,5 +110,12 @@ public class SceneLoadManager : MonoBehaviourPunCallbacks
     {
         // 씬 로드
         op.allowSceneActivation = true;
+    }
+
+    public override void OnPlayerLeftRoom(Photon.Realtime.Player otherPlayer)
+    {
+        playerCount--;
+
+        ui.SetCompletePlayer(completePlayer, playerCount);
     }
 }

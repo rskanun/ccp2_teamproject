@@ -4,7 +4,6 @@ public class Player : MonoBehaviour
 {
     // 해당 플레이어 옵션
     private PlayerData playerData;
-    private bool isDead = false;
 
     // 플레이어 공통 옵션
     private PlayerResource playerOption;
@@ -18,18 +17,10 @@ public class Player : MonoBehaviour
     private void OnEnable()
     {
         // Reset HP
-        if (isDead)
+        if (playerData != null)
         {
-            Debug.Log("dead?");
             playerData.HP = playerData.MaxHP;
-
-            isDead = false;
         }
-    }
-
-    private void OnDisable()
-    {
-        isDead = true;
     }
 
     private void Update()
@@ -40,9 +31,12 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void InitPlayerData(PlayerData initData)
+    public void InitPlayerData(PlayerData playerData)
     {
-        playerData = initData;
+        Debug.Log("Init Data");
+        this.playerData = playerData;
+
+        // Reset HP
         playerData.HP = playerData.MaxHP;
     }
 
