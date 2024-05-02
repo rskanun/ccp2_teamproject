@@ -1,9 +1,10 @@
 ﻿using Photon.Pun;
+using Photon.Realtime;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class GameManager : MonoBehaviourPun
+public class GameManager : MonoBehaviourPunCallbacks
 {
     [Header("참조 스크립트")]
     [SerializeField] private WaveManager waveManager;
@@ -14,7 +15,6 @@ public class GameManager : MonoBehaviourPun
     [SerializeField] private List<Vector2> startPoints;
 
     // 플레이어 리소스
-    private GameObject playerPrefab;
     private GameObject localPlayerPrefab;
     private List<PlayerData> playerDatas;
 
@@ -30,18 +30,30 @@ public class GameManager : MonoBehaviourPun
         // Init Player Resource
         PlayerResource resource = PlayerResource.Instance;
 
-        playerPrefab = resource.PlayerPrefab;
         localPlayerPrefab = resource.LocalPlayerPrefab;
         playerDatas = resource.PlayerDatas;
+
+        // Init Prefab in Photon Default Pool
+        InitPrefabResource();
+    }
+
+    private void InitPrefabResource()
+    {
+        DefaultPool pool = PhotonNetwork.PrefabPool as DefaultPool;
+
+        if (pool != null)
+        {
+            pool.ResourceCache.Add(localPlayerPrefab.name, localPlayerPrefab);
+        }
     }
 
     private void Start()
     {
-        // 게임 데이터 초기화
-        InitGameData();
-
         if (PhotonNetwork.IsMasterClient)
         {
+            // 게임 데이터 초기화
+            InitGameData();
+
             // 게임 시작
             GameStart();
         }
@@ -67,48 +79,40 @@ public class GameManager : MonoBehaviourPun
 
     private void InitPlayer()
     {
-        // 게임을 플레이하는 플레이어 오브젝트 목록
-        List<GameObject> playerList = new List<GameObject>();
+        GameData gameData = GameData.Instance;
 
         for(int i = 0; i < playerDatas.Count; i++)
         {
             PlayerData playerData = playerDatas[i];
-
-            if (playerData.IsPlaying)
+            if (playerDatas[i].IsPlaying)
             {
-                GameObject playerObj = SpawnPlayer(playerData, startPoints[i]);
+                GameObject playerObj = SpawnPlayer(i, startPoints[i]);
 
                 // 플레이어 오브젝트 목록에 추가
-                playerList.Add(playerObj);
+                gameData.AddPlayableChr(playerObj);
             }
         }
 
-        GameData.Instance.InitData(playerList);
+        gameData.InitData();
     }
 
-    private GameObject SpawnPlayer(PlayerData playerData, Vector2 spawnPoint)
+    private GameObject SpawnPlayer(int index, Vector2 spawnPoint)
     {
-        if (playerData == LocalPlayerData.Instance.PlayerData)
-        {
-            // 로컬 플레이어 오브젝트 생성
-            GameObject playerObj = Instantiate(localPlayerPrefab, spawnPoint, Quaternion.identity);
+        PlayerData playerData = playerDatas[index];
 
-            // 카메라 설정
-            cameraManager.InitPlayer(playerObj);
+        // 로컬 플레이어 오브젝트 생성 및 제어권 설정
+        GameObject playerObj = PhotonNetwork.Instantiate(localPlayerPrefab.name, spawnPoint, Quaternion.identity);
+        PhotonView photonView = playerObj.GetComponent<PhotonView>();
+        photonView.TransferOwnership(playerData.Player);
 
-            // 데이터 설정
-            Player player = playerObj.GetComponent<Player>();
-            player.InitPlayerData(playerData);
+        // 카메라 설정
+        // cameraManager.InitPlayer(playerObj);
 
-            return playerObj;
-        }
-        else
-        {
-            // 일반 플레이어 오브젝트 생성
-            GameObject playerObj = Instantiate(playerPrefab, spawnPoint, Quaternion.identity);
+        // 데이터 설정
+        Player player = playerObj.GetComponent<Player>();
+        player.InitPlayerData(index);
 
-            return playerObj;
-        }
+        return playerObj;
     }
 
     private void Update()
@@ -208,6 +212,23 @@ public class GameManager : MonoBehaviourPun
         // 웨이브를 최종 클리어 했을 시
         Time.timeScale = 0.0f;
         resultConfirm.OnActive("Game Clear!!", () =>
+        {
+            SceneManager.LoadScene("TitleScene");
+
+            Time.timeScale = 1.0f;
+        });
+    }
+
+    /***************************************************************
+    * [ 연결 끊김 ]
+    * 
+    * 연결이 끊겼을 때의 대처 방안
+    ***************************************************************/
+
+    public override void OnMasterClientSwitched(Photon.Realtime.Player newMasterClient)
+    {
+        Time.timeScale = 0.0f;
+        resultConfirm.OnActive("호스트의 서버 연결이 끊겼습니다!!", () =>
         {
             SceneManager.LoadScene("TitleScene");
 

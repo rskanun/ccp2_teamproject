@@ -4,12 +4,17 @@
 public class PlayerData : ScriptableObject
 {
     [Header("플레이어 정보")]
-    [SerializeField] 
-    private bool _isPlaying;
+    [SerializeField]
+    private Photon.Realtime.Player _player;
+    public Photon.Realtime.Player Player
+    {
+        set { _player = value; }
+        get { return _player; }
+    }
+
     public bool IsPlaying
     {
-        get { return _isPlaying; }
-        set { _isPlaying = value; }
+        get { return Player != null; }
     }
 
     [ReadOnly]
@@ -146,11 +151,11 @@ public class PlayerData : ScriptableObject
     public void InitData(ClassData playerClass)
     {
         // 스텟 초기화
-        _currentMaxHP = playerClass.HP;
-        _currentSTR = playerClass.STR;
-        _currentDEF = playerClass.DEF;
-        _currentAttackSpeed = playerClass.AttackSpeed;
-        _currentMoveSpeed = playerClass.MoveSpeed;
-        _currentLifeSteal = playerClass.LifeSteal;
+        MaxHP = playerClass.HP;
+        STR = playerClass.STR;
+        DEF = playerClass.DEF;
+        AttackSpeed = playerClass.AttackSpeed;
+        MoveSpeed = playerClass.MoveSpeed;
+        LifeSteal = playerClass.LifeSteal;
     }
 }

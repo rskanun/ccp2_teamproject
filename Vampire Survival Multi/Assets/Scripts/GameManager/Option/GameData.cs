@@ -52,10 +52,31 @@ public class GameData : ScriptableObject
     }
 
     [Header("참가 플레이어 정보")]
+    [ReadOnly]
+    [SerializeField]
     private List<GameObject> _playerList;
     public List<GameObject> PlayerList
     {
-        get { return _playerList; }
+        private set { _playerList = value; }
+        get
+        {
+            if (_playerList == null)
+                _playerList = new List<GameObject>();
+
+            return _playerList;
+        }
+    }
+    private List<GameObject> _cachedPlayerList;
+    public List<GameObject> CachedPlayerList
+    {
+        private set {  _cachedPlayerList = value; }
+        get
+        {
+             if (_cachedPlayerList == null)
+                _cachedPlayerList = new List<GameObject>();
+
+            return _cachedPlayerList;
+        }
     }
 
     [ReadOnly]
@@ -63,7 +84,14 @@ public class GameData : ScriptableObject
     private List<GameObject> _deadPlayerList;
     public List<GameObject> DeadPlayerList
     {
-        get { return _deadPlayerList; }
+        private set { _deadPlayerList = value; }
+        get
+        {
+            if (_deadPlayerList == null)
+                _deadPlayerList = new List<GameObject>();
+
+            return _deadPlayerList;
+        }
     }
 
     public bool IsAllDead
@@ -82,6 +110,7 @@ public class GameData : ScriptableObject
     private int _exp;
     public int Exp
     {
+        private set { _exp = value; }
         get { return _exp; }
     }
 
@@ -89,6 +118,7 @@ public class GameData : ScriptableObject
     private int _requireExp;
     public int RequireExp
     {
+        private set { _requireExp = value; }
         get { return _requireExp; }
     }
 
@@ -96,23 +126,25 @@ public class GameData : ScriptableObject
     private int _level;
     public int Level
     {
+        private set { _level = value; }
         get { return _level; }
     }
 
     [Header("이벤트")]
     [SerializeField] private GameEvent expEvent;
     [SerializeField] private GameEvent levelUpEvent;
-
-    public void InitData(List<GameObject> players)
+    
+    public void InitData()
     {
-        InitPlayer(players);
+        PlayerList = CachedPlayerList;
+        CachedPlayerList.Clear();
+
         InitLevel();
     }
 
-    private void InitPlayer(List<GameObject> players)
+    public void AddPlayableChr(GameObject playableChr)
     {
-        _playerList = new List<GameObject>(players);
-        _deadPlayerList = new List<GameObject>();
+        CachedPlayerList.Add(playableChr);
     }
 
     private void InitLevel()
@@ -120,9 +152,9 @@ public class GameData : ScriptableObject
         // Init Level
         int initLevel = 1;
 
-        _level = initLevel;
-        _exp = 0;
-        _requireExp = LevelResource.Instance.GetRequireExp(initLevel);
+        Level = initLevel;
+        Exp = 0;
+        RequireExp = LevelResource.Instance.GetRequireExp(initLevel);
 
         // 경험치 변경 이벤트
         expEvent.NotifyUpdate();
@@ -132,17 +164,17 @@ public class GameData : ScriptableObject
     {
         if (_requireExp < int.MaxValue)
         {
-            _exp += exp;
+            Exp += exp;
 
             // 레벨 및 레벨업에 필요한 경험치량 조정
-            while (_exp >= _requireExp)
+            while (Exp >= _requireExp)
             {
                 // 레벨업
-                _level++;
-                _exp -= _requireExp;
+                Level++;
+                Exp -= RequireExp;
 
                 // 필요 경험치량 조정
-                _requireExp = LevelResource.Instance.GetRequireExp(_level);
+                RequireExp = LevelResource.Instance.GetRequireExp(Level);
 
                 // 레벨업 이벤트
                 levelUpEvent.NotifyUpdate();
@@ -155,11 +187,11 @@ public class GameData : ScriptableObject
 
     public void AddDeadList(GameObject player)
     {
-        _deadPlayerList.Add(player);
+        DeadPlayerList.Add(player);
     }
 
     public void ReviveAllPlayer()
     {
-        _deadPlayerList.Clear();
+        DeadPlayerList.Clear();
     }
 }

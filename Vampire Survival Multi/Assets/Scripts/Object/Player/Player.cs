@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
+using UnityEngine;
 
-public class Player : MonoBehaviour
+public class Player : MonoBehaviourPun
 {
     // 해당 플레이어 옵션
     private PlayerData playerData;
@@ -31,9 +32,21 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void InitPlayerData(PlayerData playerData)
+    public void InitPlayerData(int playerIndex)
     {
-        Debug.Log("Init Data");
+        photonView.RPC(nameof(AsyncPlayerData), RpcTarget.MasterClient, playerIndex);
+    }
+
+    [PunRPC]
+    private void AsyncPlayerData(int playerIndex)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC(nameof(AsyncPlayerData), RpcTarget.Others, playerIndex);
+        }
+
+        PlayerData playerData = PlayerResource.Instance.PlayerDatas[playerIndex];
+
         this.playerData = playerData;
 
         // Reset HP

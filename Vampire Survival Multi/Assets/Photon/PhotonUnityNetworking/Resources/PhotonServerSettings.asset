@@ -70,6 +70,9 @@ MonoBehaviour:
   - AsyncClassData
   - PassedWaveTime
   - SetPlayerIsPlaying
+  - AsyncPlayerData
+  - InitPlayerData
+  - CompletedAsync
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

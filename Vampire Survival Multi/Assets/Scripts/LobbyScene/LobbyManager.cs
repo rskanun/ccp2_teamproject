@@ -20,6 +20,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     // 방 정보
     private Room room;
+    private int readyToStartPlayer = 0;
+    private int setPlayerDataCount = 0;
 
     /***************************************************************
     * [ 방 입장 ]
@@ -88,7 +90,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     {
         if (masterClient.IsLocal)
         {
-            LeavePlayer(otherPlayer);
+            RemovePlayer(otherPlayer);
 
             // 시작 여부 업데이트
             UpdateStartActive();
@@ -111,7 +113,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             if (IsPlayerInRoom(masterClient) == false)
             {
                 // 이미 나간 방장일 경우 패널에서 삭제
-                LeavePlayer(masterClient);
+                RemovePlayer(masterClient);
             }
 
             // 방장 넘겨받기
@@ -149,7 +151,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         return false;
     }
 
-    private void LeavePlayer(Photon.Realtime.Player removePlayer)
+    private void RemovePlayer(Photon.Realtime.Player removePlayer)
     {
         foreach (PlayerPanelManager manager in playerPanels)
         {
@@ -381,6 +383,11 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public void OnStart()
     {
+        StartCoroutine(StartGameCoroutine());
+    }
+
+    private System.Collections.IEnumerator StartGameCoroutine()
+    {
         for (int i = 0; i < playerPanels.Count; i++)
         {
             PlayerPanelManager manager = playerPanels[i];
@@ -389,7 +396,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             if (manager.IsExist)
             {
                 // 해당 자리의 플레이어 참가 설정
-                photonView.RPC(nameof(SetPlayerIsPlaying), RpcTarget.All, i);
+                photonView.RPC(nameof(SetPlayerIsPlaying), RpcTarget.All, i, manager.JoinPlayer);
 
                 // 플레이어 데이터 할당
                 photonView.RPC(nameof(InitClassData), manager.JoinPlayer, i);
@@ -397,19 +404,34 @@ public class LobbyManager : MonoBehaviourPunCallbacks
             else
             {
                 // 나머지 플레이어 참가 해제
-                playerData.IsPlaying = false;
+                photonView.RPC(nameof(SetPlayerIsPlaying), RpcTarget.All, i, null);
             }
         }
 
+        // RPC 호출이 완료된 후에 실행
+        yield return new WaitUntil(() => AllRPCsFinished());
+
+        // 모든 플레이어가 데이터를 전송 받았으면 게임 시작
         SceneLoadManager.LoadLevel("InGame");
     }
 
+    private bool AllRPCsFinished()
+    {
+        return readyToStartPlayer >= room.PlayerCount;
+    }
+
     [PunRPC]
-    private void SetPlayerIsPlaying(int index)
+    private void SetPlayerIsPlaying(int index, Photon.Realtime.Player joinPlayer)
     {
         PlayerData playerData = PlayerResource.Instance.PlayerDatas[index];
 
-        playerData.IsPlaying = true;
+        playerData.Player = joinPlayer;
+
+        if (joinPlayer == null)
+        {
+            // 완료된 데이터 셋팅
+            AddCompletedRPC();
+        }
     }
 
     [PunRPC]
@@ -421,6 +443,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         localPlayer.InitPlayerData(playerData);
 
         photonView.RPC(nameof(AsyncClassData), RpcTarget.Others, localPlayer.Class.ID, index);
+
+        // 완료된 데이터 셋팅에 추가
+        AddCompletedRPC();
     }
 
     [PunRPC]
@@ -430,6 +455,25 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         PlayerData playerData = PlayerResource.Instance.PlayerDatas[playerIndex];
 
         playerData.InitData(classData);
+
+        // 완료된 데이터 셋팅에 추가
+        AddCompletedRPC();
+    }
+
+    private void AddCompletedRPC()
+    {
+        setPlayerDataCount++;
+
+        if (setPlayerDataCount >= playerPanels.Count)
+        {
+            photonView.RPC(nameof(CompletedAsync), RpcTarget.MasterClient);
+        }
+    }
+
+    [PunRPC]
+    private void CompletedAsync()
+    {
+        readyToStartPlayer++;
     }
 
     /***************************************************************
