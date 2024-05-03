@@ -14,13 +14,13 @@ public class WaveManager : MonoBehaviour
     private GameData gameData;
 
     // 스포너 정보
-    private Queue<SpawnerManager> _spawnerSeq;
+    private Queue<SpawnerManager> _spawnerSeq = new Queue<SpawnerManager>();
     private Queue<SpawnerManager> SpawnerSeq
     {
         get
         {
             // 스포너 순서가 전부 돌면 다시 재정렬
-            if (_spawnerSeq == null || _spawnerSeq.Count <= 0)
+            if (_spawnerSeq.Count <= 0)
             {
                 List<SpawnerManager> newList = SuffleSeq(SpawnerList);
 
@@ -31,16 +31,13 @@ public class WaveManager : MonoBehaviour
         }
     }
 
-    private List<SpawnerManager> _spawnerList;
+    private List<SpawnerManager> _spawnerList = new List<SpawnerManager>();
     private List <SpawnerManager> SpawnerList
     {
         get
         {
-            if (_spawnerList == null || _spawnerList.Count <= 0)
+            if (_spawnerList.Count <= 0)
             {
-                _spawnerList = new List<SpawnerManager>();
-                _spawnerSeq = new Queue<SpawnerManager>();
-
                 // Init Spawner List
                 foreach (GameObject obj in gameData.PlayerList)
                 {

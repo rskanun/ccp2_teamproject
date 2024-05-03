@@ -1838,9 +1838,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 298736606}
-        m_TargetAssemblyTypeName: SearchCodePanel, Assembly-CSharp
-        m_MethodName: enterByCode
+      - m_Target: {fileID: 670519610}
+        m_TargetAssemblyTypeName: MultiRoomManager, Assembly-CSharp
+        m_MethodName: OnClickRoomCode
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -5113,6 +5113,8 @@ MonoBehaviour:
   createManager: {fileID: 1720772184}
   photonManager: {fileID: 487612931}
   errorManager: {fileID: 487612934}
+  messageText: {fileID: 1357323009}
+  searchCodeField: {fileID: 21407563}
 --- !u!114 &670519611
 MonoBehaviour:
   m_ObjectHideFlags: 0

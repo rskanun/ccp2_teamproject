@@ -2,26 +2,25 @@
 
 public class HUD : MonoBehaviour
 {
+    [Header("플레이어 데이터")]
+    [SerializeField] private PlayerData playerData;
+
     [Header("참조 스크립트")]
     [SerializeField] private HealthUI healthUI;
 
-    // 참조 데이터
-    private PlayerData _stat;
-    private PlayerData Stat
+    private void Awake()
     {
-        get
+        if (playerData.Player.IsLocal == false)
         {
-            if (_stat == null)
-                _stat = LocalPlayerData.Instance.PlayerData;
-
-            return _stat;
+            // 본인의 플레이어블 캐릭터가 아니라면 HUD 비활성화
+            gameObject.SetActive(false);
         }
     }
 
     public void UpdateHP()
     {
-        float currentHP = Stat.HP;
-        float maxHP = Stat.MaxHP;
+        float currentHP = playerData.HP;
+        float maxHP = playerData.MaxHP;
 
         healthUI.UpdateHP(currentHP, maxHP);
     }

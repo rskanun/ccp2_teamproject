@@ -3,8 +3,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviourPun
 {
-    // 해당 플레이어 옵션
-    private PlayerData playerData;
+    [Header("플레이어 데이터")]
+    [SerializeField] private PlayerData playerData;
 
     // 플레이어 공통 옵션
     private PlayerResource playerOption;
@@ -18,39 +18,23 @@ public class Player : MonoBehaviourPun
     private void OnEnable()
     {
         // Reset HP
-        if (playerData != null)
-        {
-            playerData.HP = playerData.MaxHP;
-        }
+        playerData.HP = playerData.MaxHP;
     }
 
     private void Update()
     {
         if (curDuration > 0)
         {
-            curDuration -= Time.deltaTime;
-        }
-    }
+            float time = Time.deltaTime;
 
-    public void InitPlayerData(int playerIndex)
-    {
-        photonView.RPC(nameof(AsyncPlayerData), RpcTarget.MasterClient, playerIndex);
+            photonView.RPC(nameof(PassedTime), RpcTarget.All, time);
+        }
     }
 
     [PunRPC]
-    private void AsyncPlayerData(int playerIndex)
+    private void PassedTime(float time)
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            photonView.RPC(nameof(AsyncPlayerData), RpcTarget.Others, playerIndex);
-        }
-
-        PlayerData playerData = PlayerResource.Instance.PlayerDatas[playerIndex];
-
-        this.playerData = playerData;
-
-        // Reset HP
-        playerData.HP = playerData.MaxHP;
+        curDuration -= Time.deltaTime;
     }
 
     /***************************************************************
@@ -69,30 +53,23 @@ public class Player : MonoBehaviourPun
             float def = playerData.DEF;
             float lastDamage = dmg / (dmg + def) * dmg;
 
-            playerData.HP -= lastDamage;
-            curDuration = playerOption.NoDamageDuration;
-
-            if (playerData.HP <= 0)
-            {
-                // hp 값이 0이하면 죽음 처리
-                OnDead();
-            }
+            TakeDamage(lastDamage);
         }
     }
 
     public void OnAttack(Monster monster, float damage)
     {
         float lastDamage = monster.OnTakeDamage(this, damage);
+        float recoverHP = lastDamage * playerData.LifeSteal;
 
-        playerData.HP += lastDamage * playerData.LifeSteal;
+        HealHP(recoverHP);
     }
 
+    [PunRPC]
     private void OnDead()
     {
         // 게임 데이터에 플레이어 값 저장
-        GameData gameData = GameData.Instance;
-
-        gameData.AddDeadList(gameObject);
+        GameData.Instance.AddDeadList(gameObject);
 
         // 플레이어 오브젝트 비활성화
         gameObject.SetActive(false);
@@ -101,5 +78,61 @@ public class Player : MonoBehaviourPun
     public void OnKilled()
     {
 
+    }
+
+
+    /***************************************************************
+    * [ 체력 처리 ]
+    * 
+    * 회복 및 피해에 의한 체력 처리
+    ***************************************************************/
+
+    [PunRPC]
+    private void TakeDamage(float damage)
+    {
+        if (PhotonNetwork.IsMasterClient == false)
+        {
+            photonView.RPC(nameof(TakeDamage), RpcTarget.MasterClient, damage);
+
+            return;
+        }
+
+        playerData.HP -= damage;
+
+        photonView.RPC(nameof(UpdateHP), RpcTarget.Others, playerData.HP);
+        photonView.RPC(nameof(AsyncNoDamageTime), RpcTarget.All);
+
+        if (playerData.HP <= 0)
+        {
+            // hp 값이 0이하면 죽음 처리
+            photonView.RPC(nameof(OnDead), RpcTarget.All);
+        }
+    }
+
+    [PunRPC]
+    private void AsyncNoDamageTime()
+    {
+        curDuration = playerOption.NoDamageDuration;
+    }
+
+    [PunRPC]
+    private void HealHP(float recoverHP)
+    {
+        if (PhotonNetwork.IsMasterClient == false)
+        {
+            photonView.RPC(nameof(HealHP), RpcTarget.MasterClient, recoverHP);
+
+            return;
+        }
+
+        playerData.HP += recoverHP;
+
+        photonView.RPC(nameof(UpdateHP), RpcTarget.Others, playerData.HP);
+    }
+
+    [PunRPC]
+    private void UpdateHP(float currentHP)
+    {
+        playerData.HP = currentHP;
     }
 }

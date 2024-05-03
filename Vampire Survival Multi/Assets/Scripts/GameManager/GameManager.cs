@@ -1,5 +1,6 @@
 ﻿using Photon.Pun;
 using Photon.Realtime;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -8,11 +9,10 @@ public class GameManager : MonoBehaviourPunCallbacks
 {
     [Header("참조 스크립트")]
     [SerializeField] private WaveManager waveManager;
-    [SerializeField] private CameraManager cameraManager;
     [SerializeField] private Confirm resultConfirm;
 
-    [Header("시작 위치")]
-    [SerializeField] private List<Vector2> startPoints;
+    [Header("플레이어블 캐릭터")]
+    [SerializeField] private List<GameObject> playableChrList;
 
     // 플레이어 리소스
     private GameObject localPlayerPrefab;
@@ -21,6 +21,9 @@ public class GameManager : MonoBehaviourPunCallbacks
     // 참조 데이터
     private WaveData waveData;
     private GameData gameData;
+
+    // 준비 여부
+    private int readyToStartPlayer = 0;
 
     private void Awake()
     {
@@ -32,37 +35,50 @@ public class GameManager : MonoBehaviourPunCallbacks
 
         localPlayerPrefab = resource.LocalPlayerPrefab;
         playerDatas = resource.PlayerDatas;
-
-        // Init Prefab in Photon Default Pool
-        InitPrefabResource();
-    }
-
-    private void InitPrefabResource()
-    {
-        DefaultPool pool = PhotonNetwork.PrefabPool as DefaultPool;
-
-        if (pool != null)
-        {
-            pool.ResourceCache.Add(localPlayerPrefab.name, localPlayerPrefab);
-        }
     }
 
     private void Start()
     {
+        // 게임 데이터 초기화
+        InitGameData();
+
         if (PhotonNetwork.IsMasterClient)
         {
-            // 게임 데이터 초기화
-            InitGameData();
-
-            // 게임 시작
-            GameStart();
+            StartCoroutine(OnStartCoroutine());
         }
+    }
+
+    private IEnumerator OnStartCoroutine()
+    {
+        yield return new WaitUntil(() => AllPlayerReady());
+
+        // 게임 시작
+        GameStart();
+    }
+
+    private bool AllPlayerReady()
+    {
+        return readyToStartPlayer >= PhotonNetwork.CurrentRoom.PlayerCount;
     }
 
     private void InitGameData()
     {
         // 플레이어 데이터 초기화
         InitPlayer();
+
+        // 준비 완료 알림
+        OnReadyToStart();
+    }
+
+    private void OnReadyToStart()
+    {
+        photonView.RPC(nameof(AddReadyPlayer), RpcTarget.MasterClient);
+    }
+
+    [PunRPC]
+    private void AddReadyPlayer()
+    {
+        readyToStartPlayer++;
     }
 
     private void GameStart()
@@ -84,35 +100,16 @@ public class GameManager : MonoBehaviourPunCallbacks
         for(int i = 0; i < playerDatas.Count; i++)
         {
             PlayerData playerData = playerDatas[i];
-            if (playerDatas[i].IsPlaying)
+            if (playerData.IsPlaying)
             {
-                GameObject playerObj = SpawnPlayer(i, startPoints[i]);
+                playableChrList[i].SetActive(true);
 
                 // 플레이어 오브젝트 목록에 추가
-                gameData.AddPlayableChr(playerObj);
+                gameData.AddPlayableChr(playableChrList[i]);
             }
         }
 
         gameData.InitData();
-    }
-
-    private GameObject SpawnPlayer(int index, Vector2 spawnPoint)
-    {
-        PlayerData playerData = playerDatas[index];
-
-        // 로컬 플레이어 오브젝트 생성 및 제어권 설정
-        GameObject playerObj = PhotonNetwork.Instantiate(localPlayerPrefab.name, spawnPoint, Quaternion.identity);
-        PhotonView photonView = playerObj.GetComponent<PhotonView>();
-        photonView.TransferOwnership(playerData.Player);
-
-        // 카메라 설정
-        // cameraManager.InitPlayer(playerObj);
-
-        // 데이터 설정
-        Player player = playerObj.GetComponent<Player>();
-        player.InitPlayerData(index);
-
-        return playerObj;
     }
 
     private void Update()
@@ -144,7 +141,7 @@ public class GameManager : MonoBehaviourPunCallbacks
                 if (waveData.RemainTime > 0 && waveData.IsLastWave == false)
                 {
                     // 클리어 보상
-                    OnWaveClear();
+                    photonView.RPC(nameof(OnWaveClear), RpcTarget.All);
                 }
 
                 // 다음 웨이브 진행
@@ -172,6 +169,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         waveData.RemainTime -= time;
     }
 
+    [PunRPC]
     private void OnWaveClear()
     {
         Debug.Log("Wave Clear");
@@ -190,10 +188,11 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         if (gameData.IsAllDead && waveData.IsRunning)
         {
-            OnGameOver();
+            photonView.RPC(nameof(OnGameOver), RpcTarget.All);
         }
     }
 
+    [PunRPC]
     private void OnGameOver()
     {
         waveData.IsRunning = false;
@@ -201,19 +200,20 @@ public class GameManager : MonoBehaviourPunCallbacks
         Time.timeScale = 0.0f;
         resultConfirm.OnActive("Game Over...", () =>
         {
-            SceneManager.LoadScene("TitleScene");
+            PhotonNetwork.LeaveRoom();
 
             Time.timeScale = 1.0f;
         });
     }
 
+    [PunRPC]
     private void OnGameClear()
     {
         // 웨이브를 최종 클리어 했을 시
         Time.timeScale = 0.0f;
         resultConfirm.OnActive("Game Clear!!", () =>
         {
-            SceneManager.LoadScene("TitleScene");
+            PhotonNetwork.LeaveRoom();
 
             Time.timeScale = 1.0f;
         });
@@ -230,9 +230,20 @@ public class GameManager : MonoBehaviourPunCallbacks
         Time.timeScale = 0.0f;
         resultConfirm.OnActive("호스트의 서버 연결이 끊겼습니다!!", () =>
         {
-            SceneManager.LoadScene("TitleScene");
+            PhotonNetwork.LeaveRoom();
 
             Time.timeScale = 1.0f;
         });
+    }
+
+    /***************************************************************
+    * [ 게임 퇴장 ]
+    * 
+    * 특정 이유로 게임에서 퇴장될 때 처리될 함수
+    ***************************************************************/
+
+    public override void OnLeftRoom()
+    {
+        SceneManager.LoadScene("TitleScene");
     }
 }

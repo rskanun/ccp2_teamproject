@@ -73,6 +73,19 @@ MonoBehaviour:
   - AsyncPlayerData
   - InitPlayerData
   - CompletedAsync
+  - AddReadyPlayer
+  - OnGameClear
+  - OnGameOver
+  - OnWaveClear
+  - SetOwnership
+  - AsyncHP
+  - AsyncNoDamageTime
+  - Heal
+  - PassedTime
+  - TakeDamage
+  - HealHP
+  - UpdateHP
+  - OnDead
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

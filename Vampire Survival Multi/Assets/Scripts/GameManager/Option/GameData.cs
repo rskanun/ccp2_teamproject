@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
@@ -66,6 +67,8 @@ public class GameData : ScriptableObject
             return _playerList;
         }
     }
+    [ReadOnly]
+    [SerializeField]
     private List<GameObject> _cachedPlayerList;
     public List<GameObject> CachedPlayerList
     {
@@ -136,8 +139,9 @@ public class GameData : ScriptableObject
     
     public void InitData()
     {
-        PlayerList = CachedPlayerList;
+        PlayerList = new List<GameObject>(CachedPlayerList);
         CachedPlayerList.Clear();
+        DeadPlayerList.Clear();
 
         InitLevel();
     }

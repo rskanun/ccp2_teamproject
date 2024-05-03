@@ -1,21 +1,26 @@
+using Photon.Pun;
+using System;
 using UnityEngine;
 
 [RequireComponent(typeof(Player))]
-public class PlayerController : MonoBehaviour, IControlState
+public class PlayerController : MonoBehaviourPun, IControlState
 {
+    [Header("플레이어 데이터")]
+    [SerializeField] private PlayerData playerData;
+
+    [Header("참조 스크립트")]
+    [SerializeField] private Player player;
+    [SerializeField] private CameraManager cameraManager;
+
     [Header("이벤트")]
     [SerializeField] private GameEvent deadEvent;
     [SerializeField] private GameEvent reviveEvent;
 
-    // 참조 컴포넌트
-    private Rigidbody2D rigid;
-    private Player player;
-
     // 참조 스크립터블 오브젝트
-    private PlayerData playerData;
     private ClassData classData;
 
-    // 이동 변수
+    // 이동 관련 변수
+    private Rigidbody2D rigid;
     private Vector2 moveVec;
 
     // 스킬 변수
@@ -24,12 +29,30 @@ public class PlayerController : MonoBehaviour, IControlState
     private Skill skill;
     private float skillCooldown;
 
+    private void Awake()
+    {
+        Photon.Realtime.Player owner = playerData.Player;
+
+        if (owner.IsLocal)
+        {
+            // 해당 캐릭터가 자신의 것이라면 조종 권한 설정
+            photonView.TransferOwnership(owner);
+        }
+        else
+        {
+            Destroy(this);
+        }
+
+    }
+
     private void Start()
     {
+        // Set Tracker
+        InitCamera();
+
         rigid = GetComponent<Rigidbody2D>();
         player = GetComponent<Player>();
 
-        playerData = LocalPlayerData.Instance.PlayerData;
         classData = LocalPlayerData.Instance.Class;
 
         // 장비 초기 셋팅
@@ -40,6 +63,11 @@ public class PlayerController : MonoBehaviour, IControlState
 
         // Init Skill & Normal Attack
         InitSkill();
+    }
+
+    private void InitCamera()
+    {
+        cameraManager.InitPlayer(gameObject);
     }
 
     private void InitSkill()

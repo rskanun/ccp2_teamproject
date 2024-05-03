@@ -4,7 +4,6 @@
 public class PlayerData : ScriptableObject
 {
     [Header("플레이어 정보")]
-    [SerializeField]
     private Photon.Realtime.Player _player;
     public Photon.Realtime.Player Player
     {
