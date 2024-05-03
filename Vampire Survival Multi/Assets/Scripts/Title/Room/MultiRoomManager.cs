@@ -24,6 +24,8 @@ public class MultiRoomManager : MonoBehaviourPunCallbacks
     [SerializeField]
     private TMP_InputField searchCodeField;
 
+    private bool isButtonPressed = false;
+
     public void OnClickMultiPlay()
     {
         if (PhotonNetwork.IsConnected == false)
@@ -164,38 +166,9 @@ public class MultiRoomManager : MonoBehaviourPunCallbacks
         }
     }
 
-    private void SearchRoomByCode(string keyword)
-    {
-        bool found = false;  // 일치하는 코드를 발견했는지 여부를 추적
-
-        foreach (string code in cachedRoomList.Keys)
-        {
-            // 키워드가 코드와 같을 시
-            if (code.Equals(keyword))
-            {
-
-                OnEnterRoom(code);
-                found = true;  // 발견했음을 표시
-                break;  // 더 이상 반복하지 않고 종료
-            }
-        }
-
-        // 일치하는 코드를 찾지 못한 경우
-        if (!found)
-        {
-            ShowText();
-            Invoke("HideText", 3f);
-        }
-    }
-
-    void ShowText()
-    {
-        messageText.gameObject.SetActive(true);
-    }
-
-    void HideText()
-    {
-        messageText.gameObject.SetActive(false);
+    private void SearchRoomByCode(string keyword)           // 코드 통한 방 입장
+    {       
+        OnEnterRoom(keyword);
     }
 
     /***************************************************************
@@ -230,6 +203,30 @@ public class MultiRoomManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinRoomFailed(short returnCode, string message)
     {
-        errorManager.AlertError(returnCode, message);
+        if (isButtonPressed)
+        {
+            ShowText();
+            Invoke("HideText", 3f);
+            isButtonPressed = false; 
+        }
+        else
+        {
+            errorManager.AlertError(returnCode, message);
+        }
     }
+
+    void ShowText()
+    {
+        messageText.gameObject.SetActive(true);
+    }
+
+    void HideText()
+    {
+        messageText.gameObject.SetActive(false);
+    }
+    public void OnSpecialButtonPressed()
+    {
+        isButtonPressed = true;
+    }
+
 }
