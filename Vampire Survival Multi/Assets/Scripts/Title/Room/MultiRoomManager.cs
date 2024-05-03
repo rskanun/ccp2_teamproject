@@ -143,7 +143,7 @@ public class MultiRoomManager : MonoBehaviourPunCallbacks
     public void OnClickSearchByCode()
     {
         string keyword = searchCodeField.text;
-        Debug.Log(keyword);
+
         SearchRoomByCode(keyword);
     }
 

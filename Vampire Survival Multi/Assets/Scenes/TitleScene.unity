@@ -1840,7 +1840,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 670519610}
         m_TargetAssemblyTypeName: MultiRoomManager, Assembly-CSharp
-        m_MethodName: OnClickRoomCode
+        m_MethodName: OnClickSearchByCode
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -2510,8 +2510,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomCodePanel: {fileID: 298736601}
   searchCodeField: {fileID: 21407563}
-  messageText: {fileID: 1357323009}
-  displayDuration: 5
 --- !u!1 &304158077
 GameObject:
   m_ObjectHideFlags: 0
@@ -13538,6 +13536,18 @@ MonoBehaviour:
       - m_Target: {fileID: 298736606}
         m_TargetAssemblyTypeName: SearchCodePanel, Assembly-CSharp
         m_MethodName: openSearchCodePanel
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 670519610}
+        m_TargetAssemblyTypeName: MultiRoomManager, Assembly-CSharp
+        m_MethodName: OnClickRoomCode
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
