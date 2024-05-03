@@ -37,6 +37,7 @@ public class PhotonManager : MonoBehaviourPunCallbacks
         }
     }
 
+
     public override void OnConnectedToMaster()
     {
         if (isConnecting)
