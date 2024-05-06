@@ -21,4 +21,4 @@ MonoBehaviour:
   _currentAttackSpeed: 0
   _currentMoveSpeed: 0
   _currentLifeSteal: 0
-  hpEvent: {fileID: 11400000, guid: 91fc2c7e67fb08043a35aea8f95afaf0, type: 2}
+  hpEvent: {fileID: 11400000, guid: 4b85cf9267e0d724aa76d5783260551b, type: 2}
