@@ -1887,7 +1887,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4a93488da649a243899cd983daa807c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: 91fc2c7e67fb08043a35aea8f95afaf0, type: 2}
+  gameEvent: {fileID: 11400000, guid: 4b85cf9267e0d724aa76d5783260551b, type: 2}
   response:
     m_PersistentCalls:
       m_Calls:
@@ -1962,7 +1962,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1e9fb108f4740e4c8d895b919dec903, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerData: {fileID: 11400000, guid: 29e7c2ac4b2e4ad4798d82dd70a16df8, type: 2}
+  playerData: {fileID: 11400000, guid: 23b7f5cf479d1d54884545fb1287db21, type: 2}
   player: {fileID: 401359578}
   cameraManager: {fileID: 296187154}
 --- !u!114 &401359578
@@ -1977,7 +1977,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6509302d6f271ac4499bb171f3a09a50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerData: {fileID: 11400000, guid: 29e7c2ac4b2e4ad4798d82dd70a16df8, type: 2}
+  playerData: {fileID: 11400000, guid: 23b7f5cf479d1d54884545fb1287db21, type: 2}
   deadEvent: {fileID: 11400000, guid: 419a0bbb7d0b0ce48a5fc5201dae2523, type: 2}
 --- !u!212 &401359579
 SpriteRenderer:
@@ -3170,7 +3170,7 @@ MonoBehaviour:
         m_MethodName: OnClickPlayer
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: 29e7c2ac4b2e4ad4798d82dd70a16df8, type: 2}
+          m_ObjectArgument: {fileID: 11400000, guid: 23b7f5cf479d1d54884545fb1287db21, type: 2}
           m_ObjectArgumentAssemblyTypeName: PlayerData, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -3974,7 +3974,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4a93488da649a243899cd983daa807c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: 4b85cf9267e0d724aa76d5783260551b, type: 2}
+  gameEvent: {fileID: 11400000, guid: cef9e175b931f154da67c9dd0310ed40, type: 2}
   response:
     m_PersistentCalls:
       m_Calls:
@@ -4049,7 +4049,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1e9fb108f4740e4c8d895b919dec903, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerData: {fileID: 11400000, guid: 23b7f5cf479d1d54884545fb1287db21, type: 2}
+  playerData: {fileID: 11400000, guid: 3f1c87287d03de8498ed4cdd571f63e3, type: 2}
   player: {fileID: 847869574}
   cameraManager: {fileID: 296187154}
 --- !u!114 &847869574
@@ -4064,7 +4064,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6509302d6f271ac4499bb171f3a09a50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerData: {fileID: 11400000, guid: 23b7f5cf479d1d54884545fb1287db21, type: 2}
+  playerData: {fileID: 11400000, guid: 3f1c87287d03de8498ed4cdd571f63e3, type: 2}
   deadEvent: {fileID: 11400000, guid: 419a0bbb7d0b0ce48a5fc5201dae2523, type: 2}
 --- !u!212 &847869575
 SpriteRenderer:
@@ -7586,7 +7586,7 @@ MonoBehaviour:
         m_MethodName: OnClickPlayer
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: 785c5833db865de4da5748d193412e65, type: 2}
+          m_ObjectArgument: {fileID: 11400000, guid: 29e7c2ac4b2e4ad4798d82dd70a16df8, type: 2}
           m_ObjectArgumentAssemblyTypeName: PlayerData, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -8907,7 +8907,7 @@ MonoBehaviour:
         m_MethodName: OnClickPlayer
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: 23b7f5cf479d1d54884545fb1287db21, type: 2}
+          m_ObjectArgument: {fileID: 11400000, guid: 3f1c87287d03de8498ed4cdd571f63e3, type: 2}
           m_ObjectArgumentAssemblyTypeName: PlayerData, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -9133,7 +9133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4a93488da649a243899cd983daa807c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: 4b85cf9267e0d724aa76d5783260551b, type: 2}
+  gameEvent: {fileID: 11400000, guid: cef9e175b931f154da67c9dd0310ed40, type: 2}
   response:
     m_PersistentCalls:
       m_Calls:
@@ -9161,7 +9161,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bdeed932d9adc140a3a1b31592d15b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stat: {fileID: 11400000, guid: 23b7f5cf479d1d54884545fb1287db21, type: 2}
+  stat: {fileID: 11400000, guid: 3f1c87287d03de8498ed4cdd571f63e3, type: 2}
   hpBar: {fileID: 599581236}
 --- !u!1 &1543835383
 GameObject:
@@ -9500,7 +9500,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 687513cc748b6da42a72d31327959f3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerData: {fileID: 11400000, guid: 29e7c2ac4b2e4ad4798d82dd70a16df8, type: 2}
+  playerData: {fileID: 11400000, guid: 23b7f5cf479d1d54884545fb1287db21, type: 2}
   healthUI: {fileID: 931914758}
 --- !u!4 &1669770591
 Transform:
@@ -9705,7 +9705,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4a93488da649a243899cd983daa807c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: 91fc2c7e67fb08043a35aea8f95afaf0, type: 2}
+  gameEvent: {fileID: 11400000, guid: 4b85cf9267e0d724aa76d5783260551b, type: 2}
   response:
     m_PersistentCalls:
       m_Calls:
@@ -9733,7 +9733,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bdeed932d9adc140a3a1b31592d15b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stat: {fileID: 11400000, guid: 29e7c2ac4b2e4ad4798d82dd70a16df8, type: 2}
+  stat: {fileID: 11400000, guid: 23b7f5cf479d1d54884545fb1287db21, type: 2}
   hpBar: {fileID: 655822013}
 --- !u!1 &1692059928
 GameObject:
@@ -10853,7 +10853,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4a93488da649a243899cd983daa807c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: d870c6df11e141948bafe2d24c1ca6a7, type: 2}
+  gameEvent: {fileID: 11400000, guid: 188273e2ccebee247a9e4b997c697d40, type: 2}
   response:
     m_PersistentCalls:
       m_Calls:
@@ -10881,7 +10881,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5bdeed932d9adc140a3a1b31592d15b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stat: {fileID: 11400000, guid: 785c5833db865de4da5748d193412e65, type: 2}
+  stat: {fileID: 11400000, guid: 29e7c2ac4b2e4ad4798d82dd70a16df8, type: 2}
   hpBar: {fileID: 1091504167}
 --- !u!1 &1862593076
 GameObject:
@@ -10985,7 +10985,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 687513cc748b6da42a72d31327959f3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerData: {fileID: 11400000, guid: 23b7f5cf479d1d54884545fb1287db21, type: 2}
+  playerData: {fileID: 11400000, guid: 3f1c87287d03de8498ed4cdd571f63e3, type: 2}
   healthUI: {fileID: 536245780}
 --- !u!4 &1929964757
 Transform:
@@ -11959,7 +11959,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 687513cc748b6da42a72d31327959f3c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerData: {fileID: 11400000, guid: 785c5833db865de4da5748d193412e65, type: 2}
+  playerData: {fileID: 11400000, guid: 29e7c2ac4b2e4ad4798d82dd70a16df8, type: 2}
   healthUI: {fileID: 7582339934758922659}
 --- !u!58 &3501079380052207250
 CircleCollider2D:
@@ -12193,7 +12193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6509302d6f271ac4499bb171f3a09a50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerData: {fileID: 11400000, guid: 785c5833db865de4da5748d193412e65, type: 2}
+  playerData: {fileID: 11400000, guid: 29e7c2ac4b2e4ad4798d82dd70a16df8, type: 2}
   deadEvent: {fileID: 11400000, guid: 419a0bbb7d0b0ce48a5fc5201dae2523, type: 2}
 --- !u!114 &7582339933143357419
 MonoBehaviour:
@@ -12207,7 +12207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1e9fb108f4740e4c8d895b919dec903, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerData: {fileID: 11400000, guid: 785c5833db865de4da5748d193412e65, type: 2}
+  playerData: {fileID: 11400000, guid: 29e7c2ac4b2e4ad4798d82dd70a16df8, type: 2}
   player: {fileID: 7582339933143357418}
   cameraManager: {fileID: 296187154}
 --- !u!50 &7582339933143357421
@@ -12269,7 +12269,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4a93488da649a243899cd983daa807c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameEvent: {fileID: 11400000, guid: d870c6df11e141948bafe2d24c1ca6a7, type: 2}
+  gameEvent: {fileID: 11400000, guid: 91fc2c7e67fb08043a35aea8f95afaf0, type: 2}
   response:
     m_PersistentCalls:
       m_Calls:

@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: PlayerResource
   m_EditorClassIdentifier: 
   _playerDatas:
-  - {fileID: 11400000, guid: 785c5833db865de4da5748d193412e65, type: 2}
   - {fileID: 11400000, guid: 29e7c2ac4b2e4ad4798d82dd70a16df8, type: 2}
   - {fileID: 11400000, guid: 23b7f5cf479d1d54884545fb1287db21, type: 2}
+  - {fileID: 11400000, guid: 3f1c87287d03de8498ed4cdd571f63e3, type: 2}
   - {fileID: 11400000, guid: bd52fbf5f2c292c45a033d0210787b7f, type: 2}
   _noDamageDuration: 0.15
   _knockbackArea: 2
