@@ -16,6 +16,13 @@ public class PlayerData : ScriptableObject
         get { return Player != null; }
     }
 
+    [SerializeField]
+    private int _id;
+    public int ID
+    {
+        get { return _id; }
+    }
+
     [ReadOnly]
     [SerializeField]
     private Vector3 _position;
@@ -42,7 +49,7 @@ public class PlayerData : ScriptableObject
                 _currentHP = value;
 
             // 이벤트 알림
-            _hpEvent.NotifyUpdate();
+            hpEvent.NotifyUpdate();
         }
     }
 
@@ -60,7 +67,7 @@ public class PlayerData : ScriptableObject
                 _currentMaxHP = value;
 
             // 이벤트 알림
-            _hpEvent.NotifyUpdate();
+            hpEvent.NotifyUpdate();
         }
     }
 
@@ -140,12 +147,7 @@ public class PlayerData : ScriptableObject
     }
 
     [Header("이벤트")]
-    [SerializeField]
-    private GameEvent _hpEvent;
-    public GameEvent HPEvent
-    {
-        get { return _hpEvent; }
-    }
+    [SerializeField] private GameEvent hpEvent;
 
     public void InitData(ClassData playerClass)
     {

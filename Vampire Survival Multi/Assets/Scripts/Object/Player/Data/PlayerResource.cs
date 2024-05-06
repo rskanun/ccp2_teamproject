@@ -53,20 +53,6 @@ public class PlayerResource : ScriptableObject
 
     [Header("플레이어 리소스")]
     [SerializeField]
-    private GameObject _playerPrefab;
-    public GameObject PlayerPrefab
-    {
-        get { return _playerPrefab; }
-    }
-
-    [SerializeField]
-    private GameObject _localPlayerPrefab;
-    public GameObject LocalPlayerPrefab
-    {
-        get { return _localPlayerPrefab;  }
-    }
-
-    [SerializeField]
     private List<PlayerData> _playerDatas;
     public List<PlayerData> PlayerDatas
     {
@@ -83,5 +69,19 @@ public class PlayerResource : ScriptableObject
     public float NoDamageDuration
     {
         get { return _noDamageDuration; }
+    }
+    
+    [SerializeField]
+    private float _knockbackArea;
+    public float KnockbackArea
+    {
+        get { return _knockbackArea; }
+    }
+
+    [SerializeField]
+    private float _knockbackForce;
+    public float KnockbackForce
+    {
+        get { return _knockbackForce; }
     }
 }

@@ -8,7 +8,7 @@ public class HUD : MonoBehaviour
     [Header("참조 스크립트")]
     [SerializeField] private HealthUI healthUI;
 
-    private void Awake()
+    private void Start()
     {
         if (playerData.Player.IsLocal == false)
         {

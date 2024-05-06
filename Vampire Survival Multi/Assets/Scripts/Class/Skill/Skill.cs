@@ -2,7 +2,10 @@
 
 public abstract class Skill : ScriptableObject
 {
-    // 플레이어 스텟
+    // 스킬 오브젝트 위치
+    public const string SKILL_OBJECT_DIRECTORY = "Skills/Object/";
+
+    // 플레이어 정보
     private PlayerData _casterData;
     protected PlayerData CasterData
     {
@@ -48,7 +51,7 @@ public abstract class Skill : ScriptableObject
 
     [SerializeField]
     private float _cooldown;
-    public virtual float Cooldown
+    public float Cooldown
     {
         get { return _cooldown; }
     }

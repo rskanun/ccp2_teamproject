@@ -12,19 +12,23 @@ public class ChaseState : IMonsterState
     public void OnUpdate(FSM fsm)
     {
         GameObject target = DetectedPlayer();
-        Vector2 pos = target.transform.position;
+        
+        if (target != null)
+        {
+            Vector2 pos = target.transform.position;
 
-        // 몬스터와 플레이어 간의 거리 계산
-        float distance = Vector2.Distance(pos, _monster.transform.position);
-        if (distance <= _monster.MonsterData.AttackDistance)
-        {
-            // 몬스터가 공격 가능한 범위까지 접근하면 공격
-            fsm.SetState(new AttackState(_monster, target));
-        }
-        else
-        {
-            // 특정 플레이어를 향해 이동
-            MoveToPlayer(pos);
+            // 몬스터와 플레이어 간의 거리 계산
+            float distance = Vector2.Distance(pos, _monster.transform.position);
+            if (distance <= _monster.MonsterData.AttackDistance)
+            {
+                // 몬스터가 공격 가능한 범위까지 접근하면 공격
+                fsm.SetState(new AttackState(_monster, target));
+            }
+            else
+            {
+                // 특정 플레이어를 향해 이동
+                MoveToPlayer(pos);
+            }
         }
     }
 

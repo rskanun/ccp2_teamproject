@@ -1,5 +1,5 @@
 using Photon.Pun;
-using System;
+using System.Collections;
 using UnityEngine;
 
 [RequireComponent(typeof(Player))]
@@ -11,13 +11,6 @@ public class PlayerController : MonoBehaviourPun, IControlState
     [Header("참조 스크립트")]
     [SerializeField] private Player player;
     [SerializeField] private CameraManager cameraManager;
-
-    [Header("이벤트")]
-    [SerializeField] private GameEvent deadEvent;
-    [SerializeField] private GameEvent reviveEvent;
-
-    // 참조 스크립터블 오브젝트
-    private ClassData classData;
 
     // 이동 관련 변수
     private Rigidbody2D rigid;
@@ -31,38 +24,41 @@ public class PlayerController : MonoBehaviourPun, IControlState
 
     private void Awake()
     {
+        if (playerData.IsPlaying == false)
+        {
+            Destroy(gameObject);
+
+            return;
+        }
+
+        // 조종 권한 설정
         Photon.Realtime.Player owner = playerData.Player;
 
-        if (owner.IsLocal)
+        if (owner != null && owner.IsLocal)
         {
             // 해당 캐릭터가 자신의 것이라면 조종 권한 설정
             photonView.TransferOwnership(owner);
         }
-        else
-        {
-            Destroy(this);
-        }
-
     }
 
     private void Start()
     {
-        // Set Tracker
-        InitCamera();
-
         rigid = GetComponent<Rigidbody2D>();
-        player = GetComponent<Player>();
-
-        classData = LocalPlayerData.Instance.Class;
-
-        // 장비 초기 셋팅
-        PlayerEquip.Instance.InitEquips();
 
         // Init Position In PlayerData
         playerData.Position = transform.position;
 
-        // Init Skill & Normal Attack
-        InitSkill();
+        if (playerData.Player.IsLocal)
+        {
+            // 장비 초기 셋팅
+            PlayerEquip.Instance.InitEquips();
+
+            // Set Tracker
+            InitCamera();
+
+            // Init Skill & Normal Attack
+            InitSkill();
+        }
     }
 
     private void InitCamera()
@@ -72,6 +68,8 @@ public class PlayerController : MonoBehaviourPun, IControlState
 
     private void InitSkill()
     {
+        ClassData classData = LocalPlayerData.Instance.Class;
+
         autoAttack = classData.PassiveSkill;
         attackCooldown = 0;
 
@@ -81,45 +79,62 @@ public class PlayerController : MonoBehaviourPun, IControlState
 
     private void Update()
     {
-        // 기본 공격
-        OnNormalAttack();
+        if (playerData.Player.IsLocal)
+        {
+            // 기본 공격
+            OnNormalAttack();
+        }
 
-        // 기본 공격 및 스킬 쿨다운
-        CooldownSkills();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            // 기본 공격 및 스킬 쿨다운
+            CooldownSkills();
+        }
     }
 
     private void OnNormalAttack()
     {
-        if (attackCooldown <= 0)
+        if (autoAttack != null && attackCooldown <= 0)
         {
             autoAttack.UseSkill(player);
 
             // 공격 후 쿨다운 적용
-            attackCooldown = autoAttack.Cooldown;
+            attackCooldown = playerData.AttackSpeed;
         }
     }
 
     private void CooldownSkills()
     {
-        attackCooldown -= Time.deltaTime;
-        skillCooldown -= Time.deltaTime;
+        float time = Time.deltaTime;
+
+        photonView.RPC(nameof(PassedAttackCooldown), photonView.Owner, time);
+        photonView.RPC(nameof(PassedSkillCooldown), photonView.Owner, time);
+    }
+
+    [PunRPC]
+    private void PassedAttackCooldown(float time)
+    {
+        if (attackCooldown > 0)
+        {
+            attackCooldown -= time;
+        }
+    }
+
+    [PunRPC]
+    private void PassedSkillCooldown(float time)
+    {
+        if (skillCooldown > 0)
+        {
+            skillCooldown -= time;
+        }
     }
 
     private void OnEnable()
     {
-        // Set Control State
-        ControlContext.Instance.SetState(this);
-
-        // Notify Revive Event
-        reviveEvent.NotifyUpdate();
-    }
-
-    private void OnDisable()
-    {
-        if (WaveData.Instance.IsRunning)
+        if (playerData.Player.IsLocal)
         {
-            // Notify Dead Event
-            deadEvent.NotifyUpdate();
+            // Set Control State
+            ControlContext.Instance.SetState(this);
         }
     }
 
@@ -133,6 +148,11 @@ public class PlayerController : MonoBehaviourPun, IControlState
     {
         OnMoveKeyPressed();
         OnSkillKeyPressed();
+
+        if (Input.GetKeyDown(KeyCode.J))
+        {
+            KnockbackMonsters();
+        }
     }
 
     private void OnMoveKeyPressed()
@@ -147,7 +167,7 @@ public class PlayerController : MonoBehaviourPun, IControlState
     {
         if (Input.GetButtonDown("Skill"))
         {
-            if (skillCooldown <= 0)
+            if (skill != null && skillCooldown <= 0)
             {
                 skill.UseSkill(player);
 
@@ -166,5 +186,36 @@ public class PlayerController : MonoBehaviourPun, IControlState
 
         // 플레이어 좌표 갱신
         playerData.Position = transform.position;
+    }
+
+    public void UpdatePlayerPos()
+    {
+        if (playerData.Player.IsLocal)
+        {
+            transform.position = playerData.Position;
+        }
+    }
+
+    /***************************************************************
+    * [ 부활 ]
+    * 
+    * 부활 시 주변 몬스터 밀치기
+    ***************************************************************/
+
+    public void KnockbackMonsters()
+    {
+        PlayerResource resource = PlayerResource.Instance;
+
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, resource.KnockbackArea);
+        foreach (Collider2D collider in colliders)
+        {
+            if (collider.CompareTag("Monster"))
+            {
+                Vector2 direction = (collider.transform.position - transform.position).normalized;
+                Rigidbody2D rb = collider.GetComponent<Rigidbody2D>();
+
+                rb.AddForce(direction * resource.KnockbackForce, ForceMode2D.Impulse);
+            }
+        }
     }
 }

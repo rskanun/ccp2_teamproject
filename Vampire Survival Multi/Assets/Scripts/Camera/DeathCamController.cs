@@ -26,7 +26,10 @@ public class DeathCamController : MonoBehaviour, IControlState
         livingPlayers = InitLivingList();
         curPlayer = livingPlayers.Head;
 
-        cameraManager.SetObservePlayer(curPlayer.Value);
+        if (curPlayer != null && cameraManager != null )
+        {
+            cameraManager.SetObservePlayer(curPlayer.Value);
+        }
     }
 
     private LinkedList<GameObject> InitLivingList()
@@ -43,6 +46,14 @@ public class DeathCamController : MonoBehaviour, IControlState
         }
 
         return result;
+    }
+
+    public void OnPlayerRevive()
+    {
+        Vector2 revivePos = curPlayer.Value.transform.position;
+
+        // 부활 위치 설정
+        LocalPlayerData.Instance.MoveToPos(revivePos);
     }
 
     /***************************************************************

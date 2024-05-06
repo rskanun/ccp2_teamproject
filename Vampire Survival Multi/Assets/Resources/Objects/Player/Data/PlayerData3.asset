@@ -12,12 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56e3e61c64ab2864895777473bf92c42, type: 3}
   m_Name: PlayerData3
   m_EditorClassIdentifier: 
-  _isPlaying: 1
+  _id: 2
   _position: {x: 0, y: 0, z: 0}
-  _classData: {fileID: 11400000, guid: 3292f0a17f9f38948be72e42b941c431, type: 2}
   _currentHP: 0
   _currentMaxHP: 10
   _currentSTR: 1
   _currentDEF: 1
-  _currentAGI: 4
-  _hpEvent: {fileID: 11400000, guid: 4b85cf9267e0d724aa76d5783260551b, type: 2}
+  _currentAttackSpeed: 0
+  _currentMoveSpeed: 0
+  _currentLifeSteal: 0
+  hpEvent: {fileID: 11400000, guid: 4b85cf9267e0d724aa76d5783260551b, type: 2}

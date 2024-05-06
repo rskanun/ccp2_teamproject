@@ -1,8 +1,9 @@
 ﻿using DG.Tweening.Core.Easing;
+using Photon.Pun;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WaveManager : MonoBehaviour
+public class WaveManager : MonoBehaviourPun
 {
     [Header("몬스터 소환 정보")]
     [SerializeField]
@@ -68,25 +69,51 @@ public class WaveManager : MonoBehaviour
 
     private void Update()
     {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            RunningWave();
+        }
+    }
+
+    private void RunningWave()
+    {
         if (waveData.IsRunning)
         {
             if (curTime <= 0)
             {
-                SpawnMob();
+                photonView.RPC(nameof(SpawnMob), RpcTarget.All);
 
-                curTime = spawnDelay;
+                UpdateWaveTime(spawnDelay);
             }
             else
-                curTime -= Time.deltaTime;
+            {
+                float passedTime = curTime - Time.deltaTime;
+
+                UpdateWaveTime(passedTime);
+            }
         }
     }
 
+    private void UpdateWaveTime(float time)
+    {
+        curTime = time;
+
+        photonView.RPC(nameof(AsyncWaveTime), RpcTarget.Others, time);
+    }
+
+    [PunRPC]
+    private void AsyncWaveTime(float time)
+    {
+        curTime = time;
+    }
+
+    [PunRPC]
     private void SpawnMob()
     {
         // 스폰할 몹
         GameObject spawnMob = waveData.GetMob();
 
-        if (spawnMob != null)
+        if (PhotonNetwork.IsMasterClient && spawnMob != null)
         {
             bool isSpawnable = false;
             SpawnerManager spawner = null;

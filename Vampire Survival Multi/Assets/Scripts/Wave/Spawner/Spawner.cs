@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
+using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
@@ -87,6 +88,6 @@ public class Spawner : MonoBehaviour
         Vector2 pivot = transform.position;
         Vector2 spawnPos = pivot + new Vector2(randomX, randomY);
 
-        Instantiate(mob, spawnPos, Quaternion.identity);
+        PhotonNetwork.Instantiate(mob.name, spawnPos, Quaternion.identity);
     }
 }

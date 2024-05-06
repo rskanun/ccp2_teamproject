@@ -28,4 +28,9 @@ public class SelectedItem : MonoBehaviour
 
         manager.CloseWindow();
     }
+
+    public void HandOverItem()
+    {
+        manager.HandOverItem(item);
+    }
 }

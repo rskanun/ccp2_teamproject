@@ -1,22 +1,33 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
+using UnityEngine;
 
-public class Projectile : MonoBehaviour
+public class Projectile : MonoBehaviourPun
 {
-    private delegate void OnHit(Monster monster);
-    private delegate void OnMove();
+    public delegate void OnHit(Monster monster);
+    public delegate void OnMove();
     private event OnHit onHitEvent;
     private event OnMove onMoveEvent;
 
-    public void ThrowProjectile(Vector2 targetPos, Player attacker, float speed, float damage, bool isPiercing)
+    private bool isPiercing = false;
+
+    public void ThrowProjectile(Vector2 targetPos, float speed, bool isPiercing, OnHit onHitListener)
+    {
+        photonView.RPC(nameof(SetPiercing), RpcTarget.All, isPiercing);
+
+        onHitEvent = onHitListener;
+        photonView.RPC(nameof(SetOnMoveEvent), RpcTarget.All, targetPos, speed);
+    }
+
+    [PunRPC]
+    private void SetPiercing(bool isPiercing)
+    {
+        this.isPiercing = isPiercing;
+    }
+
+    [PunRPC]
+    private void SetOnMoveEvent(Vector2 targetPos, float speed)
     {
         onMoveEvent = () => MoveTo(targetPos, speed);
-        onHitEvent = (monster) =>
-        {
-            attacker.OnAttack(monster, damage);
-
-            // 관통이 아닐 경우 파괴
-            if (isPiercing == false) Destroy(gameObject);
-        };
     }
 
     private void FixedUpdate()
@@ -41,6 +52,21 @@ public class Projectile : MonoBehaviour
             Monster monster = collision.GetComponent<Monster>();
 
             onHitEvent?.Invoke(monster);
+
+            if (isPiercing == false)
+            {
+                // 관통이 아닐 경우 파괴
+                photonView.RPC(nameof(DestroyObj), RpcTarget.All);
+            }
+        }
+    }
+
+    [PunRPC]
+    private void DestroyObj()
+    {
+        if (gameObject.activeSelf && photonView != null)
+        {
+            Destroy(gameObject);
         }
     }
 }

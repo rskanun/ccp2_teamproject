@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
+using UnityEngine;
 
 [CreateAssetMenu(menuName = "Skill/Class/Active/Test", fileName = "Murasaki")]
 public class Murasaki : Skill
@@ -13,7 +14,8 @@ public class Murasaki : Skill
 
     public override void UseSkill(Player caster)
     {
-        GameObject projectileObj = Instantiate(projectilePrefab);
+        string prefabName = SKILL_OBJECT_DIRECTORY + projectilePrefab.name;
+        GameObject projectileObj = PhotonNetwork.Instantiate(prefabName, CasterData.Position, Quaternion.identity);
 
         // 투사체 생성 위치 설정
         projectileObj.transform.position = CasterData.Position;
@@ -28,6 +30,9 @@ public class Murasaki : Skill
         // 투사체 발사
         Projectile projectile = projectileObj.GetComponent<Projectile>();
 
-        projectile.ThrowProjectile(targetPos, caster, speed, damage, true);
+        projectile.ThrowProjectile(targetPos, speed, true, (monster) =>
+        {
+            caster.OnSkillAttack(monster, damage);
+        });
     }
 }

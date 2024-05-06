@@ -1,5 +1,4 @@
 ﻿using Photon.Pun;
-using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -14,8 +13,11 @@ public class GameManager : MonoBehaviourPunCallbacks
     [Header("플레이어블 캐릭터")]
     [SerializeField] private List<GameObject> playableChrList;
 
+    [Header("이벤트")]
+    [SerializeField] private GameEvent reviveEvent;
+    [SerializeField] private GameEvent bossClearEvent;
+
     // 플레이어 리소스
-    private GameObject localPlayerPrefab;
     private List<PlayerData> playerDatas;
 
     // 참조 데이터
@@ -33,8 +35,10 @@ public class GameManager : MonoBehaviourPunCallbacks
         // Init Player Resource
         PlayerResource resource = PlayerResource.Instance;
 
-        localPlayerPrefab = resource.LocalPlayerPrefab;
         playerDatas = resource.PlayerDatas;
+
+        // Init Photon
+        PhotonNetwork.MinimalTimeScaleToDispatchInFixedUpdate = 0;
     }
 
     private void Start()
@@ -63,6 +67,9 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private void InitGameData()
     {
+        // 소환 프리팹 설정
+        InitPrefabResource();
+
         // 플레이어 데이터 초기화
         InitPlayer();
 
@@ -84,7 +91,32 @@ public class GameManager : MonoBehaviourPunCallbacks
     private void GameStart()
     {
         // 웨이브 시작
-        waveData.IsRunning = true;
+        photonView.RPC(nameof(WaveStart), RpcTarget.All);
+    }
+
+    [PunRPC]
+    private void WaveStart()
+    {
+        waveData.WaveStart();
+    }
+
+    /***************************************************************
+    * [ 프리팹 세팅 ]
+    * 
+    * 게임 내에서 사용될 오브젝트 프리팹 세팅
+    ***************************************************************/
+
+    private void InitPrefabResource()
+    {
+        DefaultPool pool = PhotonNetwork.PrefabPool as DefaultPool;
+
+        if (pool != null)
+        {
+            foreach (GameObject mobPrefab in MonsterResource.Instance.MonsterList)
+            {
+                pool.ResourceCache.Add(mobPrefab.name, mobPrefab);
+            }
+        }
     }
 
     /***************************************************************
@@ -102,8 +134,6 @@ public class GameManager : MonoBehaviourPunCallbacks
             PlayerData playerData = playerDatas[i];
             if (playerData.IsPlaying)
             {
-                playableChrList[i].SetActive(true);
-
                 // 플레이어 오브젝트 목록에 추가
                 gameData.AddPlayableChr(playableChrList[i]);
             }
@@ -145,7 +175,7 @@ public class GameManager : MonoBehaviourPunCallbacks
                 }
 
                 // 다음 웨이브 진행
-                waveData.NextWave();
+                photonView.RPC(nameof(NextWave), RpcTarget.All);
 
                 // 만약 웨이브가 종료된 경우
                 if (waveData.IsRunning == false)
@@ -162,11 +192,19 @@ public class GameManager : MonoBehaviourPunCallbacks
             }
         }
     }
+    [PunRPC]
+    private void NextWave()
+    {
+        waveData.NextWave();
+
+        // 다음 웨이브로 넘어갈 시 모든 플레이어 부활
+        ReviveAllPlayer();
+    }
 
     [PunRPC]
     private void PassedWaveTime(float time)
     {
-        waveData.RemainTime -= time;
+        waveData.PassedWaveTime(time);
     }
 
     [PunRPC]
@@ -174,13 +212,28 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         Debug.Log("Wave Clear");
 
-
+        if (waveData.IsBossWave)
+        {
+            bossClearEvent.NotifyUpdate();
+        }
     }
 
-    private void OnRevive()
+    private void ReviveAllPlayer()
     {
-        
-        
+        foreach (GameObject deadPlayer in gameData.DeadPlayerList)
+        {
+            deadPlayer.SetActive(true);
+        }
+
+        if (LocalPlayerData.Instance.IsDead)
+        {
+            // 본인이 죽었었으면 부활
+            LocalPlayerData.Instance.IsDead = false;
+
+            // Notify Revive Event
+            reviveEvent.NotifyUpdate();
+        }
+
         gameData.ReviveAllPlayer();
     }
 
@@ -195,14 +248,12 @@ public class GameManager : MonoBehaviourPunCallbacks
     [PunRPC]
     private void OnGameOver()
     {
-        waveData.IsRunning = false;
+        waveData.WaveStop();
 
         Time.timeScale = 0.0f;
         resultConfirm.OnActive("Game Over...", () =>
         {
             PhotonNetwork.LeaveRoom();
-
-            Time.timeScale = 1.0f;
         });
     }
 
@@ -214,8 +265,6 @@ public class GameManager : MonoBehaviourPunCallbacks
         resultConfirm.OnActive("Game Clear!!", () =>
         {
             PhotonNetwork.LeaveRoom();
-
-            Time.timeScale = 1.0f;
         });
     }
 
@@ -231,8 +280,6 @@ public class GameManager : MonoBehaviourPunCallbacks
         resultConfirm.OnActive("호스트의 서버 연결이 끊겼습니다!!", () =>
         {
             PhotonNetwork.LeaveRoom();
-
-            Time.timeScale = 1.0f;
         });
     }
 
@@ -245,5 +292,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         SceneManager.LoadScene("TitleScene");
+
+        Time.timeScale = 1.0f;
     }
 }

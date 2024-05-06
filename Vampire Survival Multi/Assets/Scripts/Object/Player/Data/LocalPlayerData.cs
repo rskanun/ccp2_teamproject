@@ -1,5 +1,6 @@
 ﻿using UnityEditor;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class LocalPlayerData : ScriptableObject
 {
@@ -76,8 +77,17 @@ public class LocalPlayerData : ScriptableObject
         }
     }
 
+    [SerializeField]
+    private bool _isDead;
+    public bool IsDead
+    {
+        set { _isDead = value; }
+        get { return _isDead; }
+    }
+
     [Header("이벤트")]
     [SerializeField] private GameEvent classEvent;
+    [SerializeField] private GameEvent posEvent;
 
     public void InitPlayerData(PlayerData localPlayerData)
     {
@@ -93,5 +103,13 @@ public class LocalPlayerData : ScriptableObject
 
         // 이벤트 알림
         classEvent.NotifyUpdate();
+    }
+
+    public void MoveToPos(Vector2 pos)
+    {
+        PlayerData.Position = pos;
+
+        // 위치 이동 이벤트
+        posEvent.NotifyUpdate();
     }
 }

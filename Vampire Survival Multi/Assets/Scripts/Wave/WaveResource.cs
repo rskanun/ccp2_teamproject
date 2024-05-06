@@ -15,6 +15,7 @@ public class WaveResource : ScriptableObject
     private class Wave
     {
         public int time;
+        public bool isBossWave;
         public List<WaveMonsterData> monsters;
     }
 
@@ -67,27 +68,27 @@ public class WaveResource : ScriptableObject
 
     [Header("웨이브 정보")]
     [SerializeField] 
-    private List<Wave> _waveDatas;
+    private List<Wave> waveDatas;
 
     public int MaxLevel
     {
-        get { return _waveDatas.Count; }
+        get { return waveDatas.Count; }
     }
 
     public int GetWaveTime(int waveLevel)
     {
         int index = waveLevel - 1;
 
-        return _waveDatas[index].time;
+        return waveDatas[index].time;
     }
     
     public List<GameObject> GetWaveMobs(int waveLevel)
     {
         int index = waveLevel - 1;
 
-        if (0 <= index && index < _waveDatas.Count)
+        if (0 <= index && index < waveDatas.Count)
         {
-            Wave resultData = _waveDatas[index];
+            Wave resultData = waveDatas[index];
             List<GameObject> result = WaveDataToList(resultData);
 
             return result;
@@ -113,5 +114,10 @@ public class WaveResource : ScriptableObject
         }
 
         return spawnMobList;
+    }
+
+    public bool IsBossWave(int level)
+    {
+        return waveDatas[level - 1].isBossWave;
     }
 }

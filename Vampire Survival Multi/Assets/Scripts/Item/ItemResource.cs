@@ -58,4 +58,27 @@ public class ItemResource : ScriptableObject
     {
         get { return _itemDatas; }
     }
+
+    // 아이템 목록
+    private Dictionary<int, ItemData> itemTable = new Dictionary<int, ItemData>();
+
+    [ContextMenu("Reload Items")]
+    private void OnValidate()
+    {
+        foreach (ItemData item in _itemDatas)
+        {
+            itemTable[item.ID] = item;
+            Debug.Log($"Add Item {item.Name}(ID:{item.ID})");
+        }
+    }
+
+    public ItemData FindItem(int id)
+    {
+        if (itemTable.ContainsKey(id))
+        {
+            return itemTable[id];
+        }
+
+        return null;
+    }
 }

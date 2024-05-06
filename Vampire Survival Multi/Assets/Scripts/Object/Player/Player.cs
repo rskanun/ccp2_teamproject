@@ -6,6 +6,9 @@ public class Player : MonoBehaviourPun
     [Header("플레이어 데이터")]
     [SerializeField] private PlayerData playerData;
 
+    [Header("이벤트")]
+    [SerializeField] private GameEvent deadEvent;
+
     // 플레이어 공통 옵션
     private PlayerResource playerOption;
     private float curDuration;
@@ -57,12 +60,19 @@ public class Player : MonoBehaviourPun
         }
     }
 
-    public void OnAttack(Monster monster, float damage)
+    public void OnNormalAttack(Monster monster, float damage)
     {
-        float lastDamage = monster.OnTakeDamage(this, damage);
-        float recoverHP = lastDamage * playerData.LifeSteal;
+        monster.OnTakeDamage(this, damage);
+
+        // 최종 데미지에 따른 체력 회복
+        float recoverHP = damage * playerData.LifeSteal;
 
         HealHP(recoverHP);
+    }
+
+    public void OnSkillAttack(Monster monster, float damage)
+    {
+        monster.OnTakeDamage(this, damage);
     }
 
     [PunRPC]
@@ -73,7 +83,15 @@ public class Player : MonoBehaviourPun
 
         // 플레이어 오브젝트 비활성화
         gameObject.SetActive(false);
-    }  
+
+        if (playerData.Player.IsLocal)
+        {
+            LocalPlayerData.Instance.IsDead = true;
+
+            // Notify Dead Event
+            deadEvent.NotifyUpdate();
+        }
+    }
 
     public void OnKilled()
     {
@@ -87,19 +105,11 @@ public class Player : MonoBehaviourPun
     * 회복 및 피해에 의한 체력 처리
     ***************************************************************/
 
-    [PunRPC]
     private void TakeDamage(float damage)
     {
-        if (PhotonNetwork.IsMasterClient == false)
-        {
-            photonView.RPC(nameof(TakeDamage), RpcTarget.MasterClient, damage);
-
-            return;
-        }
-
         playerData.HP -= damage;
 
-        photonView.RPC(nameof(UpdateHP), RpcTarget.Others, playerData.HP);
+        photonView.RPC(nameof(UpdateHP), RpcTarget.All, playerData.HP);
         photonView.RPC(nameof(AsyncNoDamageTime), RpcTarget.All);
 
         if (playerData.HP <= 0)
@@ -115,16 +125,8 @@ public class Player : MonoBehaviourPun
         curDuration = playerOption.NoDamageDuration;
     }
 
-    [PunRPC]
     private void HealHP(float recoverHP)
     {
-        if (PhotonNetwork.IsMasterClient == false)
-        {
-            photonView.RPC(nameof(HealHP), RpcTarget.MasterClient, recoverHP);
-
-            return;
-        }
-
         playerData.HP += recoverHP;
 
         photonView.RPC(nameof(UpdateHP), RpcTarget.Others, playerData.HP);

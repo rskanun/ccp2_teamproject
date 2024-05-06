@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aea8a80d5ceed1549adb5819854f4aef, type: 3}
   m_Name: PlayerResource
   m_EditorClassIdentifier: 
-  _playerPrefab: {fileID: 1773936598904198229, guid: 839f4181bdfed7e449dfd7d48f64879d, type: 3}
-  _localPlayerPrefab: {fileID: 7577828924405124712, guid: c780f0825c4920a41ad336b5e59b1f90, type: 3}
   _playerDatas:
   - {fileID: 11400000, guid: 785c5833db865de4da5748d193412e65, type: 2}
   - {fileID: 11400000, guid: 29e7c2ac4b2e4ad4798d82dd70a16df8, type: 2}
   - {fileID: 11400000, guid: 23b7f5cf479d1d54884545fb1287db21, type: 2}
-  - {fileID: 11400000, guid: 3f1c87287d03de8498ed4cdd571f63e3, type: 2}
+  - {fileID: 11400000, guid: bd52fbf5f2c292c45a033d0210787b7f, type: 2}
   _noDamageDuration: 0.15
+  _knockbackArea: 2
+  _knockbackForce: 50

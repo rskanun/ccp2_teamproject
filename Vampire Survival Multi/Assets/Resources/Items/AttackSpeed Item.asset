@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43b7ace7a0090d3409ecdbf6735c7eaf, type: 3}
   m_Name: AttackSpeed Item
   m_EditorClassIdentifier: 
+  _id: 5
   _name: "\uACF5\uACA9\uC18D\uB3C4 \uC99D\uAC00 \uC544\uC774\uD15C"
   _itemImage: {fileID: 0}
   _description: "\uACF5\uACA9\uC18D\uB3C4 +100%"

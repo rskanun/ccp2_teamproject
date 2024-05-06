@@ -12,12 +12,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 62a13efcb75bdc349afcff72c40aba75, type: 3}
   m_Name: WaveResource
   m_EditorClassIdentifier: 
-  _waveDatas:
-  - time: 50
+  waveDatas:
+  - time: 40
+    isBossWave: 0
     monsters:
     - monster: {fileID: 325465133739098425, guid: 9100b634ffdb99146b2a94e6be723e74, type: 3}
-      spawnCount: 10
+      spawnCount: 1
   - time: 999
+    isBossWave: 1
+    monsters:
+    - monster: {fileID: 325465133739098425, guid: 1ee0db8207cf01a4499dd4b5ea207c3d, type: 3}
+      spawnCount: 1
+  - time: 999
+    isBossWave: 0
     monsters:
     - monster: {fileID: 325465133739098425, guid: 9100b634ffdb99146b2a94e6be723e74, type: 3}
-      spawnCount: 10
+      spawnCount: 1

@@ -24,14 +24,4 @@ public abstract class AutoAttackSkill : Skill
             return distance + (distance * _addDistance);
         }
     }
-
-    public override float Cooldown
-    {
-        get { return CasterData.AttackSpeed; }
-    }
-
-    public float Damage
-    {
-        get { return CasterData.STR; }
-    }
 }

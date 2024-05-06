@@ -5,6 +5,13 @@ public class ItemData : ScriptableObject
 {
     [Header("아이템 정보")]
     [SerializeField]
+    private int _id;
+    public int ID
+    {
+        get { return _id; }
+    }
+
+    [SerializeField]
     private string _name;
     public string Name
     {

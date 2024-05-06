@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
+using UnityEngine;
 
 [CreateAssetMenu(menuName = "Skill/Class/Auto/Test", fileName = "Test Auto Skill")]
 public class TestAutoSkill : AutoAttackSkill
@@ -11,7 +12,8 @@ public class TestAutoSkill : AutoAttackSkill
 
     public override void UseSkill(Player caster)
     {
-        GameObject projectileObj = Instantiate(projectilePrefab);
+        string prefabName = SKILL_OBJECT_DIRECTORY + projectilePrefab.name;
+        GameObject projectileObj = PhotonNetwork.Instantiate(prefabName, CasterData.Position, Quaternion.identity);
 
         // 투사체 생성 위치 설정
         projectileObj.transform.position = CasterData.Position;
@@ -24,6 +26,9 @@ public class TestAutoSkill : AutoAttackSkill
         // 투사체 발사
         Projectile projectile = projectileObj.GetComponent<Projectile>();
 
-        projectile.ThrowProjectile(targetPos, caster, speed, Damage, IsPiercing);
+        projectile.ThrowProjectile(targetPos, speed, IsPiercing, (monster) =>
+        {
+            caster.OnNormalAttack(monster, CasterData.STR);
+        });
     }
 }

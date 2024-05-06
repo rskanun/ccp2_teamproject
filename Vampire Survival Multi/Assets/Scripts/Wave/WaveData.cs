@@ -57,8 +57,8 @@ public class WaveData : ScriptableObject
     private bool _isRunning;
     public bool IsRunning
     {
+        private set { _isRunning = value; }
         get { return _isRunning; }
-        set { _isRunning = value; }
     }
 
     [ReadOnly]
@@ -66,7 +66,26 @@ public class WaveData : ScriptableObject
     private int _waveLevel;
     public int WaveLevel
     {
+        private set { _waveLevel = value; }
         get { return _waveLevel; }
+    }
+
+    [ReadOnly]
+    [SerializeField]
+    private float _remainTime;
+    public float RemainTime
+    {
+        private set { _remainTime = value; }
+        get { return _remainTime; }
+    }
+
+    [ReadOnly]
+    [SerializeField]
+    private int _mobCount;
+    public int MobCount
+    {
+        private set { _mobCount = value; }
+        get { return _mobCount; }
     }
 
     public bool IsLastWave
@@ -75,31 +94,22 @@ public class WaveData : ScriptableObject
         {
             WaveResource resource = WaveResource.Instance;
 
-            return _waveLevel >= resource.MaxLevel;
+            return WaveLevel >= resource.MaxLevel;
         }
     }
 
-
-    [ReadOnly]
-    [SerializeField]
-    private float _remainTime;
-    public float RemainTime
+    public bool IsBossWave
     {
-        get { return _remainTime; }
-        set { _remainTime = value; }
-    }
+        get
+        {
+            WaveResource resource = WaveResource.Instance;
 
-    [ReadOnly]
-    [SerializeField]
-    private int _mobCount;
-    public int MobCount
-    {
-        get { return _mobCount; }
-        set { _mobCount = value; }
+            return resource.IsBossWave(WaveLevel);
+        }
     }
 
     // 소환할 몬스터 목록
-    private Queue<GameObject> _waveMobs;
+    private Queue<GameObject> waveMobs;
 
     public void InitData()
     {
@@ -107,21 +117,21 @@ public class WaveData : ScriptableObject
 
         int startLevel = 1;
 
-        _waveLevel = startLevel;
-        _remainTime = resource.GetWaveTime(startLevel);
-        _mobCount = resource.GetWaveMobs(startLevel).Count;
+        WaveLevel = startLevel;
+        RemainTime = resource.GetWaveTime(startLevel);
+        MobCount = resource.GetWaveMobs(startLevel).Count;
 
         // 소환할 몬스터 목록 추가
         List<GameObject> mobList = resource.GetWaveMobs(startLevel);
 
-        _waveMobs = new Queue<GameObject>(mobList);
+        waveMobs = new Queue<GameObject>(mobList);
     }
 
     public GameObject GetMob()
     {
-        if (_waveMobs.Count > 0)
+        if (waveMobs.Count > 0)
         {
-            return _waveMobs.Dequeue();
+            return waveMobs.Dequeue();
         }
         else
             return null;
@@ -133,14 +143,14 @@ public class WaveData : ScriptableObject
 
         int maxLevel = resource.MaxLevel;
 
-        if (maxLevel > _waveLevel)
+        if (maxLevel > WaveLevel)
         {
             // 웨이브 레벨 증가
-            int currentLevel = ++_waveLevel;
+            int currentLevel = ++WaveLevel;
 
             // 웨이브 정보 갱신
-            _remainTime = resource.GetWaveTime(currentLevel);
-            _mobCount += resource.GetWaveMobs(currentLevel).Count;
+            RemainTime = resource.GetWaveTime(currentLevel);
+            MobCount += resource.GetWaveMobs(currentLevel).Count;
 
             // 소환할 몬스터 목록 추가
             List<GameObject> mobList = resource.GetWaveMobs(currentLevel);
@@ -150,22 +160,42 @@ public class WaveData : ScriptableObject
         else
         {
             // 최종 웨이브 이후엔 웨이브 종료
-            _isRunning = false;
+            WaveStop();
         }
     }
 
     private void AddMobs(List<GameObject> addMobList)
     {
-        if (_waveMobs != null && _waveMobs.Count > 0)
+        if (waveMobs != null && waveMobs.Count > 0)
         {
             foreach (GameObject mob in addMobList)
             {
-                _waveMobs.Enqueue(mob);
+                waveMobs.Enqueue(mob);
             }
         }
         else
         {
-            _waveMobs = new Queue<GameObject>(addMobList);
+            waveMobs = new Queue<GameObject>(addMobList);
         }
+    }
+
+    public void WaveStart()
+    {
+        IsRunning = true;
+    }
+
+    public void WaveStop()
+    {
+        IsRunning = false;
+    }
+
+    public void OnKilledMob()
+    {
+        MobCount--;
+    }
+
+    public void PassedWaveTime(float time)
+    {
+        RemainTime -= time;
     }
 }
