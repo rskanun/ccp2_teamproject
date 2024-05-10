@@ -70,7 +70,8 @@ public class PlayerResource : ScriptableObject
     {
         get { return _noDamageDuration; }
     }
-    
+
+    [Header("부활 넉백 옵션")]
     [SerializeField]
     private float _knockbackArea;
     public float KnockbackArea
