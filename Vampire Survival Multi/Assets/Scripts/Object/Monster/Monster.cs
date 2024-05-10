@@ -82,7 +82,7 @@ public class Monster : MonoBehaviourPun
         this.currentHP = currentHP;
     }
 
-    protected void OnDead(Player killPlayer)
+    protected virtual void OnDead(Player killPlayer)
     {
         // 몬스터 제거
         photonView.RPC(nameof(DestroyMob), RpcTarget.All);

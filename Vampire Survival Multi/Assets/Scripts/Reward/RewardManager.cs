@@ -29,21 +29,10 @@ public class RewardManager : MonoBehaviourPun
         if (ui.IsActiveContainer()) rewardCount++;
         else
         {
-            if (LocalPlayerData.Instance.IsDead == false)
-            {
-                // 살아있는 플레이어는 보상 받기
-                Time.timeScale = 0.0f;
+            // 살아있는 플레이어는 보상 받기
+            Time.timeScale = 0.0f;
 
-                OpenWindow();
-            }
-            else
-            {
-                // 죽은 플레이어는 대기 모드
-                Time.timeScale = 0.0f;
-
-                ui.SetContainer(true);
-                CompletedReward();
-            }
+            OpenWindow();
         }
     }
 

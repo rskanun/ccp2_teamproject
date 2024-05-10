@@ -15,7 +15,6 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     [Header("이벤트")]
     [SerializeField] private GameEvent reviveEvent;
-    [SerializeField] private GameEvent bossClearEvent;
 
     // 플레이어 리소스
     private List<PlayerData> playerDatas;
@@ -211,11 +210,6 @@ public class GameManager : MonoBehaviourPunCallbacks
     private void OnWaveClear()
     {
         Debug.Log("Wave Clear");
-
-        if (waveData.IsBossWave)
-        {
-            bossClearEvent.NotifyUpdate();
-        }
     }
 
     private void ReviveAllPlayer()
