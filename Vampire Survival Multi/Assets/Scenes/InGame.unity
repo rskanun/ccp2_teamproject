@@ -588,7 +588,8 @@ MonoBehaviour:
   m_text: Player2
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ffd7207b99ccefb4b9d5668eb8bc74a8, type: 2}
-  m_sharedMaterial: {fileID: -3326408860502069668, guid: ffd7207b99ccefb4b9d5668eb8bc74a8, type: 2}
+  m_sharedMaterial: {fileID: -3326408860502069668, guid: ffd7207b99ccefb4b9d5668eb8bc74a8,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1154,7 +1155,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6,
+    type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1358,7 +1360,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b,
+    type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -1548,7 +1551,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b,
+    type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2096,7 +2100,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -2949,7 +2954,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6,
+    type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -3326,7 +3332,8 @@ MonoBehaviour:
         m_MethodName: OnClickPlayer
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: 23b7f5cf479d1d54884545fb1287db21, type: 2}
+          m_ObjectArgument: {fileID: 11400000, guid: 23b7f5cf479d1d54884545fb1287db21,
+            type: 2}
           m_ObjectArgumentAssemblyTypeName: PlayerData, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -3649,7 +3656,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   container: {fileID: 56621916}
-  selectPrefab: {fileID: 1237297167284556986, guid: b57024afd7ba1ed4d856805dac4bbb28, type: 3}
+  selectPrefab: {fileID: 1237297167284556986, guid: b57024afd7ba1ed4d856805dac4bbb28,
+    type: 3}
   handOverContainer: {fileID: 794740749}
   selectPlayers:
   - {fileID: 1119685357}
@@ -3797,7 +3805,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6,
+    type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -3980,7 +3989,8 @@ MonoBehaviour:
   m_text: "\uB0A8\uC740 \uD50C\uB808\uC774\uC5B4 \uC218 : n\uBA85"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ffd7207b99ccefb4b9d5668eb8bc74a8, type: 2}
-  m_sharedMaterial: {fileID: -3326408860502069668, guid: ffd7207b99ccefb4b9d5668eb8bc74a8, type: 2}
+  m_sharedMaterial: {fileID: -3326408860502069668, guid: ffd7207b99ccefb4b9d5668eb8bc74a8,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -4263,7 +4273,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -7545,7 +7556,8 @@ MonoBehaviour:
   m_text: Player4
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ffd7207b99ccefb4b9d5668eb8bc74a8, type: 2}
-  m_sharedMaterial: {fileID: -3326408860502069668, guid: ffd7207b99ccefb4b9d5668eb8bc74a8, type: 2}
+  m_sharedMaterial: {fileID: -3326408860502069668, guid: ffd7207b99ccefb4b9d5668eb8bc74a8,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -7818,7 +7830,8 @@ MonoBehaviour:
         m_MethodName: OnClickPlayer
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: 29e7c2ac4b2e4ad4798d82dd70a16df8, type: 2}
+          m_ObjectArgument: {fileID: 11400000, guid: 29e7c2ac4b2e4ad4798d82dd70a16df8,
+            type: 2}
           m_ObjectArgumentAssemblyTypeName: PlayerData, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -8123,7 +8136,8 @@ MonoBehaviour:
   m_text: Player1
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ffd7207b99ccefb4b9d5668eb8bc74a8, type: 2}
-  m_sharedMaterial: {fileID: -3326408860502069668, guid: ffd7207b99ccefb4b9d5668eb8bc74a8, type: 2}
+  m_sharedMaterial: {fileID: -3326408860502069668, guid: ffd7207b99ccefb4b9d5668eb8bc74a8,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -8606,7 +8620,8 @@ MonoBehaviour:
   m_text: "\uD50C\uB808\uC774\uC5B4\uAC00 \uBCF4\uC0C1\uC744 \uACE0\uB974\uACE0 \uC788\uC2B5\uB2C8\uB2E4..."
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ffd7207b99ccefb4b9d5668eb8bc74a8, type: 2}
-  m_sharedMaterial: {fileID: -3326408860502069668, guid: ffd7207b99ccefb4b9d5668eb8bc74a8, type: 2}
+  m_sharedMaterial: {fileID: -3326408860502069668, guid: ffd7207b99ccefb4b9d5668eb8bc74a8,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -9215,7 +9230,8 @@ MonoBehaviour:
         m_MethodName: OnClickPlayer
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: 3f1c87287d03de8498ed4cdd571f63e3, type: 2}
+          m_ObjectArgument: {fileID: 11400000, guid: 3f1c87287d03de8498ed4cdd571f63e3,
+            type: 2}
           m_ObjectArgumentAssemblyTypeName: PlayerData, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -9705,7 +9721,8 @@ MonoBehaviour:
   m_text: "\uD0C0\uC774\uD2C0\uB85C\n"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ffd7207b99ccefb4b9d5668eb8bc74a8, type: 2}
-  m_sharedMaterial: {fileID: -3326408860502069668, guid: ffd7207b99ccefb4b9d5668eb8bc74a8, type: 2}
+  m_sharedMaterial: {fileID: -3326408860502069668, guid: ffd7207b99ccefb4b9d5668eb8bc74a8,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -10252,7 +10269,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -10652,7 +10670,8 @@ MonoBehaviour:
   m_text: "\uAC8C\uC784 \uACB0\uACFC"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ffd7207b99ccefb4b9d5668eb8bc74a8, type: 2}
-  m_sharedMaterial: {fileID: -3326408860502069668, guid: ffd7207b99ccefb4b9d5668eb8bc74a8, type: 2}
+  m_sharedMaterial: {fileID: -3326408860502069668, guid: ffd7207b99ccefb4b9d5668eb8bc74a8,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -10816,7 +10835,8 @@ MonoBehaviour:
         m_MethodName: OnClickPlayer
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 11400000, guid: bd52fbf5f2c292c45a033d0210787b7f, type: 2}
+          m_ObjectArgument: {fileID: 11400000, guid: bd52fbf5f2c292c45a033d0210787b7f,
+            type: 2}
           m_ObjectArgumentAssemblyTypeName: PlayerData, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
@@ -11106,8 +11126,9 @@ MonoBehaviour:
   tmpUI: {fileID: 1797504071}
 --- !u!4 &1808820100 stripped
 Transform:
-  m_CorrespondingSourceObject: {fileID: 5331694148712834955, guid: 4ca4a14087fb1434fa3cfad218b65ddd, type: 3}
-  m_PrefabInstance: {fileID: 5331694146998419471}
+  m_CorrespondingSourceObject: {fileID: 6175021261088135702, guid: 4ca4a14087fb1434fa3cfad218b65ddd,
+    type: 3}
+  m_PrefabInstance: {fileID: 6175021260363595154}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1813327266
 GameObject:
@@ -11550,7 +11571,8 @@ MonoBehaviour:
   m_text: Player3
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ffd7207b99ccefb4b9d5668eb8bc74a8, type: 2}
-  m_sharedMaterial: {fileID: -3326408860502069668, guid: ffd7207b99ccefb4b9d5668eb8bc74a8, type: 2}
+  m_sharedMaterial: {fileID: -3326408860502069668, guid: ffd7207b99ccefb4b9d5668eb8bc74a8,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -11697,7 +11719,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b,
+    type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -11769,7 +11792,8 @@ MonoBehaviour:
   m_text: "\uB204\uAD6C\uC5D0\uAC8C \uC591\uB3C4\uD558\uC2DC\uACA0\uC2B5\uB2C8\uAE4C?"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ffd7207b99ccefb4b9d5668eb8bc74a8, type: 2}
-  m_sharedMaterial: {fileID: -3326408860502069668, guid: ffd7207b99ccefb4b9d5668eb8bc74a8, type: 2}
+  m_sharedMaterial: {fileID: -3326408860502069668, guid: ffd7207b99ccefb4b9d5668eb8bc74a8,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -11980,7 +12004,8 @@ MonoBehaviour:
   m_text: "\uB3CC\uC544\uAC00\uAE30"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ffd7207b99ccefb4b9d5668eb8bc74a8, type: 2}
-  m_sharedMaterial: {fileID: -3326408860502069668, guid: ffd7207b99ccefb4b9d5668eb8bc74a8, type: 2}
+  m_sharedMaterial: {fileID: -3326408860502069668, guid: ffd7207b99ccefb4b9d5668eb8bc74a8,
+    type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -12318,60 +12343,72 @@ MonoBehaviour:
   m_SynchronizeRotation: 0
   m_SynchronizeScale: 0
   m_UseLocal: 1
---- !u!1001 &5331694146998419471
+--- !u!1001 &6175021260363595154
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 1134049940}
     m_Modifications:
-    - target: {fileID: 5331694148712834955, guid: 4ca4a14087fb1434fa3cfad218b65ddd, type: 3}
+    - target: {fileID: 6175021261088135697, guid: 4ca4a14087fb1434fa3cfad218b65ddd,
+        type: 3}
+      propertyPath: m_Name
+      value: Ground
+      objectReference: {fileID: 0}
+    - target: {fileID: 6175021261088135702, guid: 4ca4a14087fb1434fa3cfad218b65ddd,
+        type: 3}
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5331694148712834955, guid: 4ca4a14087fb1434fa3cfad218b65ddd, type: 3}
+    - target: {fileID: 6175021261088135702, guid: 4ca4a14087fb1434fa3cfad218b65ddd,
+        type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5331694148712834955, guid: 4ca4a14087fb1434fa3cfad218b65ddd, type: 3}
+    - target: {fileID: 6175021261088135702, guid: 4ca4a14087fb1434fa3cfad218b65ddd,
+        type: 3}
       propertyPath: m_LocalPosition.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5331694148712834955, guid: 4ca4a14087fb1434fa3cfad218b65ddd, type: 3}
+    - target: {fileID: 6175021261088135702, guid: 4ca4a14087fb1434fa3cfad218b65ddd,
+        type: 3}
       propertyPath: m_LocalPosition.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5331694148712834955, guid: 4ca4a14087fb1434fa3cfad218b65ddd, type: 3}
+    - target: {fileID: 6175021261088135702, guid: 4ca4a14087fb1434fa3cfad218b65ddd,
+        type: 3}
       propertyPath: m_LocalRotation.w
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 5331694148712834955, guid: 4ca4a14087fb1434fa3cfad218b65ddd, type: 3}
+    - target: {fileID: 6175021261088135702, guid: 4ca4a14087fb1434fa3cfad218b65ddd,
+        type: 3}
       propertyPath: m_LocalRotation.x
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 5331694148712834955, guid: 4ca4a14087fb1434fa3cfad218b65ddd, type: 3}
+    - target: {fileID: 6175021261088135702, guid: 4ca4a14087fb1434fa3cfad218b65ddd,
+        type: 3}
       propertyPath: m_LocalRotation.y
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 5331694148712834955, guid: 4ca4a14087fb1434fa3cfad218b65ddd, type: 3}
+    - target: {fileID: 6175021261088135702, guid: 4ca4a14087fb1434fa3cfad218b65ddd,
+        type: 3}
       propertyPath: m_LocalRotation.z
       value: -0
       objectReference: {fileID: 0}
-    - target: {fileID: 5331694148712834955, guid: 4ca4a14087fb1434fa3cfad218b65ddd, type: 3}
+    - target: {fileID: 6175021261088135702, guid: 4ca4a14087fb1434fa3cfad218b65ddd,
+        type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5331694148712834955, guid: 4ca4a14087fb1434fa3cfad218b65ddd, type: 3}
+    - target: {fileID: 6175021261088135702, guid: 4ca4a14087fb1434fa3cfad218b65ddd,
+        type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5331694148712834955, guid: 4ca4a14087fb1434fa3cfad218b65ddd, type: 3}
+    - target: {fileID: 6175021261088135702, guid: 4ca4a14087fb1434fa3cfad218b65ddd,
+        type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5331694148712834956, guid: 4ca4a14087fb1434fa3cfad218b65ddd, type: 3}
-      propertyPath: m_Name
-      value: Ground
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4ca4a14087fb1434fa3cfad218b65ddd, type: 3}
@@ -12460,7 +12497,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 3
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b,
+    type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -12869,7 +12907,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6, type: 3}
+  m_Sprite: {fileID: 7482667652216324306, guid: 311925a002f4447b3a28927169b83ea6,
+    type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -13253,7 +13292,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
+  m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b,
+    type: 3}
   m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
