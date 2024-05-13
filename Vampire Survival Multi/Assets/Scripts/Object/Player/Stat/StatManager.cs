@@ -1,7 +1,6 @@
 ﻿using Photon.Pun;
 using TMPro;
 using UnityEngine;
-using static UnityEditor.Progress;
 
 public class StatManager : MonoBehaviourPun
 {
@@ -76,6 +75,12 @@ public class StatManager : MonoBehaviourPun
         // Update Life Steal
         playerData.LifeSteal = GetEquipLifeSteal(playerData, item);
         photonView.RPC(nameof(UpdateLifeSteal), RpcTarget.Others, playerID, playerData.LifeSteal);
+
+        // Stat Update
+        if (playerData.Player.IsLocal)
+        {
+            UpdateTmpUI();
+        }
     }
 
     [PunRPC]
@@ -212,6 +217,7 @@ public class StatManager : MonoBehaviourPun
 
     private void UpdateTmpUI()
     {
+        Debug.Log("Update Stat");
         testStatInfo.text =
             "<Status>" +
             "\r\nHP : " + PlayerStat.MaxHP +

@@ -2,11 +2,11 @@
 
 public class ChaseState : IMonsterState
 {
-    private Monster _monster;
+    private Monster monster;
 
     public ChaseState(Monster monster)
     {
-        _monster = monster;
+        this.monster = monster;
     }
 
     public void OnUpdate(FSM fsm)
@@ -18,16 +18,16 @@ public class ChaseState : IMonsterState
             Vector2 pos = target.transform.position;
 
             // 몬스터와 플레이어 간의 거리 계산
-            float distance = Vector2.Distance(pos, _monster.transform.position);
-            if (distance <= _monster.MonsterData.AttackDistance)
+            float distance = Vector2.Distance(pos, monster.transform.position);
+            if (distance <= monster.MonsterData.AttackDistance)
             {
-                // 몬스터가 공격 가능한 범위까지 접근하면 공격
-                fsm.SetState(new AttackState(_monster, target));
+                // 몬스터가 공격 가능한 범위까지 접근하면 상태 변경
+                monster.OnArriveState();
             }
             else
             {
                 // 특정 플레이어를 향해 이동
-                MoveToPlayer(pos);
+                monster.OnMove(target);
             }
         }
     }
@@ -42,7 +42,7 @@ public class ChaseState : IMonsterState
 
         foreach (GameObject player in players)
         {
-            float distance = Vector2.Distance(player.transform.position, _monster.transform.position);
+            float distance = Vector2.Distance(player.transform.position, monster.transform.position);
 
             if (distance < closestDistance)
             {
@@ -52,13 +52,6 @@ public class ChaseState : IMonsterState
         }
 
         return closestPlayer;
-    }
-
-    private void MoveToPlayer(Vector2 playerPos)
-    {
-        float speed = _monster.MonsterData.MoveSpeed * Time.deltaTime;
-
-        _monster.transform.position = Vector2.MoveTowards(_monster.transform.position, playerPos, speed);
     }
 
     public void OnEnterState() { }

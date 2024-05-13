@@ -121,6 +121,8 @@ MonoBehaviour:
   - UpdateMaxHP
   - UpdateMoveSpeed
   - UpdateSTR
+  - SetPanel
+  - InitPlayerPanel
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

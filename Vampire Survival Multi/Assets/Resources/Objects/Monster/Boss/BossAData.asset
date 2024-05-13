@@ -9,8 +9,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddacc4be35022754da0429691510349b, type: 3}
-  m_Name: ExpResource
+  m_Script: {fileID: 11500000, guid: 7e2588cb85cf3494380add9239a721c9, type: 3}
+  m_Name: BossAData
   m_EditorClassIdentifier: 
-  expCSV: {fileID: 4900000, guid: 27e63a7c808a20d4a83fe494c4bfe70a, type: 3}
-  curWaveLevel: 2
+  _healthPoint: 10
+  _strength: 1
+  _defensive: 0
+  _moveSpeed: 3
+  _attackDistance: 9999
+  _attackCooldown: 5

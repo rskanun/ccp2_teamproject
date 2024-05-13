@@ -2,7 +2,10 @@
 {
     private IMonsterState _curState;
 
-    public FSM() { }
+    public FSM(IMonsterState initState)
+    {
+        _curState = initState;
+    }
 
     public void SetState(IMonsterState state)
     {

@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     // 참조 데이터
     private WaveData waveData;
     private GameData gameData;
+    private ExpResource expResource;
 
     // 준비 여부
     private int readyToStartPlayer = 0;
@@ -30,6 +31,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         waveData = WaveData.Instance;
         gameData = GameData.Instance;
+        expResource = ExpResource.Instance;
 
         // Init Player Resource
         PlayerResource resource = PlayerResource.Instance;
@@ -72,6 +74,9 @@ public class GameManager : MonoBehaviourPunCallbacks
         // 플레이어 데이터 초기화
         InitPlayer();
 
+        // 경험치 데이터 설정
+        expResource.SetWaveLevel(waveData.WaveLevel);
+
         // 준비 완료 알림
         OnReadyToStart();
     }
@@ -113,7 +118,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             foreach (GameObject mobPrefab in MonsterResource.Instance.MonsterList)
             {
-                pool.ResourceCache.Add(mobPrefab.name, mobPrefab);
+                pool.ResourceCache.TryAdd(mobPrefab.name, mobPrefab);
             }
         }
     }
@@ -195,6 +200,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     private void NextWave()
     {
         waveData.NextWave();
+        expResource.SetWaveLevel(waveData.WaveLevel);
 
         // 다음 웨이브로 넘어갈 시 모든 플레이어 부활
         ReviveAllPlayer();

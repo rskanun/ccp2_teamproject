@@ -10,22 +10,49 @@ public class Monster : MonoBehaviourPun
 
     // 몬스터 스테이터스
     private float currentHP;
+    protected float currentCooldown;
 
     // 몬스터 유한 상태 기계
     private FSM fsm;
 
     private void Awake()
     {
-        fsm = new FSM();
+        fsm = new FSM(OnStartState());
+    }
+
+    private void Update()
+    {
+        if(PhotonNetwork.IsMasterClient)
+        {
+            OnCooldown();
+        }
+    }
+
+    protected virtual void OnCastSkill()
+    {
+        // 일정 시간마다 발동하는 스킬
+    }
+
+    private void OnCooldown()
+    {
+        float time = Time.deltaTime;
+
+        photonView.RPC(nameof(PassedCooldown), RpcTarget.All, time);
+    }
+
+    [PunRPC]
+    protected void PassedCooldown(float time)
+    {
+         if (currentCooldown > 0)
+        {
+            currentCooldown -= time;
+        }
     }
 
     public void OnEnable()
     {
         // init stat
         currentHP = data.HP;
-
-        // init fsm
-        fsm.SetState(new ChaseState(this));
     }
 
     private void OnDrawGizmos()
@@ -40,15 +67,20 @@ public class Monster : MonoBehaviourPun
     * 몬스터의 상태 제어
     ***************************************************************/
 
-    public virtual void OnAttack(GameObject target)
+    public void OnAttack(GameObject target)
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            float damage = data.STR; // 데미지 공식
-
-            Player player = target.GetComponent<Player>();
-            player.OnTakeDamage(damage);
+            AttackedPlayer(target);
         }
+    }
+
+    protected virtual void AttackedPlayer(GameObject target)
+    {
+        float damage = data.STR; // 데미지 공식
+
+        Player player = target.GetComponent<Player>();
+        player.OnTakeDamage(damage);
     }
 
     public void OnTakeDamage(Player attacker, float damage)
@@ -123,11 +155,30 @@ public class Monster : MonoBehaviourPun
     * 몬스터의 움직임 제어
     ***************************************************************/
 
+    public virtual IMonsterState OnStartState()
+    {
+        // 시작 상태
+        return new ChaseState(this);
+    }
+
+    public virtual IMonsterState OnArriveState()
+    {
+        // 공격 가능 범위까지 도착했을 때 상태
+        return new AttackState(this);
+    }
+
     private void FixedUpdate()
     {
         if (PhotonNetwork.IsMasterClient)
         {
             fsm.OnAction();
         }
+    }
+
+    public virtual void OnMove(GameObject target)
+    {
+        float speed = data.MoveSpeed * Time.deltaTime;
+
+        transform.position = Vector2.MoveTowards(transform.position, target.transform.position, speed);
     }
 }

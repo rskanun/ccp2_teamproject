@@ -2949,7 +2949,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trackingPlayer: {fileID: 11400000, guid: 3f1c87287d03de8498ed4cdd571f63e3, type: 2}
-  distance: 10
   arrow: {fileID: 1039553138}
   text: {fileID: 334789593}
 --- !u!1 &509370602
@@ -9355,7 +9354,6 @@ MonoBehaviour:
   - {fileID: 847869567}
   - {fileID: 1692059928}
   reviveEvent: {fileID: 11400000, guid: 52b1955eddf43464092092765008f767, type: 2}
-  bossClearEvent: {fileID: 11400000, guid: 188273e2ccebee247a9e4b997c697d40, type: 2}
 --- !u!4 &1346857535
 Transform:
   m_ObjectHideFlags: 0
@@ -9688,7 +9686,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trackingPlayer: {fileID: 11400000, guid: 29e7c2ac4b2e4ad4798d82dd70a16df8, type: 2}
-  distance: 10
   arrow: {fileID: 509370602}
   text: {fileID: 1151474480}
 --- !u!1 &1408789020
@@ -10518,7 +10515,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trackingPlayer: {fileID: 11400000, guid: bd52fbf5f2c292c45a033d0210787b7f, type: 2}
-  distance: 10
   arrow: {fileID: 105780050}
   text: {fileID: 211837519}
 --- !u!1 &1669770589
@@ -12160,7 +12156,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trackingPlayer: {fileID: 11400000, guid: 23b7f5cf479d1d54884545fb1287db21, type: 2}
-  distance: 10
   arrow: {fileID: 1159237464}
   text: {fileID: 307034657}
 --- !u!1 &1998399253

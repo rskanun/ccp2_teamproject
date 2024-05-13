@@ -9,8 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddacc4be35022754da0429691510349b, type: 3}
-  m_Name: ExpResource
+  m_Script: {fileID: 11500000, guid: eb53819efc2f39d4fb6038ec447c5dc6, type: 3}
+  m_Name: BossResource
   m_EditorClassIdentifier: 
-  expCSV: {fileID: 4900000, guid: 27e63a7c808a20d4a83fe494c4bfe70a, type: 3}
-  curWaveLevel: 2
+  waveBossList:
+  - waveLevel: 2
+    bossList:
+    - {fileID: 3756990987460227, guid: 45434b552f5b46a469fc19f20cc25ac9, type: 3}

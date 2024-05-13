@@ -1,14 +1,52 @@
 ﻿using System.Collections.Generic;
+using System.IO;
 using UnityEditor;
 using UnityEngine;
+using WebSocketSharp;
 
 public class ExpResource : ScriptableObject
 {
-    [System.Serializable]
-    private class ExpData
+    private class ExpTable
     {
-        public int getExp;
-        public int probability;
+        private Dictionary<int, int> table;
+        public List<int> Exps
+        {
+            get
+            {
+                List<int> list = new List<int>(table.Keys);
+
+                // 순서 정렬
+                list.Sort();
+
+                return list;
+            }
+        }
+        private int sum;
+        public int MaxValue
+        {
+            get { return sum; }
+        }
+
+        public ExpTable()
+        {
+            table = new Dictionary<int, int>();
+        }
+
+        public void AddData(int exp, int probability)
+        {
+            sum += probability;
+            table[exp] = sum;
+        }
+
+        public int GetChance(int exp)
+        {
+            if (table.ContainsKey(exp))
+            {
+                return table[exp];
+            }
+
+            return 0;
+        }
     }
 
     // 저장 파일 위치
@@ -58,42 +96,92 @@ public class ExpResource : ScriptableObject
         }
     }
 
-    [Header("획득 경험치 확률표")]
-    [SerializeField] private List<ExpData> expDataList;
+    [Header("웨이브별 획득 경험치 확률표")]
+    [SerializeField] private TextAsset expCSV;
 
-    // 경험치 획득 정보
-    private Dictionary<int, int> expTable;
-
-    // 확률 난수 최대값
-    private int maxNum;
-
-    private void OnValidate()
+    private Dictionary<int, ExpTable> _expTables;
+    private Dictionary<int, ExpTable> ExpTables
     {
-        UpdateExpInfo();
+        set { _expTables = value; }
+        get
+        {
+            if (_expTables == null)
+            {
+                _expTables = GetTables();
+            }
+
+            return _expTables;
+        }
     }
 
-    private void UpdateExpInfo()
-    {
-        // 본래 값 리셋
-        maxNum = 0;
-        expTable = new Dictionary<int, int>();
+    // 현재 경험치 정보
+    private ExpTable curTable;
+    [SerializeField] private int curWaveLevel = 0;
 
-        foreach (ExpData data in expDataList)
+    private Dictionary<int, ExpTable> GetTables()
+    {
+        Dictionary<int, ExpTable> tables = new Dictionary<int, ExpTable>();
+
+        if (expCSV != null)
         {
-            maxNum += data.probability;
-            expTable[maxNum] = data.getExp;
+            StringReader sr = new StringReader(expCSV.text);
+
+            string str;
+            while((str = sr.ReadLine()) != null)
+            {
+                str = str.Split('#')[0];
+                if (str.IsNullOrEmpty() == false)
+                {
+                    string[] strs = str.Split(",");
+
+                    int waveLevel = int.Parse(strs[0]);
+                    int getExp = int.Parse(strs[1]);
+                    int probability = int.Parse(strs[2]);
+
+                    if (tables.ContainsKey(waveLevel) == false)
+                    {
+                        // 새로운 테이블일 경우 새로 생성
+                        tables[waveLevel] = new ExpTable();
+                    }
+
+                    tables[waveLevel].AddData(getExp, probability);
+                }
+            }
+        }
+
+        return tables;
+    }
+
+    [ContextMenu("Reload Table")]
+    private void Reload()
+    {
+        ExpTables = GetTables();
+    }
+
+    public void SetWaveLevel(int waveLevel)
+    {
+        curWaveLevel = waveLevel;
+
+        if (ExpTables.ContainsKey(waveLevel))
+        {
+            // 테이블에 있는 웨이브 레벨일 경우에만 갱신
+            curTable = ExpTables[waveLevel];
         }
     }
 
     public int GetExp()
     {
-        int randomNum = Random.Range(0, maxNum);
-        
-        foreach (int probability in expTable.Keys)
+        if (curTable != null)
         {
-            if (randomNum < probability)
+            // 확률에 따른 랜덤 경험치 지급
+            int randomNum = Random.Range(1, curTable.MaxValue + 1);
+
+            foreach (int exp in curTable.Exps)
             {
-                return expTable[probability];
+                if (curTable.GetChance(exp) >= randomNum)
+                {
+                    return exp;
+                }
             }
         }
 

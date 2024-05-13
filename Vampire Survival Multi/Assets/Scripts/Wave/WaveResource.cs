@@ -15,7 +15,6 @@ public class WaveResource : ScriptableObject
     private class Wave
     {
         public int time;
-        public bool isBossWave;
         public List<WaveMonsterData> monsters;
     }
 
@@ -84,6 +83,24 @@ public class WaveResource : ScriptableObject
     
     public List<GameObject> GetWaveMobs(int waveLevel)
     {
+        bool isBossWave = BossResource.Instance.IsBossWave(waveLevel);
+
+        if (isBossWave) return GetBossMobs(waveLevel);
+        return GetNormalMobs(waveLevel);
+    }
+
+    private List<GameObject> GetBossMobs(int waveLevel)
+    {
+        List<GameObject> result = new List<GameObject>();
+        GameObject bossMob = BossResource.Instance.GetWaveBoss(waveLevel);
+
+        result.Add(bossMob);
+
+        return result;
+    }
+
+    private List<GameObject> GetNormalMobs(int waveLevel)
+    {
         int index = waveLevel - 1;
 
         if (0 <= index && index < waveDatas.Count)
@@ -114,10 +131,5 @@ public class WaveResource : ScriptableObject
         }
 
         return spawnMobList;
-    }
-
-    public bool IsBossWave(int level)
-    {
-        return waveDatas[level - 1].isBossWave;
     }
 }

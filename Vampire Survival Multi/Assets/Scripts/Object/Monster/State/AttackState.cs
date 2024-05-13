@@ -1,49 +1,84 @@
-﻿using UnityEngine;
+﻿using System.Threading;
+using UnityEngine;
 
 public class AttackState : IMonsterState
 {
-    private Monster _monster;
-    private GameObject _target;
+    private Monster monster;
+    private GameObject target;
 
-    public AttackState(Monster monster, GameObject player)
+    public AttackState(Monster monster)
     {
-        _monster = monster;
-        _target = player;
+        this.monster = monster;
+    }
+
+    public void OnEnterState()
+    {
+        GameObject target = DetectedPlayer();
+
+        if (target != null)
+        {
+            this.target = target;
+        }
+        else
+        {
+            // 플레이어를 찾지 못했으면 초기 상태로 전환
+            monster.OnStartState();
+        }
+    }
+
+    private GameObject DetectedPlayer()
+    {
+        GameObject[] players = GameObject.FindGameObjectsWithTag("Player");
+
+        // 가장 가까운 플레이어 위치 리턴
+        float closestDistance = Mathf.Infinity;
+        GameObject closestPlayer = null;
+
+        foreach (GameObject player in players)
+        {
+            float distance = Vector2.Distance(player.transform.position, monster.transform.position);
+
+            if (distance < closestDistance)
+            {
+                closestDistance = distance;
+                closestPlayer = player;
+            }
+        }
+
+        return closestPlayer;
     }
 
     public void OnUpdate(FSM fsm)
     {
         // 선 공격
-        OnAttack(_target);
+        OnAttack(target);
 
         // 해당 타겟이 여전히 공격 가능한 범위 내에 있는지 판별
-        if (_target.activeSelf == true)
+        if (target.activeSelf == true)
         {
-            Vector2 mobPos = _monster.transform.position;
-            Vector2 playerPos = _target.transform.position;
+            Vector2 mobPos = monster.transform.position;
+            Vector2 playerPos = target.transform.position;
 
             // 몬스터와 플레이어 간의 거리 계산
             float distance = Vector2.Distance(playerPos, mobPos);
-            if (distance > _monster.MonsterData.AttackDistance)
+            if (distance > monster.MonsterData.AttackDistance)
             {
                 // 거리가 멀어지면 다시 추적
-                fsm.SetState(new ChaseState(_monster));
+                fsm.SetState(new ChaseState(monster));
             }
         }
         else
         {
             // 해당 타겟이 죽은 상태면 추적 상태로 전환
-            fsm.SetState(new ChaseState(_monster));
+            fsm.SetState(new ChaseState(monster));
         }
     }
 
     private void OnAttack(GameObject target)
     {
         // 플레이어 공격
-        _monster.OnAttack(target);
+        monster.OnAttack(target);
     }
-
-    public void OnEnterState() { }
 
     public void OnExitState(FSM fsm) { }
 }

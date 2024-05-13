@@ -68,7 +68,6 @@ public class ItemResource : ScriptableObject
         foreach (ItemData item in _itemDatas)
         {
             itemTable[item.ID] = item;
-            Debug.Log($"Add Item {item.Name}(ID:{item.ID})");
         }
     }
 
