@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class BossMonster : Monster
+public abstract class BossMonster : Monster
 {
     [Header("참조 이벤트")]
     [SerializeField] private GameEvent bossClearEvent;

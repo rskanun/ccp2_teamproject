@@ -38,8 +38,15 @@ public class BossASkill : MonoBehaviour
         yield return new WaitForSeconds(castTime);
 
         // 레이저 발사
-        laser.SetActive(true);
+        DOTween.Sequence()
+            .OnStart(() =>
+            {
+                laser.SetActive(true);
+                laser.transform.localScale = new Vector3(0.0f, height);
+            })
+            .Append(laser.transform.DOScaleX(width, 0.05f))
+            .AppendInterval(remaintime)
+            .OnComplete(() => laser.SetActive(false));
         yield return new WaitForSeconds(remaintime);
-        laser.SetActive(false);
     }
 }

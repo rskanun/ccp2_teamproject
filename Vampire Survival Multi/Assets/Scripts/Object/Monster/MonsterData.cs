@@ -10,11 +10,4 @@ public class MonsterData : ObjectData
     {
         get { return _attackDistance; }
     }
-
-    [SerializeField]
-    private float _attackCooldown;
-    public float AttackCooldown
-    {
-        get { return _attackCooldown; }
-    }
 }

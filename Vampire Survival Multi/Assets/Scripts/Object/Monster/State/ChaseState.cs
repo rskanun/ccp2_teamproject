@@ -22,7 +22,7 @@ public class ChaseState : IMonsterState
             if (distance <= monster.MonsterData.AttackDistance)
             {
                 // 몬스터가 공격 가능한 범위까지 접근하면 상태 변경
-                monster.OnArriveState();
+                fsm.SetState(new AttackState(monster));
             }
             else
             {

@@ -25,6 +25,7 @@ public class Monster : MonoBehaviourPun
         if(PhotonNetwork.IsMasterClient)
         {
             OnCooldown();
+            OnCastSkill();
         }
     }
 
@@ -159,12 +160,6 @@ public class Monster : MonoBehaviourPun
     {
         // 시작 상태
         return new ChaseState(this);
-    }
-
-    public virtual IMonsterState OnArriveState()
-    {
-        // 공격 가능 범위까지 도착했을 때 상태
-        return new AttackState(this);
     }
 
     private void FixedUpdate()
