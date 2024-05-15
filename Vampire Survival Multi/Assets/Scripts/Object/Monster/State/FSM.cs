@@ -1,4 +1,6 @@
-﻿public class FSM
+﻿using UnityEngine;
+
+public class FSM
 {
     private IMonsterState _curState;
 
@@ -14,7 +16,7 @@
 
         // 새 상태 설정
         _curState = state;
-        _curState.OnEnterState();
+        _curState?.OnEnterState(this);
     }
 
     public void OnAction()

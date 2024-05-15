@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class AttackState : IMonsterState
 {
@@ -11,7 +10,7 @@ public class AttackState : IMonsterState
         this.monster = monster;
     }
 
-    public void OnEnterState()
+    public void OnEnterState(FSM fsm)
     {
         GameObject target = DetectedPlayer();
 
@@ -22,7 +21,7 @@ public class AttackState : IMonsterState
         else
         {
             // 플레이어를 찾지 못했으면 초기 상태로 전환
-            monster.OnStartState();
+            fsm.SetState(new ChaseState(monster));
         }
     }
 

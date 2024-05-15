@@ -27,7 +27,7 @@ public class ChaseState : IMonsterState
             else
             {
                 // 특정 플레이어를 향해 이동
-                monster.OnMove(target);
+                monster.OnMove(target.transform.position);
             }
         }
     }
@@ -54,7 +54,7 @@ public class ChaseState : IMonsterState
         return closestPlayer;
     }
 
-    public void OnEnterState() { }
+    public void OnEnterState(FSM fsm) { }
 
     public void OnExitState(FSM fsm) { }
 }

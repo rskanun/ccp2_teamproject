@@ -102,8 +102,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eaf65f2456447d04380e39fc8c870703, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 11400000, guid: 452d5dde37956ef43a0c80d7c77ef4fc, type: 2}
+  _data: {fileID: 11400000, guid: 452d5dde37956ef43a0c80d7c77ef4fc, type: 2}
   bossClearEvent: {fileID: 11400000, guid: 188273e2ccebee247a9e4b997c697d40, type: 2}
+  laserCooldown: 5
   laserAttack: {fileID: 4973766279568584003}
 --- !u!50 &6600218701184352524
 Rigidbody2D:
@@ -442,4 +443,3 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 452d5dde37956ef43a0c80d7c77ef4fc, type: 2}
-  skill: {fileID: 4973766279568584003}

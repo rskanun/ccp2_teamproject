@@ -5,19 +5,23 @@ public class Monster : MonoBehaviourPun
 {
     [Header("몬스터 데이터")]
     [SerializeField]
-    private MonsterData data;
-    public MonsterData MonsterData { get { return data; } }
+    private MonsterData _data;
+    public MonsterData MonsterData { get { return _data; } }
 
     // 몬스터 스테이터스
     private float currentHP;
     protected float currentCooldown;
 
     // 몬스터 유한 상태 기계
-    private FSM fsm;
+    private FSM _fsm;
+    protected FSM fsm
+    {
+        get { return _fsm; }
+    }
 
     private void Awake()
     {
-        fsm = new FSM(OnStartState());
+        _fsm = new FSM(new ChaseState(this));
     }
 
     private void Update()
@@ -53,13 +57,13 @@ public class Monster : MonoBehaviourPun
     public void OnEnable()
     {
         // init stat
-        currentHP = data.HP;
+        currentHP = _data.HP;
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, data.AttackDistance);
+        Gizmos.DrawWireSphere(transform.position, _data.AttackDistance);
     }
 
     /***************************************************************
@@ -78,7 +82,7 @@ public class Monster : MonoBehaviourPun
 
     protected virtual void AttackedPlayer(GameObject target)
     {
-        float damage = data.STR; // 데미지 공식
+        float damage = _data.STR; // 데미지 공식
 
         Player player = target.GetComponent<Player>();
         player.OnTakeDamage(damage);
@@ -88,7 +92,7 @@ public class Monster : MonoBehaviourPun
     {
         // 공격 받았을 때
         float dmg = Mathf.Abs(damage);
-        float def = data.DEF;
+        float def = _data.DEF;
         float lastDamage = dmg / (dmg + def) * dmg;
 
         photonView.RPC(nameof(TakeDamage), RpcTarget.MasterClient, attacker.photonView.ViewID, lastDamage);
@@ -156,24 +160,18 @@ public class Monster : MonoBehaviourPun
     * 몬스터의 움직임 제어
     ***************************************************************/
 
-    public virtual IMonsterState OnStartState()
-    {
-        // 시작 상태
-        return new ChaseState(this);
-    }
-
     private void FixedUpdate()
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            fsm.OnAction();
+            _fsm.OnAction();
         }
     }
 
-    public virtual void OnMove(GameObject target)
+    public virtual void OnMove(Vector2 targetPos)
     {
-        float speed = data.MoveSpeed * Time.deltaTime;
+        float speed = _data.MoveSpeed * Time.deltaTime;
 
-        transform.position = Vector2.MoveTowards(transform.position, target.transform.position, speed);
+        transform.position = Vector2.MoveTowards(transform.position, targetPos, speed);
     }
 }

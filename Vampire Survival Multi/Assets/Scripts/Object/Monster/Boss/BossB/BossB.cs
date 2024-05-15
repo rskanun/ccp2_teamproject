@@ -1,11 +1,13 @@
-﻿using System.Threading;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BossB : BossMonster
 {
     [Header("보스 공격 데이터")]
     [SerializeField] private float rushCooldown;
-    [SerializeField] private BossBSkill rushAttack;
+    [SerializeField] private BossBSkill rush;
+
+    // 보스 스킬 상태
+    private bool isRushing;
 
     protected override void OnCastSkill()
     {
@@ -13,8 +15,7 @@ public class BossB : BossMonster
         {
             // 가장 가까운 플레이어를 타겟으로 돌진
             GameObject target = GetTarget();
-
-            rushAttack.OnRush(gameObject, target.transform.position);
+            rush.OnRush(target.transform.position);
 
             // 쿨타임 설정
             currentCooldown = rushCooldown;
@@ -41,5 +42,17 @@ public class BossB : BossMonster
         }
 
         return closestPlayer;
+    }
+
+    public void OnRushing()
+    {
+        // 상태 변경
+        fsm.SetState(null);
+    }
+
+    public void OnRushStop()
+    {
+        // 상태 변경
+        fsm.SetState(new ChaseState(this));
     }
 }
