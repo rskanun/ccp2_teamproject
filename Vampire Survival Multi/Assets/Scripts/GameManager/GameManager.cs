@@ -15,13 +15,6 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     [Header("이벤트")]
     [SerializeField] private GameEvent reviveEvent;
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
-    [SerializeField] private GameEvent bossClearEvent;
-=======
->>>>>>> 3dafc852bf63d9812eb4e4d163bb0288b895f612
->>>>>>> Stashed changes
 
     // 플레이어 리소스
     private List<PlayerData> playerDatas;
@@ -30,9 +23,6 @@ public class GameManager : MonoBehaviourPunCallbacks
     private WaveData waveData;
     private GameData gameData;
     private ExpResource expResource;
-
-    // 준비 여부
-    private int readyToStartPlayer = 0;
 
     // 준비 여부
     private int readyToStartPlayer = 0;
@@ -84,12 +74,9 @@ public class GameManager : MonoBehaviourPunCallbacks
         // 플레이어 데이터 초기화
         InitPlayer();
 
-<<<<<<< Updated upstream
         // 경험치 데이터 설정
         expResource.SetWaveLevel(waveData.WaveLevel);
 
-=======
->>>>>>> Stashed changes
         // 준비 완료 알림
         OnReadyToStart();
     }
@@ -131,11 +118,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             foreach (GameObject mobPrefab in MonsterResource.Instance.MonsterList)
             {
-<<<<<<< Updated upstream
                 pool.ResourceCache.TryAdd(mobPrefab.name, mobPrefab);
-=======
-                pool.ResourceCache.Add(mobPrefab.name, mobPrefab);
->>>>>>> Stashed changes
             }
         }
     }
@@ -217,10 +200,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     private void NextWave()
     {
         waveData.NextWave();
-<<<<<<< Updated upstream
         expResource.SetWaveLevel(waveData.WaveLevel);
-=======
->>>>>>> Stashed changes
 
         // 다음 웨이브로 넘어갈 시 모든 플레이어 부활
         ReviveAllPlayer();
@@ -236,17 +216,6 @@ public class GameManager : MonoBehaviourPunCallbacks
     private void OnWaveClear()
     {
         Debug.Log("Wave Clear");
-<<<<<<< Updated upstream
-=======
-<<<<<<< HEAD
-
-        if (waveData.IsBossWave)
-        {
-            bossClearEvent.NotifyUpdate();
-        }
-=======
->>>>>>> 3dafc852bf63d9812eb4e4d163bb0288b895f612
->>>>>>> Stashed changes
     }
 
     private void ReviveAllPlayer()

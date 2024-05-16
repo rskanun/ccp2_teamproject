@@ -143,15 +143,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Run
-<<<<<<< Updated upstream
   m_Speed: 1
-=======
-<<<<<<< HEAD
-  m_Speed: 0.5
-=======
-  m_Speed: 1
->>>>>>> 3dafc852bf63d9812eb4e4d163bb0288b895f612
->>>>>>> Stashed changes
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: -8222607840919345576}

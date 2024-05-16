@@ -38,7 +38,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         // 방장 설정
         masterClient = PhotonNetwork.MasterClient;
 
-<<<<<<< Updated upstream
         OnEnterRoom();
     }
 
@@ -70,35 +69,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
         // 현재 패널 정보 동기화
         SynchroPanel(newPlayer);
-=======
-        // 로비 기본 UI 처리
-        InitLobbyUI();
-
-        if (PhotonNetwork.IsMasterClient)
-        {
-            // 비활성화 패널 설정
-            SetClosedPanel(room.MaxPlayers);
-
-            // 입장 이벤트 실행
-            OnPlayerEnteredRoom(PhotonNetwork.LocalPlayer);
-        }
-    }
-
-    public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
-    {
-        // 방장이 새로 들어온 플레이어에게 패널 할당
-        if (masterClient.IsLocal)
-        {
-            // 빈 패널에 플레이어 할당
-            SetPlayerPanel(newPlayer);
-
-            // 현재 패널 정보 동기화
-            SynchroPanel(newPlayer);
-
-            // 시작 여부 업데이트
-            UpdateStartActive();
-        }
->>>>>>> Stashed changes
     }
 
     private void SetPlayerPanel(Photon.Realtime.Player newPlayer)
@@ -293,12 +263,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         ui.SetRoomCode(room.Name);
         UpdateSettingButton();
         UpdateReadyOrStartButton();
-<<<<<<< Updated upstream
 
         // 시작 여부 업데이트
         UpdateStartActive();
-=======
->>>>>>> Stashed changes
     }
 
     private void SetClosedPanel(int maxPlayer)

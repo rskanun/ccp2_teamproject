@@ -56,15 +56,7 @@ public class Projectile : MonoBehaviourPun
             if (isPiercing == false)
             {
                 // 관통이 아닐 경우 파괴
-<<<<<<< Updated upstream
                 Destroy(gameObject);
-=======
-<<<<<<< HEAD
-                photonView.RPC(nameof(DestroyObj), RpcTarget.All);
-=======
-                Destroy(gameObject);
->>>>>>> 3dafc852bf63d9812eb4e4d163bb0288b895f612
->>>>>>> Stashed changes
             }
         }
     }

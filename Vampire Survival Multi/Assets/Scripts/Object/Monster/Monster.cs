@@ -10,10 +10,7 @@ public class Monster : MonoBehaviourPun
 
     // 몬스터 스테이터스
     private float currentHP;
-<<<<<<< Updated upstream
     protected float currentCooldown;
-=======
->>>>>>> Stashed changes
 
     // 몬스터 유한 상태 기계
     private FSM _fsm;
@@ -60,14 +57,7 @@ public class Monster : MonoBehaviourPun
     public void OnEnable()
     {
         // init stat
-<<<<<<< Updated upstream
         currentHP = _data.HP;
-=======
-        currentHP = data.HP;
-
-        // init fsm
-        fsm.SetState(new ChaseState(this));
->>>>>>> Stashed changes
     }
 
     private void OnDrawGizmos()
@@ -86,7 +76,6 @@ public class Monster : MonoBehaviourPun
     {
         if (PhotonNetwork.IsMasterClient)
         {
-<<<<<<< Updated upstream
             AttackedPlayer(target);
         }
     }
@@ -94,13 +83,9 @@ public class Monster : MonoBehaviourPun
     protected virtual void AttackedPlayer(GameObject target)
     {
         float damage = _data.STR; // 데미지 공식
-=======
-            float damage = data.STR; // 데미지 공식
->>>>>>> Stashed changes
 
-            Player player = target.GetComponent<Player>();
-            player.OnTakeDamage(damage);
-        }
+        Player player = target.GetComponent<Player>();
+        player.OnTakeDamage(damage);
     }
 
     public void OnTakeDamage(Player attacker, float damage)
@@ -111,54 +96,6 @@ public class Monster : MonoBehaviourPun
         float lastDamage = dmg / (dmg + def) * dmg;
 
         photonView.RPC(nameof(TakeDamage), RpcTarget.MasterClient, attacker.photonView.ViewID, lastDamage);
-<<<<<<< Updated upstream
-    }
-
-    [PunRPC]
-    protected void TakeDamage(int attackerViewID, float lastDamage)
-    {
-        GameObject attackerChr = PhotonView.Find(attackerViewID).gameObject;
-        Player attacker = attackerChr.GetComponent<Player>();
-
-        currentHP -= lastDamage;
-        photonView.RPC(nameof(AsyncHP), RpcTarget.Others, currentHP);
-
-        if (currentHP <= 0)
-        {
-            OnDead(attacker);
-        }
-    }
-
-    [PunRPC]
-    protected void AsyncHP(float currentHP)
-    {
-        this.currentHP = currentHP;
-=======
-<<<<<<< HEAD
-=======
->>>>>>> Stashed changes
-    }
-
-    [PunRPC]
-    protected void TakeDamage(int attackerViewID, float lastDamage)
-    {
-        GameObject attackerChr = PhotonView.Find(attackerViewID).gameObject;
-        Player attacker = attackerChr.GetComponent<Player>();
-
-        currentHP -= lastDamage;
-        photonView.RPC(nameof(AsyncHP), RpcTarget.Others, currentHP);
-
-        if (currentHP <= 0)
-        {
-            OnDead(attacker);
-        }
-    }
-
-    [PunRPC]
-    protected void AsyncHP(float currentHP)
-    {
-        this.currentHP = currentHP;
->>>>>>> 3dafc852bf63d9812eb4e4d163bb0288b895f612
     }
 
     [PunRPC]
@@ -182,7 +119,7 @@ public class Monster : MonoBehaviourPun
         this.currentHP = currentHP;
     }
 
-    protected void OnDead(Player killPlayer)
+    protected virtual void OnDead(Player killPlayer)
     {
         // 몬스터 제거
         photonView.RPC(nameof(DestroyMob), RpcTarget.All);
@@ -193,68 +130,6 @@ public class Monster : MonoBehaviourPun
 
         // 플레이어에게 킬 알림
         killPlayer.OnKilled();
-    }
-
-    [PunRPC]
-    protected void DestroyMob()
-    {
-<<<<<<< HEAD
-        Destroy(gameObject);
-
-        // 몬스터 카운트 감소
-        WaveData.Instance.OnKilledMob();
-    }
-
-    protected virtual int GetMonsterExp()
-    {
-        int exp = ExpResource.Instance.GetExp();
-=======
-        // 몬스터 제거
-        photonView.RPC(nameof(DestroyMob), RpcTarget.All);
-
-        // 경험치 획득
-        int exp = GetMonsterExp();
-        photonView.RPC(nameof(GetExp), RpcTarget.All, exp);
->>>>>>> 3dafc852bf63d9812eb4e4d163bb0288b895f612
-
-        return exp;
-    }
-
-    [PunRPC]
-    protected void GetExp(int exp)
-    {
-        GameData.Instance.AddExp(exp);
-    }
-
-    [PunRPC]
-    protected void DestroyMob()
-    {
-<<<<<<< Updated upstream
-        // 몬스터 제거
-        photonView.RPC(nameof(DestroyMob), RpcTarget.All);
-
-        // 경험치 획득
-        int exp = GetMonsterExp();
-        photonView.RPC(nameof(GetExp), RpcTarget.All, exp);
-=======
-        Destroy(gameObject);
-
-        // 몬스터 카운트 감소
-        WaveData.Instance.OnKilledMob();
-    }
-
-    protected virtual int GetMonsterExp()
-    {
-        int exp = ExpResource.Instance.GetExp();
->>>>>>> Stashed changes
-
-        return exp;
-    }
-
-    [PunRPC]
-    protected void GetExp(int exp)
-    {
-        GameData.Instance.AddExp(exp);
     }
 
     [PunRPC]
@@ -289,7 +164,6 @@ public class Monster : MonoBehaviourPun
     {
         if (PhotonNetwork.IsMasterClient)
         {
-<<<<<<< Updated upstream
             _fsm.OnAction();
         }
     }
@@ -299,9 +173,5 @@ public class Monster : MonoBehaviourPun
         float speed = _data.MoveSpeed * Time.deltaTime;
 
         transform.position = Vector2.MoveTowards(transform.position, targetPos, speed);
-=======
-            fsm.OnAction();
-        }
->>>>>>> Stashed changes
     }
 }
