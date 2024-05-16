@@ -15,6 +15,7 @@ public class WaveResource : ScriptableObject
     private class Wave
     {
         public int time;
+        public bool isBossWave;
         public List<WaveMonsterData> monsters;
     }
 
@@ -131,5 +132,10 @@ public class WaveResource : ScriptableObject
         }
 
         return spawnMobList;
+    }
+
+    public bool IsBossWave(int level)
+    {
+        return waveDatas[level - 1].isBossWave;
     }
 }

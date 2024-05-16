@@ -15,6 +15,9 @@ public class PlayerController : MonoBehaviourPun, IControlState
     // 이동 관련 변수
     private Rigidbody2D rigid;
     private Vector2 moveVec;
+    private SpriteRenderer spriter;
+    private Animator anim;
+    
 
     // 스킬 변수
     private Skill autoAttack;
@@ -24,6 +27,15 @@ public class PlayerController : MonoBehaviourPun, IControlState
 
     private void Awake()
     {
+<<<<<<< Updated upstream
+=======
+<<<<<<< HEAD
+        spriter=GetComponent<SpriteRenderer>();
+        anim=GetComponent<Animator>();
+
+=======
+>>>>>>> 3dafc852bf63d9812eb4e4d163bb0288b895f612
+>>>>>>> Stashed changes
         if (playerData.IsPlaying == false)
         {
             Destroy(gameObject);
@@ -186,6 +198,74 @@ public class PlayerController : MonoBehaviourPun, IControlState
 
         // 플레이어 좌표 갱신
         playerData.Position = transform.position;
+
+        anim.SetFloat("Speed", movement.magnitude);
+        if (movement.x != 0)
+        {
+            spriter.flipX = movement.x < 0;
+        }
+    }
+
+    public void UpdatePlayerPos()
+    {
+        if (playerData.Player.IsLocal)
+        {
+            transform.position = playerData.Position;
+        }
+    }
+
+    /***************************************************************
+    * [ 부활 ]
+    * 
+    * 부활 시 주변 몬스터 밀치기
+    ***************************************************************/
+
+    public void KnockbackMonsters()
+    {
+        PlayerResource resource = PlayerResource.Instance;
+
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, resource.KnockbackArea);
+        foreach (Collider2D collider in colliders)
+        {
+            if (collider.CompareTag("Monster"))
+            {
+                Vector2 direction = (collider.transform.position - transform.position).normalized;
+                Rigidbody2D rb = collider.GetComponent<Rigidbody2D>();
+
+                rb.AddForce(direction * resource.KnockbackForce, ForceMode2D.Impulse);
+            }
+        }
+    }
+
+    public void UpdatePlayerPos()
+    {
+        if (playerData.Player.IsLocal)
+        {
+            transform.position = playerData.Position;
+        }
+    }
+
+    /***************************************************************
+    * [ 부활 ]
+    * 
+    * 부활 시 주변 몬스터 밀치기
+    ***************************************************************/
+
+    public void KnockbackMonsters()
+    {
+        PlayerResource resource = PlayerResource.Instance;
+
+        Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, resource.KnockbackArea);
+        foreach (Collider2D collider in colliders)
+        {
+            if (collider.CompareTag("Monster"))
+            {
+                Vector2 direction = (collider.transform.position - transform.position).normalized;
+                Rigidbody2D rb = collider.GetComponent<Rigidbody2D>();
+
+                rb.AddForce(direction * resource.KnockbackForce, ForceMode2D.Impulse);
+            }
+        }
     }
 
     public void UpdatePlayerPos()

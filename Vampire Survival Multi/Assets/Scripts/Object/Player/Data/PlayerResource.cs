@@ -70,8 +70,17 @@ public class PlayerResource : ScriptableObject
     {
         get { return _noDamageDuration; }
     }
+<<<<<<< Updated upstream
 
     [Header("부활 넉백 옵션")]
+=======
+<<<<<<< HEAD
+    
+=======
+
+    [Header("부활 넉백 옵션")]
+>>>>>>> 3dafc852bf63d9812eb4e4d163bb0288b895f612
+>>>>>>> Stashed changes
     [SerializeField]
     private float _knockbackArea;
     public float KnockbackArea

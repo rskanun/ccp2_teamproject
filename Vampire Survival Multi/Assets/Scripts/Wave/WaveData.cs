@@ -98,6 +98,19 @@ public class WaveData : ScriptableObject
         }
     }
 
+<<<<<<< Updated upstream
+=======
+    public bool IsBossWave
+    {
+        get
+        {
+            WaveResource resource = WaveResource.Instance;
+
+            return resource.IsBossWave(WaveLevel);
+        }
+    }
+
+>>>>>>> Stashed changes
     // 소환할 몬스터 목록
     private Queue<GameObject> waveMobs;
 

@@ -13,11 +13,25 @@ MonoBehaviour:
   m_Name: WaveResource
   m_EditorClassIdentifier: 
   waveDatas:
+<<<<<<< Updated upstream
   - time: 999
     monsters: []
   - time: 999
     monsters: []
+=======
+  - time: 40
+    isBossWave: 0
+    monsters:
+    - monster: {fileID: 325465133739098425, guid: 9100b634ffdb99146b2a94e6be723e74, type: 3}
+      spawnCount: 1
+>>>>>>> Stashed changes
   - time: 999
+    isBossWave: 1
+    monsters:
+    - monster: {fileID: 325465133739098425, guid: 1ee0db8207cf01a4499dd4b5ea207c3d, type: 3}
+      spawnCount: 1
+  - time: 999
+    isBossWave: 0
     monsters:
     - monster: {fileID: 325465133739098425, guid: 9100b634ffdb99146b2a94e6be723e74, type: 3}
       spawnCount: 1
