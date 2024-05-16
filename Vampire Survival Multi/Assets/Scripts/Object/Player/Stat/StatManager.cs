@@ -217,7 +217,6 @@ public class StatManager : MonoBehaviourPun
 
     private void UpdateTmpUI()
     {
-        Debug.Log("Update Stat");
         testStatInfo.text =
             "<Status>" +
             "\r\nHP : " + PlayerStat.MaxHP +

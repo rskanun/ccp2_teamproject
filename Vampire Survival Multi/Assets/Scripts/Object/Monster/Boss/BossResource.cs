@@ -12,8 +12,8 @@ public class BossResource : ScriptableObject
     }
 
     // 저장 파일 위치
-    private const string FILE_DIRECTORY = "Assets/Resources/Objects/Monster";
-    private const string FILE_PATH = "Assets/Resources/Objects/Monster/BossResource.asset";
+    private const string FILE_DIRECTORY = "Assets/Resources/Objects/Monster/Boss";
+    private const string FILE_PATH = "Assets/Resources/Objects/Monster/Boss/BossResource.asset";
 
     private static BossResource _instance;
     public static BossResource Instance
@@ -22,7 +22,7 @@ public class BossResource : ScriptableObject
         {
             if (_instance != null) return _instance;
 
-            _instance = Resources.Load<BossResource>("Objects/Monster/BossResource");
+            _instance = Resources.Load<BossResource>("Objects/Monster/Boss/BossResource");
 
 #if UNITY_EDITOR
             if (_instance == null)

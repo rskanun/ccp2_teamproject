@@ -19,7 +19,7 @@ public class ChaseState : IMonsterState
 
             // 몬스터와 플레이어 간의 거리 계산
             float distance = Vector2.Distance(pos, monster.transform.position);
-            if (distance <= monster.MonsterData.AttackDistance)
+            if (distance <= monster.Stat.AttackDistance)
             {
                 // 몬스터가 공격 가능한 범위까지 접근하면 상태 변경
                 fsm.SetState(new AttackState(monster));

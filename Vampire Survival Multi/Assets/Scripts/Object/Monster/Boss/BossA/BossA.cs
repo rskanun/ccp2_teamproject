@@ -11,7 +11,7 @@ public class BossA : BossMonster
 
     protected override void OnCastSkill()
     {
-        if (currentCooldown <= 0.0f)
+        if (CoolTime <= 0.0f)
         {
             laserAttack.OnShoot(attackRotate);
 
@@ -19,7 +19,7 @@ public class BossA : BossMonster
             attackRotate -= 45;
 
             // 쿨타임 설정
-            currentCooldown = laserCooldown;
+            CoolTime = laserCooldown;
         }
     }
 

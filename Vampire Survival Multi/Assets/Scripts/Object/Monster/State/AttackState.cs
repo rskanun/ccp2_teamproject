@@ -60,7 +60,7 @@ public class AttackState : IMonsterState
 
             // 몬스터와 플레이어 간의 거리 계산
             float distance = Vector2.Distance(playerPos, mobPos);
-            if (distance > monster.MonsterData.AttackDistance)
+            if (distance > monster.Stat.AttackDistance)
             {
                 // 거리가 멀어지면 다시 추적
                 fsm.SetState(new ChaseState(monster));

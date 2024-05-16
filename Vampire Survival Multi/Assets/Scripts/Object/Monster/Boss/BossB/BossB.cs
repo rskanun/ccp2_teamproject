@@ -11,14 +11,14 @@ public class BossB : BossMonster
 
     protected override void OnCastSkill()
     {
-        if (currentCooldown <= 0.0f)
+        if (CoolTime <= 0.0f)
         {
             // 가장 가까운 플레이어를 타겟으로 돌진
             GameObject target = GetTarget();
             rush.OnRush(target.transform.position);
 
             // 쿨타임 설정
-            currentCooldown = rushCooldown;
+            CoolTime = rushCooldown;
         }
     }
 

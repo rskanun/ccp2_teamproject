@@ -6,22 +6,33 @@ public class Monster : MonoBehaviourPun
     [Header("몬스터 데이터")]
     [SerializeField]
     private MonsterData _data;
-    public MonsterData MonsterData { get { return _data; } }
+    public MonsterData Stat { get { return _data; } }
 
     // 몬스터 스테이터스
-    private float currentHP;
-    protected float currentCooldown;
+    private float _currentHP;
+    protected float HP
+    {
+        get { return _currentHP; }
+        set { _currentHP = value; }
+    }
+    private float _coolTime;
+    protected float CoolTime
+    {
+        get { return _coolTime; }
+        set { _coolTime = value; }
+    }
 
     // 몬스터 유한 상태 기계
     private FSM _fsm;
     protected FSM fsm
     {
+        private set {  _fsm = value; }
         get { return _fsm; }
     }
 
     private void Awake()
     {
-        _fsm = new FSM(new ChaseState(this));
+        fsm = new FSM(new ChaseState(this));
     }
 
     private void Update()
@@ -48,16 +59,16 @@ public class Monster : MonoBehaviourPun
     [PunRPC]
     protected void PassedCooldown(float time)
     {
-         if (currentCooldown > 0)
+         if (CoolTime > 0)
         {
-            currentCooldown -= time;
+            CoolTime -= time;
         }
     }
 
     public void OnEnable()
     {
         // init stat
-        currentHP = _data.HP;
+        HP = _data.HP;
     }
 
     private void OnDrawGizmos()
@@ -82,7 +93,7 @@ public class Monster : MonoBehaviourPun
 
     protected virtual void AttackedPlayer(GameObject target)
     {
-        float damage = _data.STR; // 데미지 공식
+        float damage = Stat.STR; // 데미지 공식
 
         Player player = target.GetComponent<Player>();
         player.OnTakeDamage(damage);
@@ -92,7 +103,7 @@ public class Monster : MonoBehaviourPun
     {
         // 공격 받았을 때
         float dmg = Mathf.Abs(damage);
-        float def = _data.DEF;
+        float def = Stat.DEF;
         float lastDamage = dmg / (dmg + def) * dmg;
 
         photonView.RPC(nameof(TakeDamage), RpcTarget.MasterClient, attacker.photonView.ViewID, lastDamage);
@@ -104,10 +115,10 @@ public class Monster : MonoBehaviourPun
         GameObject attackerChr = PhotonView.Find(attackerViewID).gameObject;
         Player attacker = attackerChr.GetComponent<Player>();
 
-        currentHP -= lastDamage;
-        photonView.RPC(nameof(AsyncHP), RpcTarget.Others, currentHP);
+        HP -= lastDamage;
+        photonView.RPC(nameof(AsyncHP), RpcTarget.Others, HP);
 
-        if (currentHP <= 0)
+        if (HP <= 0)
         {
             OnDead(attacker);
         }
@@ -116,7 +127,7 @@ public class Monster : MonoBehaviourPun
     [PunRPC]
     protected void AsyncHP(float currentHP)
     {
-        this.currentHP = currentHP;
+        HP = currentHP;
     }
 
     protected virtual void OnDead(Player killPlayer)
@@ -164,13 +175,13 @@ public class Monster : MonoBehaviourPun
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            _fsm.OnAction();
+            fsm.OnAction();
         }
     }
 
     public virtual void OnMove(Vector2 targetPos)
     {
-        float speed = _data.MoveSpeed * Time.deltaTime;
+        float speed = Stat.MoveSpeed * Time.deltaTime;
 
         transform.position = Vector2.MoveTowards(transform.position, targetPos, speed);
     }

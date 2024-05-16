@@ -42,7 +42,7 @@ public class BossBSkill : MonoBehaviour
 
     private void OnRushAttack()
     {
-        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, monster.MonsterData.AttackDistance);
+        Collider2D[] hitColliders = Physics2D.OverlapCircleAll(transform.position, monster.Stat.AttackDistance);
 
         // 돌진 도중 주변 플레이어 데미지
         foreach (Collider2D collider in hitColliders)
@@ -92,7 +92,7 @@ public class BossBSkill : MonoBehaviour
         monster.OnRushing();
 
         // 돌진 전 차징
-        ActiveRoute(transform.position, targetPos, monster.MonsterData.AttackDistance, delay);
+        ActiveRoute(transform.position, targetPos, monster.Stat.AttackDistance, delay);
         yield return new WaitForSeconds(delay);
 
         // 목표지점까지 돌진
@@ -133,6 +133,6 @@ public class BossBSkill : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, shortDistance);
 
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(targetPos, monster.MonsterData.AttackDistance);
+        Gizmos.DrawWireSphere(targetPos, monster.Stat.AttackDistance);
     }
 }

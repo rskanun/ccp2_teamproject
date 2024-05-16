@@ -123,6 +123,8 @@ MonoBehaviour:
   - UpdateSTR
   - SetPanel
   - InitPlayerPanel
+  - InitSplitBody
+  - AsyncSplitBodyCount
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
