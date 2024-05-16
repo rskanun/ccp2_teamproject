@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 
-public class BossA : BossMonster
+public class LaserBoss : BossMonster
 {
     [Header("보스 공격 데이터")]
     [SerializeField] private float laserCooldown;
-    [SerializeField] private BossASkill laserAttack;
+    [SerializeField] private LaserBossSkill laserAttack;
 
     // 보스 공격 데이터
     private float attackRotate;

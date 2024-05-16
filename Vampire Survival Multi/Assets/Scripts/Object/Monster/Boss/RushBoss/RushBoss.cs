@@ -1,24 +1,21 @@
 ﻿using UnityEngine;
 
-public class BossB : BossMonster
+public class RushBoss : BossMonster
 {
     [Header("보스 공격 데이터")]
     [SerializeField] private float rushCooldown;
-    [SerializeField] private BossBSkill rush;
+    [SerializeField] private RushBossSkill rush;
 
     // 보스 스킬 상태
     private bool isRushing;
 
     protected override void OnCastSkill()
     {
-        if (CoolTime <= 0.0f)
+        if (isRushing == false && CoolTime <= 0.0f)
         {
             // 가장 가까운 플레이어를 타겟으로 돌진
             GameObject target = GetTarget();
             rush.OnRush(target.transform.position);
-
-            // 쿨타임 설정
-            CoolTime = rushCooldown;
         }
     }
 
@@ -46,13 +43,23 @@ public class BossB : BossMonster
 
     public void OnRushing()
     {
-        // 상태 변경
-        fsm.SetState(null);
+        isRushing = true;
     }
 
     public void OnRushStop()
     {
-        // 상태 변경
-        fsm.SetState(new ChaseState(this));
+        // 쿨타임 설정
+        CoolTime = rushCooldown;
+
+        isRushing = false;
+    }
+
+    public override void OnMove(Vector2 targetPos)
+    {
+        if (!isRushing)
+        {
+            // 대쉬 중이 아닐 경우에만 움직임
+            base.OnMove(targetPos);
+        }
     }
 }

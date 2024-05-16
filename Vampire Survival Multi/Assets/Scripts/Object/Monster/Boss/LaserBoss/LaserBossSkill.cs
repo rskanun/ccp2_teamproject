@@ -2,7 +2,7 @@
 using System.Collections;
 using UnityEngine;
 
-public class BossASkill : MonoBehaviour
+public class LaserBossSkill : MonoBehaviour
 {
     [Header("레이저 설정")]
     [SerializeField] private float castTime;

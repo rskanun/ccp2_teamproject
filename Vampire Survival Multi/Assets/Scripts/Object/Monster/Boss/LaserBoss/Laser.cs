@@ -6,7 +6,7 @@ public class Laser : MonoBehaviour
     [Header("보스 데이터")]
     [SerializeField] private MonsterData data;
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnTriggerStay2D(Collider2D collision)
     {
         if (PhotonNetwork.IsMasterClient == false)
         {

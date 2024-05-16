@@ -1,7 +1,7 @@
 ﻿using Photon.Pun;
 using UnityEngine;
 
-public class BossC : BossMonster
+public class SplitBoss : BossMonster
 {
     [Header("보스 분열 데이터")]
     [SerializeField] private int maxSplitConut;
@@ -21,15 +21,16 @@ public class BossC : BossMonster
             for (int i = 0; i < splitBodyNum; i++)
             {
                 string name = RemoveCloneInName(gameObject.name);
-                GameObject splitBody = PhotonNetwork.Instantiate(name, transform.position, Quaternion.identity);
+                float posX = Random.Range(transform.position.x - 0.5f, transform.position.x + 0.5f);
+                float posY = Random.Range(transform.position.y - 0.5f, transform.position.y + 0.5f);
+                GameObject splitBody = PhotonNetwork.Instantiate(name, new Vector3(posX, posY, transform.position.z), Quaternion.identity);
 
-                splitBody.GetComponent<BossC>().OnSplit(splitCount + 1);
+                splitBody.GetComponent<SplitBoss>().OnSplit(splitCount + 1);
             }
         }
 
         // 남은 분열체 수 설정
         splitBodyCount--;
-        Debug.Log($"Dead -> remain: {splitBodyCount} / splitCount: {splitCount}");
 
         // 보스 정보 동기화
         photonView.RPC(nameof(AsyncSplitBodyCount), RpcTarget.Others, splitBodyCount);
@@ -60,7 +61,6 @@ public class BossC : BossMonster
 
         // 남은 분열체 수 설정
         splitBodyCount++;
-        Debug.Log($"Split -> remain: {splitBodyCount} / splitCount: {splitCount}");
 
         // 보스 정보 동기화
         photonView.RPC(nameof(AsyncSplitBodyCount), RpcTarget.Others, splitBodyCount);

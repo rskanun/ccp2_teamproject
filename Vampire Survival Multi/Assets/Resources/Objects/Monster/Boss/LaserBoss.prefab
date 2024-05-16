@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5313075957188627956}
   - component: {fileID: 8842503338174038588}
   m_Layer: 0
-  m_Name: BossA
+  m_Name: LaserBoss
   m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

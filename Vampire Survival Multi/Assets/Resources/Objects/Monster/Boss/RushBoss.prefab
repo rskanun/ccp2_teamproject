@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 7920782052984049507}
   - component: {fileID: 6836871942617890987}
   m_Layer: 0
-  m_Name: BossB
+  m_Name: RushBoss
   m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -207,7 +207,8 @@ MonoBehaviour:
   shortChargingDelay: 2
   longChargingDelay: 5
   rushSpeed: 20
-  rushDamage: 10
+  shortRushDamage: 5
+  longRushDamage: 10
   stopDistance: 0.05
   rushRoute: {fileID: 984191337859699165}
   pivot: {fileID: 7685601166325938995}

@@ -3,14 +3,15 @@ using Photon.Pun;
 using System.Collections;
 using UnityEngine;
 
-public class BossBSkill : MonoBehaviour
+public class RushBossSkill : MonoBehaviour
 {
     [Header("돌진 설정")]
     [SerializeField] private float shortDistance;
     [SerializeField] private float shortChargingDelay;
     [SerializeField] private float longChargingDelay;
     [SerializeField] private float rushSpeed;
-    [SerializeField] private float rushDamage;
+    [SerializeField] private float shortRushDamage;
+    [SerializeField] private float longRushDamage;
     [SerializeField] private float stopDistance;
 
     [Header("사용 오브젝트")]
@@ -19,10 +20,11 @@ public class BossBSkill : MonoBehaviour
     [SerializeField] private SpriteRenderer sprite;
 
     [Header("참조 오브젝트")]
-    [SerializeField] private BossB monster;
+    [SerializeField] private RushBoss monster;
 
     // 현재 상테
     private bool isRushing = false;
+    private bool isLongRush = false;
     private Vector2 targetPos;
 
     private void FixedUpdate()
@@ -51,7 +53,8 @@ public class BossBSkill : MonoBehaviour
             {
                 Player player = collider.GetComponent<Player>();
 
-                player.OnTakeDamage(rushDamage);
+                float damage = isLongRush ? longRushDamage : shortRushDamage;
+                player.OnTakeDamage(damage);
             }
         }
     }
@@ -85,8 +88,11 @@ public class BossBSkill : MonoBehaviour
 
     private IEnumerator RushToTarget(Vector3 targetPos)
     {
+
         float distance = (targetPos - transform.position).magnitude;
-        float delay = (distance > shortDistance) ? longChargingDelay : shortChargingDelay;
+
+        isLongRush = distance > shortDistance;
+        float delay = isLongRush ? longChargingDelay : shortChargingDelay;
 
         // 돌진 상태로 전환
         monster.OnRushing();
@@ -102,7 +108,6 @@ public class BossBSkill : MonoBehaviour
     private void ActiveRoute(Vector2 bossPos, Vector2 targetPos, float attackDistance, float chargingDelay)
     {
         Vector2 spriteSize = sprite.bounds.size;
-        Debug.Log(spriteSize);
 
         // 경로 길이 설정
         float distance = Vector2.Distance(bossPos, targetPos);

@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7e2588cb85cf3494380add9239a721c9, type: 3}
-  m_Name: BossAData
+  m_Name: LaserBossData
   m_EditorClassIdentifier: 
   _healthPoint: 10
   _strength: 1
