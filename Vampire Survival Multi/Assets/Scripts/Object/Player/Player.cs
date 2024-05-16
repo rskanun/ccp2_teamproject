@@ -11,7 +11,9 @@ public class Player : MonoBehaviourPun
 
     // 플레이어 공통 옵션
     private PlayerResource playerOption;
-    private float curDuration;
+    [SerializeField] private float curRegenDelay;
+    [SerializeField] private float curRegenCooldown;
+    private float curNoHitTime;
 
     private void Start()
     {
@@ -26,18 +28,61 @@ public class Player : MonoBehaviourPun
 
     private void Update()
     {
-        if (curDuration > 0)
+        if (PhotonNetwork.IsMasterClient)
         {
             float time = Time.deltaTime;
 
-            photonView.RPC(nameof(PassedTime), RpcTarget.All, time);
+            if (curNoHitTime > 0) // 공격 쿨다운
+                photonView.RPC(nameof(AttackCooldown), RpcTarget.All, time);
+
+            if (curRegenDelay > 0)
+            {
+                // 데미지를 안 받은 시간 쿨다운
+                photonView.RPC(nameof(UpdateNoDmgTime), RpcTarget.All, time);
+            }
+            else
+            {
+                if (curRegenCooldown <= 0)
+                {
+                    // 일정 시간마다 체력 재생
+                    photonView.RPC(nameof(RegenHP), RpcTarget.All);
+                }
+                else
+                {
+                    // 체력 재생 쿨다운
+                    photonView.RPC(nameof(RegenCooldown), RpcTarget.All, time);
+                }
+            }
         }
     }
 
     [PunRPC]
-    private void PassedTime(float time)
+    private void AttackCooldown(float time)
     {
-        curDuration -= Time.deltaTime;
+        curNoHitTime -= time;
+    }
+
+    [PunRPC]
+    private void UpdateNoDmgTime(float time)
+    {
+        curRegenDelay -= time;
+    }
+
+    [PunRPC]
+    private void RegenCooldown(float time)
+    {
+        curRegenCooldown -= time;
+    }
+
+    [PunRPC]
+    private void RegenHP()
+    {
+        if (playerData.HP < playerData.MaxHP)
+        {
+            // 플레이어의 체력이 닳은 경우에만 작동
+            playerData.HP += playerOption.RegenHP;
+            curRegenCooldown = playerOption.RegenCooltime;
+        }
     }
 
     /***************************************************************
@@ -49,7 +94,7 @@ public class Player : MonoBehaviourPun
     public void OnTakeDamage(float damage)
     {
         // 피격받은 지 일정시간이 경과하면 데미지
-        if (curDuration <= 0)
+        if (curNoHitTime <= 0)
         {
             // 공격 받았을 때
             float dmg = Mathf.Abs(damage);
@@ -122,7 +167,9 @@ public class Player : MonoBehaviourPun
     [PunRPC]
     private void AsyncNoDamageTime()
     {
-        curDuration = playerOption.NoDamageDuration;
+        curNoHitTime = playerOption.NoDamageDuration;
+        curRegenDelay = playerOption.RegentDelay;
+        curRegenCooldown = 0;
     }
 
     private void HealHP(float recoverHP)

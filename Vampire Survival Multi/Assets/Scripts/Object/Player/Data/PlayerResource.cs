@@ -71,6 +71,27 @@ public class PlayerResource : ScriptableObject
         get { return _noDamageDuration; }
     }
 
+    [SerializeField]
+    private float _regenCooltime;
+    public float RegenCooltime
+    {
+        get { return _regenCooltime; }
+    }
+
+    [SerializeField]
+    private float _regenDelay;
+    public float RegentDelay
+    {
+        get { return _regenDelay; }
+    }
+
+    [SerializeField]
+    private float _regenHP;
+    public float RegenHP
+    {
+        get { return _regenHP; }
+    }
+
     [Header("부활 넉백 옵션")]
     [SerializeField]
     private float _knockbackArea;
