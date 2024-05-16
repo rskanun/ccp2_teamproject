@@ -1,6 +1,7 @@
 ﻿using Photon.Pun;
 using TMPro;
 using UnityEngine;
+using static UnityEditor.Progress;
 
 public class StatManager : MonoBehaviourPun
 {
@@ -75,12 +76,15 @@ public class StatManager : MonoBehaviourPun
         // Update Life Steal
         playerData.LifeSteal = GetEquipLifeSteal(playerData, item);
         photonView.RPC(nameof(UpdateLifeSteal), RpcTarget.Others, playerID, playerData.LifeSteal);
+<<<<<<< Updated upstream
 
         // Stat Update
         if (playerData.Player.IsLocal)
         {
             UpdateTmpUI();
         }
+=======
+>>>>>>> Stashed changes
     }
 
     [PunRPC]
