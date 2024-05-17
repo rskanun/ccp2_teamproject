@@ -11,8 +11,8 @@ public class Player : MonoBehaviourPun
 
     // 플레이어 공통 옵션
     private PlayerResource playerOption;
-    [SerializeField] private float curRegenDelay;
-    [SerializeField] private float curRegenCooldown;
+    private float curRegenDelay;
+    private float curRegenCooldown;
     private float curNoHitTime;
 
     private void Start()

@@ -125,6 +125,11 @@ MonoBehaviour:
   - InitPlayerPanel
   - InitSplitBody
   - AsyncSplitBodyCount
+  - AsyncRegenDelay
+  - AttackCooldown
+  - RegenCooldown
+  - UpdateNoDmgTime
+  - RegenHP
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

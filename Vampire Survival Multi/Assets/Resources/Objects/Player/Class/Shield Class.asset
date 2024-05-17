@@ -12,14 +12,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23f754e3244236349beb13125061f27a, type: 3}
   m_Name: Shield Class
   m_EditorClassIdentifier: 
-  _healthPoint: 0
-  _strength: 0
-  _defensive: 0
-  _moveSpeed: 0
-  _attackSpeed: 0
+  _healthPoint: 100
+  _strength: 50
+  _defensive: 150
+  _moveSpeed: 3.4
+  _attackSpeed: 0.5
   _lifeSteal: 0
-  _passiveSkill: {fileID: 0}
-  _activeSkill: {fileID: 0}
-  _id: 0
-  _name: 
-  _icon: {fileID: 0}
+  _passiveSkill: {fileID: 11400000, guid: 78214d81d426162438888e034465e5e9, type: 2}
+  _activeSkill: {fileID: 11400000, guid: 56669873005adbc4ba810c11b07c8945, type: 2}
+  _id: 1
+  _name: "\uBC29\uD328 \uD074\uB798\uC2A4"
+  _icon: {fileID: 21300000, guid: 570018e27fa24c34091ab0bbdcff209b, type: 3}

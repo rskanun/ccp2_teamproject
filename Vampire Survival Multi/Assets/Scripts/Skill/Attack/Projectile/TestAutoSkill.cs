@@ -2,9 +2,11 @@
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "Skill/Class/Auto/Test", fileName = "Test Auto Skill")]
-public class TestAutoSkill : AutoAttackSkill
+public class TestAutoSkill : Skill
 {
     // 스킬 세부 사항
+    [SerializeField] private bool isPiercing;
+    [SerializeField] private float distance;
     [SerializeField] private float speed;
 
     [Header("발사체")]
@@ -21,12 +23,12 @@ public class TestAutoSkill : AutoAttackSkill
         // 이동 방향 설정
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 casterPos = CasterData.Position;
-        Vector2 targetPos = casterPos + (mousePos - casterPos).normalized * Distance;
+        Vector2 targetPos = casterPos + (mousePos - casterPos).normalized * distance;
 
         // 투사체 발사
         Projectile projectile = projectileObj.GetComponent<Projectile>();
 
-        projectile.ThrowProjectile(targetPos, speed, IsPiercing, (monster) =>
+        projectile.ThrowProjectile(targetPos, speed, isPiercing, (monster) =>
         {
             caster.OnNormalAttack(monster, CasterData.STR);
         });

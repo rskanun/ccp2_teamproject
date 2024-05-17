@@ -5,6 +5,7 @@ using UnityEngine;
 public class Murasaki : Skill
 {
     // 스킬 세부 사항
+    [SerializeField] private float distance;
     [SerializeField] private float speed;
     [SerializeField] private float damageValue;
     [SerializeField] private float damageRate;
@@ -23,7 +24,7 @@ public class Murasaki : Skill
         // 이동 방향 설정
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 casterPos = CasterData.Position;
-        Vector2 targetPos = casterPos + (mousePos - casterPos).normalized * Distance;
+        Vector2 targetPos = casterPos + (mousePos - casterPos).normalized * distance;
 
         float damage = damageValue + CasterData.STR * damageRate;
 

@@ -18,5 +18,8 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 3f1c87287d03de8498ed4cdd571f63e3, type: 2}
   - {fileID: 11400000, guid: bd52fbf5f2c292c45a033d0210787b7f, type: 2}
   _noDamageDuration: 0.15
+  _regenCooltime: 1
+  _regenDelay: 5
+  _regenHP: 1
   _knockbackArea: 2
   _knockbackForce: 50

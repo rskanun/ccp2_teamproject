@@ -43,13 +43,6 @@ public abstract class Skill : ScriptableObject
 
     [Header("스킬 상세 정보")]
     [SerializeField]
-    private float _distance;
-    public virtual float Distance
-    {
-        get { return _distance; }
-    }
-
-    [SerializeField]
     private float _cooldown;
     public float Cooldown
     {

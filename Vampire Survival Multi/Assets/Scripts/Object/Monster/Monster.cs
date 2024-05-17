@@ -1,6 +1,11 @@
 ﻿using Photon.Pun;
 using UnityEngine;
 
+public enum MonsterState
+{
+    Stun
+}
+
 public class Monster : MonoBehaviourPun
 {
     [Header("몬스터 데이터")]
@@ -29,6 +34,9 @@ public class Monster : MonoBehaviourPun
         private set {  _fsm = value; }
         get { return _fsm; }
     }
+
+    // 버프&디버프 목록
+
 
     private void Awake()
     {
