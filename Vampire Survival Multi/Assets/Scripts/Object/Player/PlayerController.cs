@@ -15,6 +15,8 @@ public class PlayerController : MonoBehaviourPun, IControlState
     // 이동 관련 변수
     private Rigidbody2D rigid;
     private Vector2 moveVec;
+    private SpriteRenderer spriter;
+    private Animator anim;
 
     // 스킬 변수
     private Skill autoAttack;
@@ -24,6 +26,9 @@ public class PlayerController : MonoBehaviourPun, IControlState
 
     private void Awake()
     {
+        spriter = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
+
         if (playerData.IsPlaying == false)
         {
             Destroy(gameObject);
@@ -186,6 +191,11 @@ public class PlayerController : MonoBehaviourPun, IControlState
 
         // 플레이어 좌표 갱신
         playerData.Position = transform.position;
+        anim.SetFloat("Speed", movement.magnitude);
+        if (movement.x != 0)
+        {
+            spriter.flipX = movement.x < 0;
+        }
     }
 
     public void UpdatePlayerPos()
