@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Photon.Pun;
+using UnityEngine;
 
 public class LaserBoss : BossMonster
 {
@@ -13,14 +14,27 @@ public class LaserBoss : BossMonster
     {
         if (CoolTime <= 0.0f)
         {
-            laserAttack.OnShoot(attackRotate);
-
-            // 다음 공격할 방향 설정
-            attackRotate -= 45;
+            // 레이저 스킬 사용
+            photonView.RPC(nameof(OnLaserShoot), RpcTarget.All);
 
             // 쿨타임 설정
-            CoolTime = laserCooldown;
+            photonView.RPC(nameof(SetCoolTime), RpcTarget.All);
         }
+    }
+
+    [PunRPC]
+    private void OnLaserShoot()
+    {
+        laserAttack.OnShoot(attackRotate);
+
+        // 다음 공격할 방향 설정
+        attackRotate -= 45;
+    }
+
+    [PunRPC]
+    private void SetCoolTime()
+    {
+        CoolTime = laserCooldown;
     }
 
     protected override void AttackedPlayer(GameObject target)

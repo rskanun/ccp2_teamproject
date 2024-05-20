@@ -140,21 +140,22 @@ public class Monster : MonoBehaviourPun
 
     protected virtual void OnDead(Player killPlayer)
     {
-        // 몬스터 제거
-        photonView.RPC(nameof(DestroyMob), RpcTarget.All);
-
         // 경험치 획득
         int exp = GetMonsterExp();
         photonView.RPC(nameof(GetExp), RpcTarget.All, exp);
 
         // 플레이어에게 킬 알림
         killPlayer.OnKilled();
+
+        // 몬스터 제거
+        photonView.RPC(nameof(DestroyMob), RpcTarget.All);
     }
 
     [PunRPC]
     protected void DestroyMob()
     {
-        Destroy(gameObject);
+        if (PhotonNetwork.IsMasterClient)
+            PhotonNetwork.Destroy(gameObject);
 
         // 몬스터 카운트 감소
         WaveData.Instance.OnKilledMob();

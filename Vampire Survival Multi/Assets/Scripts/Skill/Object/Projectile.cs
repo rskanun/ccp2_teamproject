@@ -41,12 +41,18 @@ public class Projectile : MonoBehaviourPun
 
         if ((Vector2)transform.position == targetPos)
         {
-            Destroy(gameObject);
+            if (PhotonNetwork.IsMasterClient)
+                photonView.RPC(nameof(DestroyProjectile), RpcTarget.All);
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (PhotonNetwork.IsMasterClient == false)
+        {
+            return;
+        }
+
         if (collision.CompareTag("Monster"))
         {
             Monster monster = collision.GetComponent<Monster>();
@@ -56,15 +62,15 @@ public class Projectile : MonoBehaviourPun
             if (isPiercing == false)
             {
                 // 관통이 아닐 경우 파괴
-                Destroy(gameObject);
+                photonView.RPC(nameof(DestroyProjectile), RpcTarget.AllBuffered);
             }
         }
     }
 
     [PunRPC]
-    private void DestroyObj()
+    private void DestroyProjectile()
     {
-        if (gameObject.activeSelf && photonView != null)
+        if (gameObject != null)
         {
             Destroy(gameObject);
         }

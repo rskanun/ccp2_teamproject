@@ -8,7 +8,7 @@ public class ShieldRush : Skill
     [SerializeField] private float rushSpeed;
     [SerializeField] private float knockbackPower;
 
-    public override void UseSkill(Player caster)
+    public override void UseSkill(Player caster, Vector2 direction)
     {
         // 캐릭터 적용 후 제작
     }

@@ -7,9 +7,9 @@ public abstract class BossMonster : Monster
 
     protected override void OnDead(Player killPlayer)
     {
-        base.OnDead(killPlayer);
-
         bossClearEvent.NotifyUpdate();
+
+        base.OnDead(killPlayer);
     }
 
     protected override int GetMonsterExp()

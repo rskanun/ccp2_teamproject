@@ -23,6 +23,13 @@ public class RewardManager : MonoBehaviourPun
     [SerializeField]
     private int completedPlayer = 0;
 
+    public void GetBossReward()
+    {
+        if (PhotonNetwork.IsMasterClient)
+            photonView.RPC(nameof(GetReward), RpcTarget.All);
+    }
+
+    [PunRPC]
     public void GetReward()
     {
         // 이미 보상창이 열려 있다면 카운트 추가

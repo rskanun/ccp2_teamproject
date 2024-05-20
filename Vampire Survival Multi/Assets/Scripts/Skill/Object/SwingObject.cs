@@ -1,13 +1,29 @@
 ﻿using DG.Tweening;
+using Photon.Pun;
 using UnityEngine;
 
-public class SwingObject : MonoBehaviour
+public class SwingObject : MonoBehaviourPun
 {
     [Header("타격 각도")]
     [SerializeField] private float swingAngle;
 
     public delegate void OnHit(Monster monster);
     private event OnHit onHitEvent;
+
+    public void InitParent(int parentViewID)
+    {
+        photonView.RPC(nameof(SetParent), RpcTarget.All, parentViewID);
+    }
+
+    [PunRPC]
+    private void SetParent(int parentViewID)
+    {
+        PhotonView parentView = PhotonView.Find(parentViewID);
+        if (parentView != null)
+        {
+            transform.SetParent(parentView.transform, true);
+        }
+    }
 
     public void OnSwing(float attackAngle, float swingSpeed, bool isRightSwing, OnHit onHitListener)
     {
@@ -27,7 +43,8 @@ public class SwingObject : MonoBehaviour
             .Append(transform.DORotate(new Vector3(0, 0, attackAngle + swingAngle / 2.0f), swingSpeed))
             .OnComplete(() =>
             {
-                Destroy(gameObject);
+                if (PhotonNetwork.IsMasterClient)
+                    PhotonNetwork.Destroy(gameObject);
             });
     }
 

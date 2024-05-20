@@ -15,7 +15,7 @@ MonoBehaviour:
   waveBossList:
   - waveLevel: 1
     bossList:
-    - {fileID: 2619630261418695700, guid: e4f867f3d2e1cc14a93e925d05fba078, type: 3}
+    - {fileID: 3756990987460227, guid: 45434b552f5b46a469fc19f20cc25ac9, type: 3}
   - waveLevel: 2
     bossList:
     - {fileID: 3756990987460227, guid: 45434b552f5b46a469fc19f20cc25ac9, type: 3}

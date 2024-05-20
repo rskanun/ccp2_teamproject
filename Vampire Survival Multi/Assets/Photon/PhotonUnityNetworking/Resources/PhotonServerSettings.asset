@@ -130,6 +130,15 @@ MonoBehaviour:
   - RegenCooldown
   - UpdateNoDmgTime
   - RegenHP
+  - OnCastSkill
+  - OnPlayerAttacked
+  - SynchroPanel
+  - DestroyMobObj
+  - OnDeadBossMob
+  - DestroyProjectile
+  - OnLaserShoot
+  - SetCoolTime
+  - SetParent
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

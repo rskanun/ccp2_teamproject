@@ -12,25 +12,25 @@ public class TestAutoSkill : Skill
     [Header("발사체")]
     [SerializeField] private GameObject projectilePrefab;
 
-    public override void UseSkill(Player caster)
+    public override void UseSkill(Player caster, Vector2 direction)
     {
+        Vector2 casterPos = caster.PlayerData.Position;
+
         string prefabName = SKILL_OBJECT_DIRECTORY + projectilePrefab.name;
-        GameObject projectileObj = PhotonNetwork.Instantiate(prefabName, CasterData.Position, Quaternion.identity);
+        GameObject projectileObj = PhotonNetwork.Instantiate(prefabName, casterPos, Quaternion.identity);
 
         // 투사체 생성 위치 설정
-        projectileObj.transform.position = CasterData.Position;
+        projectileObj.transform.position = casterPos;
 
         // 이동 방향 설정
-        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 casterPos = CasterData.Position;
-        Vector2 targetPos = casterPos + (mousePos - casterPos).normalized * distance;
+        Vector2 targetPos = casterPos + direction * distance;
 
         // 투사체 발사
         Projectile projectile = projectileObj.GetComponent<Projectile>();
 
         projectile.ThrowProjectile(targetPos, speed, isPiercing, (monster) =>
         {
-            caster.OnNormalAttack(monster, CasterData.STR);
+            caster.OnNormalAttack(monster, caster.PlayerData.STR);
         });
     }
 }

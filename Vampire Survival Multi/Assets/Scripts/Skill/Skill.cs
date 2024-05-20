@@ -5,19 +5,6 @@ public abstract class Skill : ScriptableObject
     // 스킬 오브젝트 위치
     public const string SKILL_OBJECT_DIRECTORY = "Skills/Object/";
 
-    // 플레이어 정보
-    private PlayerData _casterData;
-    protected PlayerData CasterData
-    {
-        get
-        {
-            if (_casterData == null)
-                _casterData = LocalPlayerData.Instance.PlayerData;
-
-            return _casterData;
-        }
-    }
-
     [Header("표시 정보")]
     [SerializeField]
     private string _name;
@@ -49,5 +36,5 @@ public abstract class Skill : ScriptableObject
         get { return _cooldown; }
     }
 
-    public abstract void UseSkill(Player caster);
+    public abstract void UseSkill(Player caster, Vector2 direction);
 }

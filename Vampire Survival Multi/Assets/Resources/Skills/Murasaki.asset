@@ -18,8 +18,8 @@ MonoBehaviour:
     \uBB34\uD55C\uC774 \uD569\uCCD0\uC11C \uC0DD\uACA8\uB098\uB294 \uAC00\uC0C1\uC758
     \uC9C8\uB7C9\uC744 \uC3D8\uC544 \uC801\uC5D0\uAC8C <style=Damage>1000%</style>\uC758
     \uB370\uBBF8\uC9C0\uB97C \uC785\uD78C\uB2E4"
-  _distance: 20
   _cooldown: 5
+  distance: 10
   speed: 7
   damageValue: 100
   damageRate: 10
