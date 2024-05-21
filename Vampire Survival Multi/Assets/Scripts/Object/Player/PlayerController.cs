@@ -264,4 +264,14 @@ public class PlayerController : MonoBehaviourPun, IControlState
             }
         }
     }
+
+    private void OnDrawGizmos()
+    {
+        if (skill != null && skill is ShieldRush)
+        {
+            ShieldRush shieldRush = (ShieldRush)skill;
+            shieldRush.OnDraw();
+            Debug.Log("OnDraw");
+        }
+    }
 }

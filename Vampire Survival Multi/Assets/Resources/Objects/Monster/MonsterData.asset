@@ -12,9 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e2588cb85cf3494380add9239a721c9, type: 3}
   m_Name: MonsterData
   m_EditorClassIdentifier: 
-  _healthPoint: 1
-  _strength: 1
+  _healthPoint: 300
+  _strength: 10
   _defensive: 0
   _moveSpeed: 3
   _attackDistance: 1
-  _attackCooldown: 1

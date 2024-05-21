@@ -1,11 +1,6 @@
 ﻿using Photon.Pun;
 using UnityEngine;
 
-public enum MonsterState
-{
-    Stun
-}
-
 public class Monster : MonoBehaviourPun
 {
     [Header("몬스터 데이터")]
@@ -27,20 +22,19 @@ public class Monster : MonoBehaviourPun
         set { _coolTime = value; }
     }
 
+    // 몬스터 상태이상 목록
+    private StatusEffectManager statusManager;
+
     // 몬스터 유한 상태 기계
-    private FSM _fsm;
-    protected FSM fsm
-    {
-        private set {  _fsm = value; }
-        get { return _fsm; }
-    }
-
-    // 버프&디버프 목록
-
+    private FSM fsm;
 
     private void Awake()
     {
-        fsm = new FSM(new ChaseState(this));
+        if (PhotonNetwork.IsMasterClient)
+        {
+            statusManager = new StatusEffectManager();
+            fsm = new FSM(new ChaseState(this));
+        }
     }
 
     private void Update()
@@ -49,6 +43,7 @@ public class Monster : MonoBehaviourPun
         {
             OnCooldown();
             OnCastSkill();
+            StatusEffectsTimer();
         }
     }
 
@@ -62,6 +57,13 @@ public class Monster : MonoBehaviourPun
         float time = Time.deltaTime;
 
         photonView.RPC(nameof(PassedCooldown), RpcTarget.All, time);
+    }
+
+    private void StatusEffectsTimer()
+    {
+        float time = Time.deltaTime;
+
+        statusManager.EffectTimer(time);
     }
 
     [PunRPC]
@@ -101,10 +103,13 @@ public class Monster : MonoBehaviourPun
 
     protected virtual void AttackedPlayer(GameObject target)
     {
-        float damage = Stat.STR; // 데미지 공식
+        if (statusManager.HasStatusEffect(StatusEffect.Stun) == false)
+        {
+            float damage = Stat.STR; // 데미지 공식
 
-        Player player = target.GetComponent<Player>();
-        player.OnTakeDamage(damage);
+            Player player = target.GetComponent<Player>();
+            player.OnTakeDamage(damage);
+        }
     }
 
     public void OnTakeDamage(Player attacker, float damage)
@@ -174,6 +179,11 @@ public class Monster : MonoBehaviourPun
         GameData.Instance.AddExp(exp);
     }
 
+    public void AddEffect(StatusEffect type, float duration)
+    {
+        statusManager.AddEffect(type, duration);
+    }
+
     /***************************************************************
     * [ 움직임 제어 ]
     * 
@@ -190,8 +200,11 @@ public class Monster : MonoBehaviourPun
 
     public virtual void OnMove(Vector2 targetPos)
     {
-        float speed = Stat.MoveSpeed * Time.deltaTime;
+        if (statusManager.HasStatusEffect(StatusEffect.Stun) == false)
+        {
+            float speed = Stat.MoveSpeed * Time.deltaTime;
 
-        transform.position = Vector2.MoveTowards(transform.position, targetPos, speed);
+            transform.position = Vector2.MoveTowards(transform.position, targetPos, speed);
+        }
     }
 }
