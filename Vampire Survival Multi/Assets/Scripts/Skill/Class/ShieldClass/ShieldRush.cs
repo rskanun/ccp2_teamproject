@@ -1,5 +1,4 @@
-﻿using Photon.Pun;
-using UnityEngine;
+﻿using UnityEngine;
 
 [CreateAssetMenu(menuName = "Skill/Class/ShieldClass/ActiveSkill", fileName = "Shield Rush")]
 public class ShieldRush : Skill

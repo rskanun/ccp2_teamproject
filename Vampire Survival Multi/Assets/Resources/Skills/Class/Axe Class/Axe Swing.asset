@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a26bc66a06326084fa438ad8eb93af3d, type: 3}
   m_Name: Axe Swing
   m_EditorClassIdentifier: 
-  _name: 
+  _name: "\uC2A4\uD0AC \uC774\uB984"
   _icon: {fileID: 0}
-  _description: 
+  _description: "\uC2A4\uD0AC \uC124\uBA85"
   _cooldown: 0
   swingPrefab: {fileID: 0}

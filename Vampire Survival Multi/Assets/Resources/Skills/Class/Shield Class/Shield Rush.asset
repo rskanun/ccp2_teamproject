@@ -17,5 +17,5 @@ MonoBehaviour:
   _description: "\uBC29\uCC10!"
   _cooldown: 5
   knockbackArea: {x: 1.5, y: 2}
-  knockbackPower: 10
+  knockbackPower: 25
   stunDuration: 1
