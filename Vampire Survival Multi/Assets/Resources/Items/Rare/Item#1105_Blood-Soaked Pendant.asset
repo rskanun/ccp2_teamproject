@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43b7ace7a0090d3409ecdbf6735c7eaf, type: 3}
+  m_Name: Item#1105_Blood-Soaked Pendant
+  m_EditorClassIdentifier: 
+  _id: 1105
+  _name: "\uD53C\uB97C \uBA38\uAE08\uC740 \uD32C\uB358\uD2B8"
+  _itemImage: {fileID: 21300000, guid: 4a6f65cdfb5435648a90d09a52e42ddf, type: 3}
+  _description: "\uC783\uC740 \uCCB4\uB825 \uBE44\uB840 \uBC29\uC5B4\uB825 \uC99D\uAC00
+    \uCD5C\uB300 \uCCB4\uB825 30%\uBBF8\uB9CC\uC77C\uB54C \uCD5C\uB300 50\uC99D\uAC00\r"
+  _healthPoint: 0
+  _percentHP: 0
+  _strength: 0
+  _percentSTR: 0
+  _defensive: 0
+  _percentDEF: 0
+  _moveSpeed: 0
+  _attackSpeed: 0
+  _lifeSteal: 0
