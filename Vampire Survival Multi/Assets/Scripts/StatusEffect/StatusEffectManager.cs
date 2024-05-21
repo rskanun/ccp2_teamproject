@@ -35,7 +35,7 @@ public class StatusEffectManager
 
     public void EffectTimer(float time)
     {
-        foreach(StatusEffect key in effects.Keys) // <- 문제
+        foreach(StatusEffect key in new List<StatusEffect>(effects.Keys))
         {
             // 지속시간 감소
             effects[key] -= time;
