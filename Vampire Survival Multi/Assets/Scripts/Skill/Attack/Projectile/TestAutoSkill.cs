@@ -21,7 +21,13 @@ public class TestAutoSkill : AutoAttackSkill
         // 이동 방향 설정
         Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 casterPos = CasterData.Position;
+        Vector2 direction = (mousePos - casterPos).normalized;
         Vector2 targetPos = casterPos + (mousePos - casterPos).normalized * Distance;
+
+        // 투사체 발사 방향으로 회전
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+        projectileObj.transform.rotation = Quaternion.Euler(new Vector3(0, 0, angle));
+
 
         // 투사체 발사
         Projectile projectile = projectileObj.GetComponent<Projectile>();
