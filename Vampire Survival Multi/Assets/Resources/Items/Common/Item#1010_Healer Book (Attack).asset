@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43b7ace7a0090d3409ecdbf6735c7eaf, type: 3}
+  m_Name: Item#1010_Healer Book (Attack)
+  m_EditorClassIdentifier: 
+  _id: 1010
+  _name: "\uD790\uB7EC \uAD50\uBCF8(\uACF5\uACA9\uD3B8)"
+  _itemImage: {fileID: 21300000, guid: c1022db01537a7141a1e9b2d5cfb90f4, type: 3}
+  _description: "\uC544\uAD70 \uD68C\uBCF5 \uC2DC 5\uCD08\uAC04 \uACF5\uACA9\uB825
+    +5"
+  _healthPoint: 0
+  _percentHP: 0
+  _strength: 0
+  _percentSTR: 0
+  _defensive: 0
+  _percentDEF: 0
+  _moveSpeed: 0
+  _attackSpeed: 0
+  _lifeSteal: 0
