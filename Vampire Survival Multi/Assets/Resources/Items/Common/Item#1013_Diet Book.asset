@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43b7ace7a0090d3409ecdbf6735c7eaf, type: 3}
+  m_Name: Item#1013_Diet Book
+  m_EditorClassIdentifier: 
+  _id: 1013
+  _name: "\uB2E4\uC774\uC5B4\uD2B8 \uAD50\uBCF8"
+  _itemImage: {fileID: 21300000, guid: 4262737582d1e7e4e9760b1611573d4b, type: 3}
+  _description: "\uCCB4\uB825 -5 \uC774\uB3D9\uC18D\uB3C4 +5%"
+  _healthPoint: -5
+  _percentHP: 0
+  _strength: 0
+  _percentSTR: 0
+  _defensive: 0
+  _percentDEF: 0
+  _moveSpeed: 5
+  _attackSpeed: 0
+  _lifeSteal: 0
