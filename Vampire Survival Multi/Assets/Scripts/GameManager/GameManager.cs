@@ -253,6 +253,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         Time.timeScale = 0.0f;
         resultConfirm.OnActive("Game Over...", () =>
         {
+            Time.timeScale = 1.0f;
+
             PhotonNetwork.LeaveRoom();
         });
     }
@@ -264,6 +266,8 @@ public class GameManager : MonoBehaviourPunCallbacks
         Time.timeScale = 0.0f;
         resultConfirm.OnActive("Game Clear!!", () =>
         {
+            Time.timeScale = 1.0f;
+
             PhotonNetwork.LeaveRoom();
         });
     }
@@ -292,7 +296,5 @@ public class GameManager : MonoBehaviourPunCallbacks
     public override void OnLeftRoom()
     {
         SceneManager.LoadScene("TitleScene");
-
-        Time.timeScale = 1.0f;
     }
 }

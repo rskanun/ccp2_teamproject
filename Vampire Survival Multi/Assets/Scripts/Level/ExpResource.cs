@@ -116,7 +116,6 @@ public class ExpResource : ScriptableObject
 
     // 현재 경험치 정보
     private ExpTable curTable;
-    [SerializeField] private int curWaveLevel = 0;
 
     private Dictionary<int, ExpTable> GetTables()
     {
@@ -160,8 +159,6 @@ public class ExpResource : ScriptableObject
 
     public void SetWaveLevel(int waveLevel)
     {
-        curWaveLevel = waveLevel;
-
         if (ExpTables.ContainsKey(waveLevel))
         {
             // 테이블에 있는 웨이브 레벨일 경우에만 갱신

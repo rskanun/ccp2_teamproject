@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 43b7ace7a0090d3409ecdbf6735c7eaf, type: 3}
-  m_Name: LifeSteal Item
+  m_Name: TestLegend
   m_EditorClassIdentifier: 
-  _id: 4
-  _name: "\uD761\uD608 \uC544\uC774\uD15C"
+  _id: 0
+  _name: 
   _itemImage: {fileID: 0}
-  _description: "\uCCB4\uB825 \uD761\uD608 +100%"
+  _description: 
   _healthPoint: 0
   _percentHP: 0
   _strength: 0
@@ -24,4 +24,4 @@ MonoBehaviour:
   _percentDEF: 0
   _moveSpeed: 0
   _attackSpeed: 0
-  _lifeSteal: 100
+  _lifeSteal: 0

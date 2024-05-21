@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a2dde9563ab28247aec67892ee0102c, type: 3}
   m_Name: Life Steal
   m_EditorClassIdentifier: 
-  _name: 
+  _name: "\uC2A4\uD0AC \uC774\uB984"
   _icon: {fileID: 0}
-  _description: 
+  _description: "\uC2A4\uD0AC \uC124\uBA85"
   _cooldown: 0

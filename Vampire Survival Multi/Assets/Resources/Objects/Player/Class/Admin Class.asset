@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Admin Class
   m_EditorClassIdentifier: 
   _healthPoint: 99999
-  _strength: 1
+  _strength: 100
   _defensive: 99999
   _moveSpeed: 4
   _attackSpeed: 1

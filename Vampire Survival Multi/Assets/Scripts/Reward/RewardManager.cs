@@ -1,11 +1,17 @@
 ﻿using Photon.Pun;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+public enum RewardType
+{
+    Wave,
+    Boss
+}
+
 public class RewardManager : MonoBehaviourPun
 {
+
     [Header("참조 스크립트")]
     [SerializeField] private RewardUI ui;
     [SerializeField] private HandOverManager handOverManager;
@@ -26,29 +32,37 @@ public class RewardManager : MonoBehaviourPun
     public void GetBossReward()
     {
         if (PhotonNetwork.IsMasterClient)
-            photonView.RPC(nameof(GetReward), RpcTarget.All);
+            photonView.RPC(nameof(GetReward), RpcTarget.All, RewardType.Boss);
+    }
+
+    public void GetWaveReward()
+    {
+        GetReward(RewardType.Wave);
     }
 
     [PunRPC]
-    public void GetReward()
+    private void GetReward(RewardType type)
     {
-        // 이미 보상창이 열려 있다면 카운트 추가
-        if (ui.IsActiveContainer()) rewardCount++;
-        else
+        if (WaveData.Instance.IsLastWave == false)
         {
-            // 살아있는 플레이어는 보상 받기
-            Time.timeScale = 0.0f;
+            // 이미 보상창이 열려 있다면 카운트 추가
+            if (ui.IsActiveContainer()) rewardCount++;
+            else
+            {
+                // 살아있는 플레이어는 보상 받기
+                Time.timeScale = 0.0f;
 
-            OpenWindow();
+                OpenWindow(type);
+            }
         }
     }
 
-    private void OpenWindow()
+    private void OpenWindow(RewardType type)
     {
         ui.SetContainer(true);
 
         // 선택할 수 있는 아이템 랜덤 뽑기
-        ItemData[] selectableItems = GetRandomItems(selectCount);
+        ItemData[] selectableItems = GetRandomItems(type, selectCount);
 
         // 아이템 선택창 띄우기
         List<GameObject> items = new List<GameObject>();
@@ -104,7 +118,7 @@ public class RewardManager : MonoBehaviourPun
         if (rewardCount > 0)
         {
             // 받을 보상이 남아있다면 창 다시 열기
-            OpenWindow();
+            OpenWindow(RewardType.Wave);
 
             rewardCount--;
         }
@@ -152,27 +166,28 @@ public class RewardManager : MonoBehaviourPun
         Time.timeScale = 1.0f;
     }
 
-    private ItemData[] GetRandomItems(int count)
+    private ItemData[] GetRandomItems(RewardType type, int count)
     {
         ItemData[] items = new ItemData[count];
 
         // count 만큼 아이템 뽑기
         for(int i = 0;  i < count; i++)
         {
-            items[i] = GetRandomItem();
+            items[i] = GetRandomItem(type);
         }
 
         return items;
     }
 
-    private ItemData GetRandomItem()
+    private ItemData GetRandomItem(RewardType type)
     {
-        // ItemResource 안의 사용가능한 아이템 중 하나 랜덤으로 뽑기
-        List<ItemData> items = ItemResource.Instance.ItemDatas;
+        RewardResource resource = RewardResource.Instance;
 
-        int randomNum = Random.Range(0, items.Count);
-        ItemData randomItem = items[randomNum];
+        int waveLevel = WaveData.Instance.WaveLevel;
 
-        return randomItem;
+        if (type.Equals(RewardType.Wave))
+            return resource.GetWaveReward(waveLevel);
+        else
+            return resource.GetBossReward(waveLevel);
     }
 }

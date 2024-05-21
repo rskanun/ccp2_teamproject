@@ -16,4 +16,5 @@ MonoBehaviour:
   _icon: {fileID: 0}
   _description: "\uC2A4\uD0AC \uC124\uBA85"
   _cooldown: 0
-  swingPrefab: {fileID: 0}
+  swingPrefab: {fileID: 604153516294900674, guid: c4a5fc3ad3452c34c9b1a7c65baf8dc8,
+    type: 3}

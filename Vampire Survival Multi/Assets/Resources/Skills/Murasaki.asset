@@ -21,6 +21,7 @@ MonoBehaviour:
   _cooldown: 5
   distance: 10
   speed: 7
-  damageValue: 100
-  damageRate: 10
-  projectilePrefab: {fileID: 660804144596147880, guid: 1976ee57926b5014882611fcfd9092e1, type: 3}
+  damageValue: 1000
+  damageRate: 100
+  projectilePrefab: {fileID: 660804144596147880, guid: 1976ee57926b5014882611fcfd9092e1,
+    type: 3}
