@@ -41,6 +41,16 @@ public class PlayerData : ScriptableObject
         set { _classData = value; }
     }
 
+    [Header("현재 상태")]
+    [ReadOnly]
+    [SerializeField]
+    private bool _isInvisible;
+    public bool IsInvisible
+    {
+        get { return _isInvisible; }
+        set { _isInvisible = value; }
+    }
+
     [Header("현재 스텟")]
     [ReadOnly]
     [SerializeField]

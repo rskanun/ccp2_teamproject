@@ -10,8 +10,11 @@ public class Projectile : MonoBehaviourPun
 
     private bool isPiercing = false;
 
-    public void ThrowProjectile(Vector2 targetPos, float speed, bool isPiercing, OnHit onHitListener)
+    public void ThrowProjectile(Vector2 targetPos, float speed, float angle, bool isPiercing, OnHit onHitListener)
     {
+        // 투사체 각도 설정
+        transform.eulerAngles = new Vector3(0, 0, angle);
+
         photonView.RPC(nameof(SetPiercing), RpcTarget.All, isPiercing);
 
         onHitEvent = onHitListener;

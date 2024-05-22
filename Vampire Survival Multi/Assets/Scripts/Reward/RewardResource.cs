@@ -162,7 +162,6 @@ public class RewardResource : ScriptableObject
     private ItemGrade GetRandomGrade(RewardTable table)
     {
         int num = UnityEngine.Random.Range(0, table.legendDropRate);
-        Debug.Log($"0 ~ {table.legendDropRate}: {num}");
 
         if (num < table.commonDropRate) return ItemGrade.Common;
         else if (num < table.rareDropRate) return ItemGrade.Rare;

@@ -35,12 +35,18 @@ public class AttackState : IMonsterState
 
         foreach (GameObject player in players)
         {
-            float distance = Vector2.Distance(player.transform.position, monster.transform.position);
+            Player p = player.GetComponent<Player>();
 
-            if (distance < closestDistance)
+            // 은신 상태 플레이어 제외
+            if (p.HasBuff(Buff.Invisible) == false)
             {
-                closestDistance = distance;
-                closestPlayer = player;
+                float distance = Vector2.Distance(player.transform.position, monster.transform.position);
+
+                if (distance < closestDistance)
+                {
+                    closestDistance = distance;
+                    closestPlayer = player;
+                }
             }
         }
 

@@ -15,6 +15,10 @@ public class Player : MonoBehaviourPun
     [Header("이벤트")]
     [SerializeField] private GameEvent deadEvent;
 
+    // 플레이어 버프
+    private BuffManager buffManager = new BuffManager();
+    private bool isInvisibleState = false;
+
     // 플레이어 공통 옵션
     private PlayerResource playerOption;
     private float curRegenDelay;
@@ -36,32 +40,67 @@ public class Player : MonoBehaviourPun
     {
         if (WaveData.Instance.IsRunning && PhotonNetwork.IsMasterClient)
         {
-            float time = Time.deltaTime;
+            OnCheckBuff();
+            PassedTime();
+        }
+    }
 
-            if (curNoHitTime > 0) // 공격 쿨다운
-                photonView.RPC(nameof(AttackCooldown), RpcTarget.All, time);
+    private void OnCheckBuff()
+    {
+        if (isInvisibleState == false && HasBuff(Buff.Invisible))
+        {
+            isInvisibleState = true;
 
-            if (curRegenDelay > 0)
+            photonView.RPC(nameof(SetPlayerAlpha), RpcTarget.All, 0.7f);
+        }
+        else if (isInvisibleState && HasBuff(Buff.Invisible) == false)
+        {
+            isInvisibleState = false;
+
+            photonView.RPC(nameof(SetPlayerAlpha), RpcTarget.All, 1.0f);
+        }
+    }
+
+    [PunRPC]
+    private void SetPlayerAlpha(float a)
+    {
+        SpriteRenderer sprite = GetComponent<SpriteRenderer>();
+
+        Color color = sprite.color;
+        color.a = a;
+        sprite.color = color;
+    }
+
+    private void PassedTime()
+    {
+        float time = Time.deltaTime;
+
+        // 버프 쿨다운
+        buffManager.BuffTimer(time);
+
+        if (curNoHitTime > 0) // 공격 쿨다운
+            photonView.RPC(nameof(AttackCooldown), RpcTarget.All, time);
+
+        if (curRegenDelay > 0)
+        {
+            // 데미지를 안 받은 시간 쿨다운
+            photonView.RPC(nameof(UpdateNoDmgTime), RpcTarget.All, time);
+        }
+        else
+        {
+            if (curRegenCooldown <= 0)
             {
-                // 데미지를 안 받은 시간 쿨다운
-                photonView.RPC(nameof(UpdateNoDmgTime), RpcTarget.All, time);
+                // 일정 시간마다 체력 재생
+                if (PlayerData.HP < PlayerData.MaxHP)
+                {
+                    // 플레이어의 체력이 닳은 경우에만 작동
+                    photonView.RPC(nameof(RegenHP), RpcTarget.All);
+                }
             }
             else
             {
-                if (curRegenCooldown <= 0)
-                {
-                    // 일정 시간마다 체력 재생
-                    if (PlayerData.HP < PlayerData.MaxHP)
-                    {
-                        // 플레이어의 체력이 닳은 경우에만 작동
-                        photonView.RPC(nameof(RegenHP), RpcTarget.All);
-                    }
-                }
-                else
-                {
-                    // 체력 재생 쿨다운
-                    photonView.RPC(nameof(RegenCooldown), RpcTarget.All, time);
-                }
+                // 체력 재생 쿨다운
+                photonView.RPC(nameof(RegenCooldown), RpcTarget.All, time);
             }
         }
     }
@@ -100,8 +139,8 @@ public class Player : MonoBehaviourPun
 
     public void OnTakeDamage(float damage)
     {
-        // 피격받은 지 일정시간이 경과하면 데미지
-        if (curNoHitTime <= 0)
+        // 은신이 아니고, 피격받은 지 일정시간이 경과하면 데미지
+        if (curNoHitTime <= 0 && HasBuff(Buff.Invisible) == false)
         {
             // 공격 받았을 때
             float dmg = Mathf.Abs(damage);
@@ -190,5 +229,21 @@ public class Player : MonoBehaviourPun
     private void UpdateHP(float currentHP)
     {
         PlayerData.HP = currentHP;
+    }
+
+    /***************************************************************
+    * [ 버프 ]
+    * 
+    * 현재 플레이어가 가지고 있는 이로운 효과 처리
+    ***************************************************************/
+
+    public void AddBuff(Buff buff, float duration)
+    {
+        buffManager.AddBuff(buff, duration);
+    }
+
+    public bool HasBuff(Buff buff)
+    {
+        return buffManager.HasBuff(buff);
     }
 }

@@ -111,6 +111,11 @@ public class PlayerController : MonoBehaviourPun, IControlState
     [PunRPC]
     private void OnPlayerAttacked(Vector2 direction)
     {
+        if (player.HasBuff(Buff.Invisible))
+        {
+            return;
+        }
+
         if (autoAttack != null && attackCooldown <= 0)
         {
             autoAttack.UseSkill(player, direction);
@@ -222,6 +227,12 @@ public class PlayerController : MonoBehaviourPun, IControlState
     {
         // 키 입력에 따른 플레이어 움직임
         Vector2 movement = moveVec.normalized * playerData.MoveSpeed * Time.deltaTime;
+        if (player.HasBuff(Buff.Invisible))
+        {
+            float increaseSpeed = 1.5f;
+
+            movement *= increaseSpeed;
+        }
 
         rigid.MovePosition(rigid.position + movement);
 

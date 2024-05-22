@@ -28,7 +28,7 @@ public class TestAutoSkill : Skill
         // 투사체 발사
         Projectile projectile = projectileObj.GetComponent<Projectile>();
 
-        projectile.ThrowProjectile(targetPos, speed, isPiercing, (monster) =>
+        projectile.ThrowProjectile(targetPos, speed, 0, isPiercing, (monster) =>
         {
             caster.OnNormalAttack(monster, caster.PlayerData.STR);
         });

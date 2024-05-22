@@ -1,14 +1,12 @@
 ﻿using Photon.Pun;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Skill/Class/Active/Test", fileName = "Murasaki")]
-public class Murasaki : Skill
+[CreateAssetMenu(menuName = "Skill/Class/DaggerClass/NormalAttack", fileName = "Dagger Throw")]
+public class DaggerThrow : Skill
 {
     // 스킬 세부 사항
     [SerializeField] private float distance;
     [SerializeField] private float speed;
-    [SerializeField] private float damageValue;
-    [SerializeField] private float damageRate;
 
     [Header("발사체")]
     [SerializeField] private GameObject projectilePrefab;
@@ -26,14 +24,18 @@ public class Murasaki : Skill
         // 이동 방향 설정
         Vector2 targetPos = casterPos + direction * distance;
 
-        float damage = damageValue + caster.PlayerData.STR * damageRate;
+        // 피격 데미지
+        float damage = caster.PlayerData.STR;
+
+        // 투척 각도
+        float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
 
         // 투사체 발사
         Projectile projectile = projectileObj.GetComponent<Projectile>();
 
-        projectile.ThrowProjectile(targetPos, speed, 0, true, (monster) =>
+        projectile.ThrowProjectile(targetPos, speed, angle, false, (monster) =>
         {
-            caster.OnSkillAttack(monster, damage);
+            caster.OnNormalAttack(monster, damage);
         });
     }
 }
