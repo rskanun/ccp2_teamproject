@@ -69,6 +69,7 @@ public class PlayerData : ScriptableObject
 
             // 이벤트 알림
             hpEvent.NotifyUpdate();
+            Debug.Log($"{name}: {value}");
         }
     }
 
@@ -95,13 +96,28 @@ public class PlayerData : ScriptableObject
     private float _currentSTR;
     public float STR
     {
-        get { return _currentSTR; }
+        get { return _currentSTR + BuffSTR; }
         set
         {
             if (value <= 0)
-                _currentSTR = 1;
+                _currentSTR = 0;
             else
                 _currentSTR = value;
+        }
+    }
+
+    [ReadOnly]
+    [SerializeField]
+    private float _buffSTR;
+    public float BuffSTR
+    {
+        private get { return _buffSTR; }
+        set
+        {
+            if (value <= 0)
+                _buffSTR = 0;
+            else
+                _buffSTR = value;
         }
     }
 

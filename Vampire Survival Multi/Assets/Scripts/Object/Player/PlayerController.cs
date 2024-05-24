@@ -64,6 +64,11 @@ public class PlayerController : MonoBehaviourPun, IControlState
             // Set Tracker
             InitCamera();
         }
+
+        if (PhotonNetwork.IsMasterClient)
+        {
+            StartCoroutine(SetSkillInit());
+        }
     }
 
     private void InitCamera()
@@ -80,6 +85,15 @@ public class PlayerController : MonoBehaviourPun, IControlState
 
         skill = classData.ActiveSkill;
         skillCooldown = 0;
+    }
+
+    private IEnumerator SetSkillInit()
+    {
+        // 웨이브 시작 후 실행
+        yield return new WaitUntil(() => { return WaveData.Instance.IsRunning; });
+
+        autoAttack.InitSkill(player);
+        skill.InitSkill(player);
     }
 
     private void Update()
@@ -186,11 +200,6 @@ public class PlayerController : MonoBehaviourPun, IControlState
     {
         OnMoveKeyPressed();
         OnSkillKeyPressed();
-
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            KnockbackMonsters();
-        }
     }
 
     private void OnMoveKeyPressed()

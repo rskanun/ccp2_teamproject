@@ -153,6 +153,7 @@ public class Player : MonoBehaviourPun
 
     public void OnNormalAttack(Monster monster, float damage)
     {
+        Debug.Log(damage);
         monster.OnTakeDamage(this, damage);
 
         // 최종 데미지에 따른 체력 회복
@@ -218,7 +219,7 @@ public class Player : MonoBehaviourPun
         curRegenCooldown = 0;
     }
 
-    private void HealHP(float recoverHP)
+    public void HealHP(float recoverHP)
     {
         PlayerData.HP += recoverHP;
 
@@ -229,6 +230,28 @@ public class Player : MonoBehaviourPun
     private void UpdateHP(float currentHP)
     {
         PlayerData.HP = currentHP;
+    }
+
+    /***************************************************************
+    * [ 스텟 증가 ]
+    * 
+    * 현재 플레이어의 일시적 스탯 증가
+    ***************************************************************/
+
+    public void SetBuffSTR(float increaseSTR)
+    {
+        photonView.RPC(nameof(UpdateBuffSTR), RpcTarget.MasterClient, increaseSTR);
+    }
+
+    [PunRPC]
+    private void UpdateBuffSTR(float increaseSTR)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC(nameof(UpdateBuffSTR), RpcTarget.Others, increaseSTR);
+        }
+
+        PlayerData.BuffSTR = increaseSTR;
     }
 
     /***************************************************************
