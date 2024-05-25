@@ -42,7 +42,7 @@ public class SplitBoss : BossMonster
         }
         else
         {
-            Destroy(gameObject);
+            PhotonNetwork.Destroy(gameObject);
         }
     }
 

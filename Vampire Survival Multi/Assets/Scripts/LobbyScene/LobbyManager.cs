@@ -50,25 +50,15 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         {
             // 방장의 경우 비활성화 패널 설정
             SetClosedPanel(room.MaxPlayers);
+
+            // 첫 번째 패널에 자신 할당
+            SetPlayerPanel(masterClient);
         }
-
-        // 방장으로부터 자리 배치 받기
-        SetPanel();
-    }
-
-    private void SetPanel()
-    {
-        photonView.RPC(nameof(InitPlayerPanel), RpcTarget.MasterClient, PhotonNetwork.LocalPlayer);
-    }
-
-    [PunRPC]
-    private void InitPlayerPanel(Photon.Realtime.Player newPlayer)
-    {
-        // 빈 패널에 플레이어 할당
-        SetPlayerPanel(newPlayer);
-
-        // 현재 패널 정보 동기화
-        SynchroPanel(newPlayer);
+        else
+        {
+            // 방장으로부터 패널 정보 동기화 받기
+            photonView.RPC(nameof(SynchroPanel), RpcTarget.MasterClient, PhotonNetwork.LocalPlayer);
+        }
     }
 
     private void SetPlayerPanel(Photon.Realtime.Player newPlayer)
@@ -82,6 +72,18 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
         // 모든 플레이어에게 해당 패널 설정
         manager.OnJoinPlayer(newPlayer);
+    }
+
+    public override void OnPlayerEnteredRoom(Photon.Realtime.Player newPlayer)
+    {
+        if (masterClient.IsLocal)
+        {
+            // 새 플레이어 패널 설정
+            SetPlayerPanel(newPlayer);
+
+            // 시작 여부 업데이트
+            UpdateStartActive();
+        }
     }
 
     /***************************************************************
@@ -223,6 +225,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         myPanelManager = manager;
     }
 
+    [PunRPC]
     private void SynchroPanel(Photon.Realtime.Player newPlayer)
     {
         // 모든 패널 동기화

@@ -13,5 +13,10 @@ MonoBehaviour:
   m_Name: ClassResource
   m_EditorClassIdentifier: 
   _classList:
-  - {fileID: 11400000, guid: 016fdf86795781b4882c0830a17518aa, type: 2}
   - {fileID: 11400000, guid: 3292f0a17f9f38948be72e42b941c431, type: 2}
+  - {fileID: 11400000, guid: 4d986bca47dca1d419229cb7a31ca906, type: 2}
+  - {fileID: 11400000, guid: 79de8fc3ee8c0114daed81314a50d89d, type: 2}
+  - {fileID: 11400000, guid: 66d91cfdf6190524182c49816bd106e1, type: 2}
+  - {fileID: 11400000, guid: e7eb9b33d0a3c1c478aa7cc62ec6dff2, type: 2}
+  - {fileID: 11400000, guid: 392812aa1d274264183a73d5766ef320, type: 2}
+  - {fileID: 11400000, guid: 5f62d24ff4154c44e99aec8324ea317b, type: 2}

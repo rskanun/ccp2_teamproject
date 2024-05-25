@@ -257,7 +257,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uBB34\uC801 \uD074\uB798\uC2A4"
+  m_text: "\uBC29\uD328 \uD074\uB798\uC2A4"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ffd7207b99ccefb4b9d5668eb8bc74a8, type: 2}
   m_sharedMaterial: {fileID: -3326408860502069668, guid: ffd7207b99ccefb4b9d5668eb8bc74a8, type: 2}
@@ -603,7 +603,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300012, guid: d79edf18a76e2654a9ac99f15de8b2b3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 570018e27fa24c34091ab0bbdcff209b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -883,14 +883,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: b9d3d7dbf5c4f114fbe9d15c62c0f9cc, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2894,7 +2894,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300014, guid: d79edf18a76e2654a9ac99f15de8b2b3, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9a58f5069a59d1644b55a5aadc5dd58b, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3635,6 +3635,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da0185870dd6b934091a740fbcc43984, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerData: {fileID: 11400000, guid: 3f1c87287d03de8498ed4cdd571f63e3, type: 2}
   ui: {fileID: 383662387}
   confirm: {fileID: 1235003045}
 --- !u!114 &383662387
@@ -5546,7 +5547,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 536808533}
   toggleTransition: 1
   graphic: {fileID: 895477685}
@@ -5579,7 +5580,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a72c702db555c94ab7ab5a0ab7a970e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  classData: {fileID: 0}
+  classData: {fileID: 11400000, guid: 392812aa1d274264183a73d5766ef320, type: 2}
   ui: {fileID: 536808532}
   selectManager: {fileID: 97742757}
 --- !u!114 &536808532
@@ -6496,6 +6497,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da0185870dd6b934091a740fbcc43984, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerData: {fileID: 11400000, guid: 29e7c2ac4b2e4ad4798d82dd70a16df8, type: 2}
   ui: {fileID: 682062312}
   confirm: {fileID: 1235003045}
 --- !u!114 &682062312
@@ -6938,14 +6940,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 25180e46342b2214a9d68d0f0ce01ca5, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -8625,7 +8627,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 846405428}
   toggleTransition: 1
   graphic: {fileID: 515921606}
@@ -8658,7 +8660,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a72c702db555c94ab7ab5a0ab7a970e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  classData: {fileID: 0}
+  classData: {fileID: 11400000, guid: 5f62d24ff4154c44e99aec8324ea317b, type: 2}
   ui: {fileID: 846405427}
   selectManager: {fileID: 97742757}
 --- !u!114 &846405427
@@ -9354,7 +9356,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a72c702db555c94ab7ab5a0ab7a970e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  classData: {fileID: 11400000, guid: 016fdf86795781b4882c0830a17518aa, type: 2}
+  classData: {fileID: 11400000, guid: 3292f0a17f9f38948be72e42b941c431, type: 2}
   ui: {fileID: 879130561}
   selectManager: {fileID: 97742757}
 --- !u!114 &879130561
@@ -11960,6 +11962,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da0185870dd6b934091a740fbcc43984, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerData: {fileID: 11400000, guid: bd52fbf5f2c292c45a033d0210787b7f, type: 2}
   ui: {fileID: 1155835801}
   confirm: {fileID: 1235003045}
 --- !u!114 &1155835801
@@ -12395,7 +12398,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: "\uB2E8\uB3C4 \uD074\uB798\uC2A4"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ffd7207b99ccefb4b9d5668eb8bc74a8, type: 2}
   m_sharedMaterial: {fileID: -3326408860502069668, guid: ffd7207b99ccefb4b9d5668eb8bc74a8, type: 2}
@@ -12983,7 +12986,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 1282182305}
   toggleTransition: 1
   graphic: {fileID: 722896932}
@@ -13016,7 +13019,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a72c702db555c94ab7ab5a0ab7a970e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  classData: {fileID: 0}
+  classData: {fileID: 11400000, guid: e7eb9b33d0a3c1c478aa7cc62ec6dff2, type: 2}
   ui: {fileID: 1282182304}
   selectManager: {fileID: 97742757}
 --- !u!114 &1282182304
@@ -14471,7 +14474,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uB354\uBBF8 \uD074\uB798\uC2A4"
+  m_text: Admin
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ffd7207b99ccefb4b9d5668eb8bc74a8, type: 2}
   m_sharedMaterial: {fileID: -3326408860502069668, guid: ffd7207b99ccefb4b9d5668eb8bc74a8, type: 2}
@@ -15281,14 +15284,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: b3a100d8344187049b3f8b5c9e5aba88, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -16159,14 +16162,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 9b0be4ef9a8e4b34eaa96ebc919f52a0, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -16664,14 +16667,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: c27014685dc9aee42800f1851d0d6e6d, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -17048,7 +17051,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: "\uC11D\uAD81 \uD074\uB798\uC2A4"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ffd7207b99ccefb4b9d5668eb8bc74a8, type: 2}
   m_sharedMaterial: {fileID: -3326408860502069668, guid: ffd7207b99ccefb4b9d5668eb8bc74a8, type: 2}
@@ -17712,7 +17715,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: "\uAD6C\uC2AC \uD074\uB798\uC2A4"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ffd7207b99ccefb4b9d5668eb8bc74a8, type: 2}
   m_sharedMaterial: {fileID: -3326408860502069668, guid: ffd7207b99ccefb4b9d5668eb8bc74a8, type: 2}
@@ -18395,7 +18398,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 1780974768}
   toggleTransition: 1
   graphic: {fileID: 1107818525}
@@ -18428,7 +18431,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a72c702db555c94ab7ab5a0ab7a970e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  classData: {fileID: 0}
+  classData: {fileID: 11400000, guid: 66d91cfdf6190524182c49816bd106e1, type: 2}
   ui: {fileID: 1780974767}
   selectManager: {fileID: 97742757}
 --- !u!114 &1780974767
@@ -20120,7 +20123,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: "\uB3C4\uB07C \uD074\uB798\uC2A4"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ffd7207b99ccefb4b9d5668eb8bc74a8, type: 2}
   m_sharedMaterial: {fileID: -3326408860502069668, guid: ffd7207b99ccefb4b9d5668eb8bc74a8, type: 2}
@@ -20430,7 +20433,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a72c702db555c94ab7ab5a0ab7a970e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  classData: {fileID: 11400000, guid: 3292f0a17f9f38948be72e42b941c431, type: 2}
+  classData: {fileID: 11400000, guid: 4d986bca47dca1d419229cb7a31ca906, type: 2}
   ui: {fileID: 1941211660}
   selectManager: {fileID: 97742757}
 --- !u!114 &1941211660
@@ -22325,7 +22328,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: "\uC644\uB4DC \uD074\uB798\uC2A4"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: ffd7207b99ccefb4b9d5668eb8bc74a8, type: 2}
   m_sharedMaterial: {fileID: -3326408860502069668, guid: ffd7207b99ccefb4b9d5668eb8bc74a8, type: 2}
@@ -22655,6 +22658,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da0185870dd6b934091a740fbcc43984, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerData: {fileID: 11400000, guid: 23b7f5cf479d1d54884545fb1287db21, type: 2}
   ui: {fileID: 2032814461}
   confirm: {fileID: 1235003045}
 --- !u!114 &2032814461
@@ -23453,7 +23457,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 0
+  m_Interactable: 1
   m_TargetGraphic: {fileID: 2111094804}
   toggleTransition: 1
   graphic: {fileID: 721423130}
@@ -23486,7 +23490,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a72c702db555c94ab7ab5a0ab7a970e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  classData: {fileID: 0}
+  classData: {fileID: 11400000, guid: 79de8fc3ee8c0114daed81314a50d89d, type: 2}
   ui: {fileID: 2111094803}
   selectManager: {fileID: 97742757}
 --- !u!114 &2111094803

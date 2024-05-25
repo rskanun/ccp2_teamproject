@@ -4,15 +4,21 @@ using UnityEngine;
 public class Player : MonoBehaviourPun
 {
     [Header("플레이어 데이터")]
-    [SerializeField] private PlayerData playerData;
+    [SerializeField] 
+    private PlayerData _playerData;
+    public PlayerData PlayerData
+    {
+        private set { _playerData = value; }
+        get { return _playerData; }
+    }
 
     [Header("이벤트")]
     [SerializeField] private GameEvent deadEvent;
 
     // 플레이어 공통 옵션
     private PlayerResource playerOption;
-    [SerializeField] private float curRegenDelay;
-    [SerializeField] private float curRegenCooldown;
+    private float curRegenDelay;
+    private float curRegenCooldown;
     private float curNoHitTime;
 
     private void Start()
@@ -23,12 +29,12 @@ public class Player : MonoBehaviourPun
     private void OnEnable()
     {
         // Reset HP
-        playerData.HP = playerData.MaxHP;
+        PlayerData.HP = PlayerData.MaxHP;
     }
 
     private void Update()
     {
-        if (PhotonNetwork.IsMasterClient)
+        if (WaveData.Instance.IsRunning && PhotonNetwork.IsMasterClient)
         {
             float time = Time.deltaTime;
 
@@ -45,7 +51,11 @@ public class Player : MonoBehaviourPun
                 if (curRegenCooldown <= 0)
                 {
                     // 일정 시간마다 체력 재생
-                    photonView.RPC(nameof(RegenHP), RpcTarget.All);
+                    if (PlayerData.HP < PlayerData.MaxHP)
+                    {
+                        // 플레이어의 체력이 닳은 경우에만 작동
+                        photonView.RPC(nameof(RegenHP), RpcTarget.All);
+                    }
                 }
                 else
                 {
@@ -77,12 +87,9 @@ public class Player : MonoBehaviourPun
     [PunRPC]
     private void RegenHP()
     {
-        if (playerData.HP < playerData.MaxHP)
-        {
-            // 플레이어의 체력이 닳은 경우에만 작동
-            playerData.HP += playerOption.RegenHP;
-            curRegenCooldown = playerOption.RegenCooltime;
-        }
+        // 체력 재생 및 재생 쿨타임 적용
+        PlayerData.HP += playerOption.RegenHP;
+        curRegenCooldown = playerOption.RegenCooltime;
     }
 
     /***************************************************************
@@ -98,7 +105,7 @@ public class Player : MonoBehaviourPun
         {
             // 공격 받았을 때
             float dmg = Mathf.Abs(damage);
-            float def = playerData.DEF;
+            float def = PlayerData.DEF;
             float lastDamage = dmg / (dmg + def) * dmg;
 
             TakeDamage(lastDamage);
@@ -110,7 +117,7 @@ public class Player : MonoBehaviourPun
         monster.OnTakeDamage(this, damage);
 
         // 최종 데미지에 따른 체력 회복
-        float recoverHP = damage * playerData.LifeSteal;
+        float recoverHP = damage * PlayerData.LifeSteal;
 
         HealHP(recoverHP);
     }
@@ -129,7 +136,7 @@ public class Player : MonoBehaviourPun
         // 플레이어 오브젝트 비활성화
         gameObject.SetActive(false);
 
-        if (playerData.Player.IsLocal)
+        if (PlayerData.Player.IsLocal)
         {
             LocalPlayerData.Instance.IsDead = true;
 
@@ -152,12 +159,12 @@ public class Player : MonoBehaviourPun
 
     private void TakeDamage(float damage)
     {
-        playerData.HP -= damage;
+        PlayerData.HP -= damage;
 
-        photonView.RPC(nameof(UpdateHP), RpcTarget.All, playerData.HP);
+        photonView.RPC(nameof(UpdateHP), RpcTarget.All, PlayerData.HP);
         photonView.RPC(nameof(AsyncNoDamageTime), RpcTarget.All);
 
-        if (playerData.HP <= 0)
+        if (PlayerData.HP <= 0)
         {
             // hp 값이 0이하면 죽음 처리
             photonView.RPC(nameof(OnDead), RpcTarget.All);
@@ -174,14 +181,14 @@ public class Player : MonoBehaviourPun
 
     private void HealHP(float recoverHP)
     {
-        playerData.HP += recoverHP;
+        PlayerData.HP += recoverHP;
 
-        photonView.RPC(nameof(UpdateHP), RpcTarget.Others, playerData.HP);
+        photonView.RPC(nameof(UpdateHP), RpcTarget.Others, PlayerData.HP);
     }
 
     [PunRPC]
     private void UpdateHP(float currentHP)
     {
-        playerData.HP = currentHP;
+        PlayerData.HP = currentHP;
     }
 }

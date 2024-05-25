@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 43b7ace7a0090d3409ecdbf6735c7eaf, type: 3}
+  m_Name: Item#1122_Loudspeaker
+  m_EditorClassIdentifier: 
+  _id: 1122
+  _name: "\uB3D9\uB124\uBC29\uB124 \uD655\uC131\uAE30"
+  _itemImage: {fileID: 21300000, guid: 2b1701bc6a152c447ae5d4f9374c4fdf, type: 3}
+  _description: "5\uCD08\uC5D0 1\uBC88 \uBCF8\uC778 \uC8FC\uBCC0 \uBC29\uC5B4\uB825
+    \uBE44\uB840 \uB370\uBBF8\uC9C0(25+10%)\r\n"
+  _healthPoint: 0
+  _percentHP: 0
+  _strength: 0
+  _percentSTR: 0
+  _defensive: 0
+  _percentDEF: 0
+  _moveSpeed: 0
+  _attackSpeed: 0
+  _lifeSteal: 0

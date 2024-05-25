@@ -125,10 +125,20 @@ MonoBehaviour:
   - InitPlayerPanel
   - InitSplitBody
   - AsyncSplitBodyCount
+  - AsyncRegenDelay
   - AttackCooldown
   - RegenCooldown
-  - RegenHP
   - UpdateNoDmgTime
+  - RegenHP
+  - OnCastSkill
+  - OnPlayerAttacked
+  - SynchroPanel
+  - DestroyMobObj
+  - OnDeadBossMob
+  - DestroyProjectile
+  - OnLaserShoot
+  - SetCoolTime
+  - SetParent
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

@@ -5,6 +5,9 @@ using UnityEngine;
 [RequireComponent(typeof(PlayerPanelUI))]
 public class PlayerPanelManager : MonoBehaviourPun
 {
+    [Header("패널 플레이어 데이터")]
+    [SerializeField] private PlayerData playerData;
+
     [Header("참조 스크립트")]
     [SerializeField] private PlayerPanelUI ui;
     [SerializeField] private Confirm confirm;
@@ -66,6 +69,9 @@ public class PlayerPanelManager : MonoBehaviourPun
         if (player.IsLocal)
         {
             ui.SetLocalMark(true);
+
+            // 플레이어 데이터 설정
+            LocalPlayerData.Instance.InitPlayerData(playerData);
 
             // 직업명 설정
             UpdateClass();
@@ -168,20 +174,23 @@ public class PlayerPanelManager : MonoBehaviourPun
         ClassData classData = LocalPlayerData.Instance.Class;
 
         // 직업 변경 사실을 방장에게 알림
-        photonView.RPC(nameof(SetPlayerClass), RpcTarget.MasterClient, classData.Name);
+        photonView.RPC(nameof(SetPlayerClass), RpcTarget.MasterClient, classData.ID);
     }
 
     [PunRPC]
-    private void SetPlayerClass(string className)
+    private void SetPlayerClass(int id)
     {
         // 모든 사람들에게 해당 패널 플레이어의 직업 적용
-        photonView.RPC(nameof(SetClassName), RpcTarget.All, className);
+        photonView.RPC(nameof(SetClass), RpcTarget.All, id);
     }
 
     [PunRPC]
-    private void SetClassName(string name)
+    private void SetClass(int id)
     {
-        ui.SetClassName(name);
+        ClassData classData = ClassResource.Instance.FindClass(id);
+
+        playerData.PlayerClass = classData;
+        ui.SetClassName(classData.Name);
     }
 
     /***************************************************************
@@ -265,11 +274,11 @@ public class PlayerPanelManager : MonoBehaviourPun
     public void SendRoomData(Photon.Realtime.Player sendPlayer, Photon.Realtime.Player panelPlayer)
     {
         // 본인의 패널이 아닌 플레이어가 존재하는 패널만 동기화
-        if (IsExist && JoinPlayer != sendPlayer)
+        if (IsExist)
         {
-            string className = ui.GetClassName();
+            int classID = (playerData.PlayerClass != null) ? playerData.PlayerClass.ID : -1;
 
-            photonView.RPC(nameof(ReceiveRoomData), sendPlayer, panelPlayer, className);
+            photonView.RPC(nameof(ReceiveRoomData), sendPlayer, panelPlayer, classID);
         }
 
         // 방 닫힘 여부 동기화
@@ -283,10 +292,13 @@ public class PlayerPanelManager : MonoBehaviourPun
     }
 
     [PunRPC]
-    private void ReceiveRoomData(Photon.Realtime.Player player, string className)
+    private void ReceiveRoomData(Photon.Realtime.Player player, int classID)
     {
-        SetPanelInfo(player);
-        SetClassName(className);
+        if (classID >= 0)
+        {
+            SetPanelInfo(player);
+            SetClass(classID);
+        }
     }
 
     [PunRPC]

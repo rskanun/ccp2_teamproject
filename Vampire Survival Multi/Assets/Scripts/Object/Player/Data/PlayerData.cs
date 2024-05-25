@@ -32,6 +32,15 @@ public class PlayerData : ScriptableObject
         set { _position = value; }
     }
 
+    [ReadOnly]
+    [SerializeField]
+    private ClassData _classData;
+    public ClassData PlayerClass
+    {
+        get { return _classData; }
+        set { _classData = value; }
+    }
+
     [Header("현재 스텟")]
     [ReadOnly]
     [SerializeField]

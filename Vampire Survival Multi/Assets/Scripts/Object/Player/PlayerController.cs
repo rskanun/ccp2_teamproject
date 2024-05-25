@@ -53,6 +53,9 @@ public class PlayerController : MonoBehaviourPun, IControlState
         // Init Position In PlayerData
         playerData.Position = transform.position;
 
+        // Init Skill & Normal Attack
+        InitSkill();
+
         if (playerData.Player.IsLocal)
         {
             // 장비 초기 셋팅
@@ -60,9 +63,6 @@ public class PlayerController : MonoBehaviourPun, IControlState
 
             // Set Tracker
             InitCamera();
-
-            // Init Skill & Normal Attack
-            InitSkill();
         }
     }
 
@@ -73,7 +73,7 @@ public class PlayerController : MonoBehaviourPun, IControlState
 
     private void InitSkill()
     {
-        ClassData classData = LocalPlayerData.Instance.Class;
+        ClassData classData = playerData.PlayerClass;
 
         autoAttack = classData.PassiveSkill;
         attackCooldown = 0;
@@ -84,36 +84,54 @@ public class PlayerController : MonoBehaviourPun, IControlState
 
     private void Update()
     {
-        if (playerData.Player.IsLocal)
+        if (WaveData.Instance.IsRunning)
         {
-            // 기본 공격
-            OnNormalAttack();
-        }
+            if (playerData.Player.IsLocal)
+            {
+                // 기본 공격
+                OnNormalAttack();
+            }
 
-        if (PhotonNetwork.IsMasterClient)
-        {
-            // 기본 공격 및 스킬 쿨다운
-            CooldownSkills();
+            if (PhotonNetwork.IsMasterClient)
+            {
+                // 기본 공격 및 스킬 쿨다운
+                CooldownSkills();
+            }
         }
     }
 
     private void OnNormalAttack()
     {
+        Vector2 direction = GetDirection();
+
+        // 공격 실행
+        photonView.RPC(nameof(OnPlayerAttacked), RpcTarget.MasterClient, direction);
+    }
+
+    [PunRPC]
+    private void OnPlayerAttacked(Vector2 direction)
+    {
         if (autoAttack != null && attackCooldown <= 0)
         {
-            autoAttack.UseSkill(player);
+            autoAttack.UseSkill(player, direction);
 
-            // 공격 후 쿨다운 적용
-            attackCooldown = playerData.AttackSpeed;
+            // 모든 플레이어로부터 공격 후 쿨다운 적용
+            photonView.RPC(nameof(AsyncAttackCooldown), RpcTarget.All);
         }
+    }
+
+    [PunRPC]
+    private void AsyncAttackCooldown()
+    {
+        attackCooldown = playerData.AttackSpeed;
     }
 
     private void CooldownSkills()
     {
         float time = Time.deltaTime;
 
-        photonView.RPC(nameof(PassedAttackCooldown), photonView.Owner, time);
-        photonView.RPC(nameof(PassedSkillCooldown), photonView.Owner, time);
+        photonView.RPC(nameof(PassedAttackCooldown), RpcTarget.All, time);
+        photonView.RPC(nameof(PassedSkillCooldown), RpcTarget.All, time);
     }
 
     [PunRPC]
@@ -141,6 +159,16 @@ public class PlayerController : MonoBehaviourPun, IControlState
             // Set Control State
             ControlContext.Instance.SetState(this);
         }
+    }
+
+    private Vector2 GetDirection()
+    {
+        // 마우스 기준 스킬 사용 방향 결정
+        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 casterPos = transform.position;
+        Vector2 direction = (mousePos - casterPos).normalized;
+
+        return direction;
     }
 
     /***************************************************************
@@ -172,13 +200,21 @@ public class PlayerController : MonoBehaviourPun, IControlState
     {
         if (Input.GetButtonDown("Skill"))
         {
-            if (skill != null && skillCooldown <= 0)
-            {
-                skill.UseSkill(player);
+            Vector2 direction = GetDirection();
 
-                // 스킬 사용 후 쿨다운 적용
-                skillCooldown = skill.Cooldown;
-            }
+            photonView.RPC(nameof(OnCastSkill), RpcTarget.MasterClient, direction);
+        }
+    }
+
+    [PunRPC]
+    private void OnCastSkill(Vector2 direction)
+    {
+        if (skill != null && skillCooldown <= 0)
+        {
+            skill.UseSkill(player, direction);
+
+            // 스킬 사용 후 쿨다운 적용
+            skillCooldown = skill.Cooldown;
         }
     }
 

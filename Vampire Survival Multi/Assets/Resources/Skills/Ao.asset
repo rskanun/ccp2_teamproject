@@ -17,8 +17,8 @@ MonoBehaviour:
   _description: "\uC77C\uC815 \uC2DC\uAC04\uB9C8\uB2E4 \uBB34\uD558\uD55C \uC8FC\uC220\uC744
     \uC8FC\uB825\uC73C\uB85C \uB9CC\uB4E0 \uD22C\uC0AC\uCCB4\uB97C \uB0A0\uB824 <style=Damage>100%</style>\uC758
     \uB370\uBBF8\uC9C0\uB97C \uC785\uD78C"
-  _distance: 10
   _cooldown: 0
-  _isPiercing: 0
+  isPiercing: 0
+  distance: 10
   speed: 5
   projectilePrefab: {fileID: 660804144596147880, guid: 81f719473bc06e3488954201d18c8f80, type: 3}

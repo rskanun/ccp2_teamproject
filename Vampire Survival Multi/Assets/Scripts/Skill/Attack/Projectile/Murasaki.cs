@@ -1,10 +1,12 @@
 ﻿using Photon.Pun;
 using UnityEngine;
+using UnityEngine.UI;
 
 [CreateAssetMenu(menuName = "Skill/Class/Active/Test", fileName = "Murasaki")]
 public class Murasaki : Skill
 {
     // 스킬 세부 사항
+    [SerializeField] private float distance;
     [SerializeField] private float speed;
     [SerializeField] private float damageValue;
     [SerializeField] private float damageRate;
@@ -12,20 +14,20 @@ public class Murasaki : Skill
     [Header("발사체")]
     [SerializeField] private GameObject projectilePrefab;
 
-    public override void UseSkill(Player caster)
+    public override void UseSkill(Player caster, Vector2 direction)
     {
+        Vector2 casterPos = caster.PlayerData.Position;
+
         string prefabName = SKILL_OBJECT_DIRECTORY + projectilePrefab.name;
-        GameObject projectileObj = PhotonNetwork.Instantiate(prefabName, CasterData.Position, Quaternion.identity);
+        GameObject projectileObj = PhotonNetwork.Instantiate(prefabName, casterPos, Quaternion.identity);
 
         // 투사체 생성 위치 설정
-        projectileObj.transform.position = CasterData.Position;
+        projectileObj.transform.position = casterPos;
 
         // 이동 방향 설정
-        Vector2 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        Vector2 casterPos = CasterData.Position;
-        Vector2 targetPos = casterPos + (mousePos - casterPos).normalized * Distance;
+        Vector2 targetPos = casterPos + direction * distance;
 
-        float damage = damageValue + CasterData.STR * damageRate;
+        float damage = damageValue + caster.PlayerData.STR * damageRate;
 
         // 투사체 발사
         Projectile projectile = projectileObj.GetComponent<Projectile>();
@@ -35,4 +37,5 @@ public class Murasaki : Skill
             caster.OnSkillAttack(monster, damage);
         });
     }
+
 }

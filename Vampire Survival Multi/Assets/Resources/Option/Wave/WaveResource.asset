@@ -14,7 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveDatas:
   - time: 999
-    monsters: []
+    monsters:
+    - monster: {fileID: 325465133739098425, guid: 9100b634ffdb99146b2a94e6be723e74, type: 3}
+      spawnCount: 10
   - time: 999
     monsters: []
   - time: 999
