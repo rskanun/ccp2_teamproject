@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a26bc66a06326084fa438ad8eb93af3d, type: 3}
   m_Name: Axe Swing
   m_EditorClassIdentifier: 
-  _name: "\uC2A4\uD0AC \uC774\uB984"
+  _name: "\uAE30\uBCF8 \uC2A4\uD0AC - \uB3C4\uB07C"
   _icon: {fileID: 0}
-  _description: "\uC2A4\uD0AC \uC124\uBA85"
+  _description: "\uB3C4\uB07C\uB97C \uC624\uB978\uCABD\uC5D0\uC11C \uC67C\uCABD\uC73C\uB85C
+    \uBD80\uCC44\uAF34\n\uBAA8\uC591\uC73C\uB85C \uACF5\uACA9(\uACF5\uACA9\uB825*0.75+\uBC29\uC5B4\uB825
+    0.25)"
   _cooldown: 0
   swingPrefab: {fileID: 604153516294900674, guid: c4a5fc3ad3452c34c9b1a7c65baf8dc8,
     type: 3}
