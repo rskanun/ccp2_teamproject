@@ -105,6 +105,17 @@ public class Player : MonoBehaviourPun
         }
     }
 
+    [PunRPC]
+    public void UpdatePlayerPos(Vector2 pos)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC(nameof(UpdatePlayerPos), RpcTarget.Others, pos);
+        }
+
+        transform.position = pos;
+    }
+
     /***************************************************************
     * [ 상태 처리 ]
     * 

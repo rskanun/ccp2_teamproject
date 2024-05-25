@@ -32,7 +32,7 @@ public class ShieldRush : Skill
 
         // 플레이어 이동
         Vector2 rushPos = (Vector2)caster.transform.position + direction * knockbackArea.x;
-        caster.transform.position = rushPos;
+        caster.UpdatePlayerPos(rushPos);
     }
 
     private void OnKnockback(Rigidbody2D rigid, Vector2 force)

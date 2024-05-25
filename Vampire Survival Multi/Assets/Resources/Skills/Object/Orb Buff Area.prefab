@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3923419585388182771}
   - component: {fileID: 7829549031935700268}
   - component: {fileID: 44913051094174762}
+  - component: {fileID: 4115537196342915344}
   m_Layer: 0
   m_Name: Buff Zone
   m_TagString: Untagged
@@ -102,6 +103,18 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &4115537196342915344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3483505695504055875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 906fa15f1b3ce9e4396fd12187389d12, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6603380660969543303
 GameObject:
   m_ObjectHideFlags: 0
@@ -113,6 +126,7 @@ GameObject:
   - component: {fileID: 4399145645194912622}
   - component: {fileID: 6752723049237261002}
   - component: {fileID: 2488981829351203621}
+  - component: {fileID: 4702619894252399053}
   m_Layer: 0
   m_Name: Heal Zone
   m_TagString: Untagged
@@ -204,6 +218,19 @@ CircleCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Radius: 0.5
+--- !u!114 &4702619894252399053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6603380660969543303}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8afaab8abda4bfc4fa51822d59b90da4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  delay: 1
 --- !u!1 &7106081657106845994
 GameObject:
   m_ObjectHideFlags: 0
@@ -253,7 +280,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healZone: {fileID: 6603380660969543303}
   buffZone: {fileID: 3483505695504055875}
-  delay: 1
 --- !u!114 &1036668887432497773
 MonoBehaviour:
   m_ObjectHideFlags: 0
