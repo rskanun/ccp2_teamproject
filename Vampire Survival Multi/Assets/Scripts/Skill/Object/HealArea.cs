@@ -40,7 +40,6 @@ public class HealArea : MonoBehaviour
                 foreach (GameObject target in targetList)
                 {
                     Player player = target.GetComponent<Player>();
-                    Debug.Log($"{player.name}: +{heal}");
                     player.HealHP(heal);
                 }
 
@@ -66,7 +65,6 @@ public class HealArea : MonoBehaviour
             GameObject obj = collision.gameObject;
 
             inAreaObjs.Add(name, obj);
-            Debug.Log("Enter " + name);
         }
     }
 
@@ -82,7 +80,6 @@ public class HealArea : MonoBehaviour
             string name = collision.name;
 
             inAreaObjs.Remove(name);
-            Debug.Log("Exit " + name);
         }
     }
 }

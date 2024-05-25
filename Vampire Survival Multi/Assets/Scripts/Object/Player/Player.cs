@@ -138,7 +138,6 @@ public class Player : MonoBehaviourPun
 
     public void OnNormalAttack(Monster monster, float damage)
     {
-        Debug.Log(damage);
         monster.OnTakeDamage(this, damage);
 
         // 최종 데미지에 따른 체력 회복

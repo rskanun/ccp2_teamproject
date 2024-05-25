@@ -22,8 +22,25 @@ public class TrackingArrow : MonoBehaviour
 
     private void Update()
     {
-        PlayerData localPlayer = LocalPlayerData.Instance.PlayerData;
+        LocalPlayerData localPlayer = LocalPlayerData.Instance;
 
+        // 살아있는 경우에만 실행
+        if (localPlayer.IsDead == false && trackingPlayer.HP > 0)
+        {
+            ArrowUpdate(localPlayer.PlayerData);
+        }
+        else if (arrow.activeSelf == true)
+        {
+            isExitedCamera = false;
+
+            // 화살표가 활성화된 상태에서 죽었을 경우 비활성화
+            arrow.SetActive(false);
+            text.SetActive(false);
+        }
+    }
+
+    private void ArrowUpdate(PlayerData localPlayer)
+    {
         // 카메라 사이즈 계산
         Vector2 cameraHalfSize = new Vector2(Camera.main.orthographicSize * Camera.main.aspect, Camera.main.orthographicSize);
 
@@ -50,9 +67,9 @@ public class TrackingArrow : MonoBehaviour
             // 화살표 이동
             transform.localPosition = direction * distance;
         }
-        else if(isExitedCamera)
+        else if (isExitedCamera)
         {
-             isExitedCamera = false;
+            isExitedCamera = false;
 
             // 해당 플레이어가 다시 화면 안으로 들어올 경우 화살표 비활성화
             arrow.SetActive(false);
