@@ -92,7 +92,7 @@ public class Player : MonoBehaviourPun
                 if (PlayerData.HP < PlayerData.MaxHP)
                 {
                     // 플레이어의 체력이 닳은 경우에만 작동
-                    photonView.RPC(nameof(HealHP), RpcTarget.All, playerOption.RegenHP);
+                    HealHP(playerOption.RegenHP);
 
                     curRegenCooldown = playerOption.RegenCooltime;
                 }

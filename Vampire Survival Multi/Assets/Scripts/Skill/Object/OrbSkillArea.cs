@@ -93,7 +93,7 @@ public class OrbSkillArea : MonoBehaviourPun
                 foreach (GameObject target in targetList)
                 {
                     Player player = target.GetComponent<Player>();
-
+                    Debug.Log($"{player.name}: +{heal}");
                     player.HealHP(heal);
                 }
 

@@ -69,7 +69,6 @@ public class PlayerData : ScriptableObject
 
             // 이벤트 알림
             hpEvent.NotifyUpdate();
-            Debug.Log($"{name}: {value}");
         }
     }
 
