@@ -75,7 +75,7 @@ public class WaveData : ScriptableObject
     private float _remainTime;
     public float RemainTime
     {
-        private set { _remainTime = value; }
+        set { _remainTime = value; }
         get { return _remainTime; }
     }
 
@@ -182,10 +182,5 @@ public class WaveData : ScriptableObject
     public void OnKilledMob()
     {
         MobCount--;
-    }
-
-    public void PassedWaveTime(float time)
-    {
-        RemainTime -= time;
     }
 }

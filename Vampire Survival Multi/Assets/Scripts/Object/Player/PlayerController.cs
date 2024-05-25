@@ -53,9 +53,6 @@ public class PlayerController : MonoBehaviourPun, IControlState
         // Init Position In PlayerData
         playerData.Position = transform.position;
 
-        // Init Skill & Normal Attack
-        InitSkill();
-
         if (playerData.Player.IsLocal)
         {
             // 장비 초기 셋팅
@@ -67,6 +64,9 @@ public class PlayerController : MonoBehaviourPun, IControlState
 
         if (PhotonNetwork.IsMasterClient)
         {
+            // Init Skill & Normal Attack
+            InitSkill();
+
             StartCoroutine(SetSkillInit());
         }
     }
@@ -134,40 +134,23 @@ public class PlayerController : MonoBehaviourPun, IControlState
         {
             autoAttack.UseSkill(player, direction);
 
-            // 모든 플레이어로부터 공격 후 쿨다운 적용
-            photonView.RPC(nameof(AsyncAttackCooldown), RpcTarget.All);
+            // 공격 후 쿨다운 적용
+            attackCooldown = playerData.AttackSpeed;
         }
-    }
-
-    [PunRPC]
-    private void AsyncAttackCooldown()
-    {
-        attackCooldown = playerData.AttackSpeed;
     }
 
     private void CooldownSkills()
     {
         float time = Time.deltaTime;
 
-        photonView.RPC(nameof(PassedAttackCooldown), RpcTarget.All, time);
-        photonView.RPC(nameof(PassedSkillCooldown), RpcTarget.All, time);
-    }
-
-    [PunRPC]
-    private void PassedAttackCooldown(float time)
-    {
         if (attackCooldown > 0)
         {
-            attackCooldown -= time;
+            attackCooldown -= Time.deltaTime;
         }
-    }
 
-    [PunRPC]
-    private void PassedSkillCooldown(float time)
-    {
         if (skillCooldown > 0)
         {
-            skillCooldown -= time;
+            skillCooldown -= Time.deltaTime;
         }
     }
 

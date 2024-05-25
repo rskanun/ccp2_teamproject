@@ -73,18 +73,16 @@ public class Player : MonoBehaviourPun
 
     private void PassedTime()
     {
-        float time = Time.deltaTime;
-
         // 버프 쿨다운
-        buffManager.BuffTimer(time);
+        buffManager.BuffTimer(Time.deltaTime);
 
         if (curNoHitTime > 0) // 공격 쿨다운
-            photonView.RPC(nameof(AttackCooldown), RpcTarget.All, time);
+            curNoHitTime -= Time.deltaTime;
 
         if (curRegenDelay > 0)
         {
             // 데미지를 안 받은 시간 쿨다운
-            photonView.RPC(nameof(UpdateNoDmgTime), RpcTarget.All, time);
+            curRegenDelay -= Time.deltaTime;
         }
         else
         {
@@ -94,41 +92,17 @@ public class Player : MonoBehaviourPun
                 if (PlayerData.HP < PlayerData.MaxHP)
                 {
                     // 플레이어의 체력이 닳은 경우에만 작동
-                    photonView.RPC(nameof(RegenHP), RpcTarget.All);
+                    photonView.RPC(nameof(HealHP), RpcTarget.All, playerOption.RegenHP);
+
+                    curRegenCooldown = playerOption.RegenCooltime;
                 }
             }
             else
             {
                 // 체력 재생 쿨다운
-                photonView.RPC(nameof(RegenCooldown), RpcTarget.All, time);
+                curRegenCooldown -= Time.deltaTime;
             }
         }
-    }
-
-    [PunRPC]
-    private void AttackCooldown(float time)
-    {
-        curNoHitTime -= time;
-    }
-
-    [PunRPC]
-    private void UpdateNoDmgTime(float time)
-    {
-        curRegenDelay -= time;
-    }
-
-    [PunRPC]
-    private void RegenCooldown(float time)
-    {
-        curRegenCooldown -= time;
-    }
-
-    [PunRPC]
-    private void RegenHP()
-    {
-        // 체력 재생 및 재생 쿨타임 적용
-        PlayerData.HP += playerOption.RegenHP;
-        curRegenCooldown = playerOption.RegenCooltime;
     }
 
     /***************************************************************

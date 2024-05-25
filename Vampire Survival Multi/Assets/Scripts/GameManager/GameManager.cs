@@ -192,7 +192,15 @@ public class GameManager : MonoBehaviourPunCallbacks
             {
                 float time = Time.deltaTime;
 
-                photonView.RPC(nameof(PassedWaveTime), RpcTarget.All, time);
+                waveData.RemainTime -= time;
+
+                int prevTime = Mathf.FloorToInt(waveData.RemainTime + time);
+                int curTime = Mathf.FloorToInt(waveData.RemainTime);
+
+                if (prevTime != curTime)
+                {
+                    photonView.RPC(nameof(UpdateWaveTime), RpcTarget.Others, curTime);
+                }
             }
         }
     }
@@ -207,9 +215,9 @@ public class GameManager : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    private void PassedWaveTime(float time)
+    private void UpdateWaveTime(int time)
     {
-        waveData.PassedWaveTime(time);
+        waveData.RemainTime = time;
     }
 
     [PunRPC]
