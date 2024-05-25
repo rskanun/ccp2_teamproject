@@ -73,18 +73,16 @@ public class Player : MonoBehaviourPun
 
     private void PassedTime()
     {
-        float time = Time.deltaTime;
-
         // 버프 쿨다운
-        buffManager.BuffTimer(time);
+        buffManager.BuffTimer(Time.deltaTime);
 
         if (curNoHitTime > 0) // 공격 쿨다운
-            photonView.RPC(nameof(AttackCooldown), RpcTarget.All, time);
+            curNoHitTime -= Time.deltaTime;
 
         if (curRegenDelay > 0)
         {
             // 데미지를 안 받은 시간 쿨다운
-            photonView.RPC(nameof(UpdateNoDmgTime), RpcTarget.All, time);
+            curRegenDelay -= Time.deltaTime;
         }
         else
         {
@@ -94,41 +92,28 @@ public class Player : MonoBehaviourPun
                 if (PlayerData.HP < PlayerData.MaxHP)
                 {
                     // 플레이어의 체력이 닳은 경우에만 작동
-                    photonView.RPC(nameof(RegenHP), RpcTarget.All);
+                    HealHP(playerOption.RegenHP);
+
+                    curRegenCooldown = playerOption.RegenCooltime;
                 }
             }
             else
             {
                 // 체력 재생 쿨다운
-                photonView.RPC(nameof(RegenCooldown), RpcTarget.All, time);
+                curRegenCooldown -= Time.deltaTime;
             }
         }
     }
 
     [PunRPC]
-    private void AttackCooldown(float time)
+    public void UpdatePlayerPos(Vector2 pos)
     {
-        curNoHitTime -= time;
-    }
+        if (PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC(nameof(UpdatePlayerPos), RpcTarget.Others, pos);
+        }
 
-    [PunRPC]
-    private void UpdateNoDmgTime(float time)
-    {
-        curRegenDelay -= time;
-    }
-
-    [PunRPC]
-    private void RegenCooldown(float time)
-    {
-        curRegenCooldown -= time;
-    }
-
-    [PunRPC]
-    private void RegenHP()
-    {
-        // 체력 재생 및 재생 쿨타임 적용
-        PlayerData.HP += playerOption.RegenHP;
-        curRegenCooldown = playerOption.RegenCooltime;
+        transform.position = pos;
     }
 
     /***************************************************************
@@ -153,6 +138,7 @@ public class Player : MonoBehaviourPun
 
     public void OnNormalAttack(Monster monster, float damage)
     {
+        Debug.Log(damage);
         monster.OnTakeDamage(this, damage);
 
         // 최종 데미지에 따른 체력 회복
@@ -218,7 +204,7 @@ public class Player : MonoBehaviourPun
         curRegenCooldown = 0;
     }
 
-    private void HealHP(float recoverHP)
+    public void HealHP(float recoverHP)
     {
         PlayerData.HP += recoverHP;
 
@@ -229,6 +215,28 @@ public class Player : MonoBehaviourPun
     private void UpdateHP(float currentHP)
     {
         PlayerData.HP = currentHP;
+    }
+
+    /***************************************************************
+    * [ 스텟 증가 ]
+    * 
+    * 현재 플레이어의 일시적 스탯 증가
+    ***************************************************************/
+
+    public void SetBuffSTR(float increaseSTR)
+    {
+        photonView.RPC(nameof(UpdateBuffSTR), RpcTarget.MasterClient, increaseSTR);
+    }
+
+    [PunRPC]
+    private void UpdateBuffSTR(float increaseSTR)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC(nameof(UpdateBuffSTR), RpcTarget.Others, increaseSTR);
+        }
+
+        PlayerData.BuffSTR = increaseSTR;
     }
 
     /***************************************************************

@@ -140,6 +140,11 @@ MonoBehaviour:
   - SetCoolTime
   - SetParent
   - SetPlayerAlpha
+  - UpdateBuffSTR
+  - SetActiveZone
+  - UpdatePos
+  - UpdateWaveTime
+  - UpdatePlayerPos
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

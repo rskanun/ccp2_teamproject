@@ -36,5 +36,7 @@ public abstract class Skill : ScriptableObject
         get { return _cooldown; }
     }
 
+    public virtual void InitSkill(Player caster) { }
+
     public abstract void UseSkill(Player caster, Vector2 direction);
 }

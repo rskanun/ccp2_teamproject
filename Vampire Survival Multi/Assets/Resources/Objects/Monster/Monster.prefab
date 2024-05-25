@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: -3659289031768780915}
   - component: {fileID: 325465133739098406}
   - component: {fileID: -8016353243359321557}
-  - component: {fileID: -7889401965723688544}
+  - component: {fileID: -5552653466379661290}
   m_Layer: 0
   m_Name: Monster
   m_TagString: Monster
@@ -159,11 +159,11 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
-  - {fileID: -7889401965723688544}
+  - {fileID: -5552653466379661290}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &-7889401965723688544
+--- !u!114 &-5552653466379661290
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -178,4 +178,4 @@ MonoBehaviour:
   m_SynchronizePosition: 1
   m_SynchronizeRotation: 0
   m_SynchronizeScale: 0
-  m_UseLocal: 1
+  m_UseLocal: 0

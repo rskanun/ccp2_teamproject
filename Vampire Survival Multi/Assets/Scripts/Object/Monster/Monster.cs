@@ -54,9 +54,7 @@ public class Monster : MonoBehaviourPun
 
     private void OnCooldown()
     {
-        float time = Time.deltaTime;
-
-        photonView.RPC(nameof(PassedCooldown), RpcTarget.All, time);
+        CoolTime -= Time.deltaTime;
     }
 
     private void StatusEffectsTimer()
@@ -66,25 +64,16 @@ public class Monster : MonoBehaviourPun
         statusManager.EffectTimer(time);
     }
 
-    [PunRPC]
-    protected void PassedCooldown(float time)
-    {
-         if (CoolTime > 0)
-        {
-            CoolTime -= time;
-        }
-    }
-
     public void OnEnable()
     {
         // init stat
-        HP = _data.HP;
+        HP = Stat.HP;
     }
 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, _data.AttackDistance);
+        Gizmos.DrawWireSphere(transform.position, Stat.AttackDistance);
     }
 
     /***************************************************************
@@ -118,15 +107,6 @@ public class Monster : MonoBehaviourPun
         float dmg = Mathf.Abs(damage);
         float def = Stat.DEF;
         float lastDamage = dmg / (dmg + def) * dmg;
-
-        photonView.RPC(nameof(TakeDamage), RpcTarget.MasterClient, attacker.photonView.ViewID, lastDamage);
-    }
-
-    [PunRPC]
-    protected void TakeDamage(int attackerViewID, float lastDamage)
-    {
-        GameObject attackerChr = PhotonView.Find(attackerViewID).gameObject;
-        Player attacker = attackerChr.GetComponent<Player>();
 
         HP -= lastDamage;
         photonView.RPC(nameof(AsyncHP), RpcTarget.Others, HP);
