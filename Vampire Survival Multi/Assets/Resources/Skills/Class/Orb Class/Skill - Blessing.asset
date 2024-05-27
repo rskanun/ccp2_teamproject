@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b2cd3c577778e8f4c9343c863dd598aa, type: 3}
-  m_Name: Blessing
+  m_Name: Skill - Blessing
   m_EditorClassIdentifier: 
-  _name: "\uC2A4\uD0AC \uC774\uB984"
-  _icon: {fileID: 0}
-  _description: "\uC2A4\uD0AC \uC124\uBA85"
-  _cooldown: 1
+  _name: "\uC2A4\uD0AC - \uAD6C\uC2AC"
+  _icon: {fileID: 21300000, guid: f945c0e10c38e5b45ac5f8159aa5a7ab, type: 3}
+  _description: "\uC9C0\uC18D\uD790&\uC9C0\uC18D \uACF5\uACA9\uB825 \uC99D\uAC00
+    \uAD50\uD658\n(\uD68C\uBCF5 : \uACF5\uACA9\uB825*0.05, \uACF5\uC99D : \uACF5\uACA9\uB825*0.05)\r"
+  _cooldown: 20
   skillAreaPrefab: {fileID: 7106081657106845994, guid: 398348ffb24d1e1488396ed414cacc72,
     type: 3}
