@@ -36,7 +36,18 @@ public abstract class Skill : ScriptableObject
         get { return _cooldown; }
     }
 
-    public virtual void InitSkill(Player caster) { }
+    public virtual void InitSkill(Player caster)
+    {
+        // 게임 시작 시 실행
+    }
 
-    public abstract void UseSkill(Player caster, Vector2 direction);
+    public virtual void UseSkill(Player caster, Vector2 direction)
+    {
+        // 스킬 버튼을 눌렀을 경우 실행
+    }
+
+    public virtual void OnKillEvent(Player caster)
+    {
+        // 플레이어가 킬을 했을 경우 실행
+    }
 }

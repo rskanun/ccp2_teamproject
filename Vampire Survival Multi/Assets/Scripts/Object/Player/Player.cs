@@ -171,7 +171,10 @@ public class Player : MonoBehaviourPun
 
     public void OnKilled()
     {
+        ClassData classData = PlayerData.PlayerClass;
 
+        classData.PassiveSkill.OnKillEvent(this);
+        classData.ActiveSkill.OnKillEvent(this);
     }
 
 

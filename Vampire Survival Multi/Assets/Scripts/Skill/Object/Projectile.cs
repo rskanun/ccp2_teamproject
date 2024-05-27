@@ -15,27 +15,18 @@ public class Projectile : MonoBehaviourPun
         // 투사체 각도 설정
         transform.eulerAngles = new Vector3(0, 0, angle);
 
-        photonView.RPC(nameof(SetPiercing), RpcTarget.All, isPiercing);
+        this.isPiercing = isPiercing;
 
         onHitEvent = onHitListener;
-        photonView.RPC(nameof(SetOnMoveEvent), RpcTarget.All, targetPos, speed);
-    }
-
-    [PunRPC]
-    private void SetPiercing(bool isPiercing)
-    {
-        this.isPiercing = isPiercing;
-    }
-
-    [PunRPC]
-    private void SetOnMoveEvent(Vector2 targetPos, float speed)
-    {
         onMoveEvent = () => MoveTo(targetPos, speed);
     }
 
     private void FixedUpdate()
     {
-        onMoveEvent?.Invoke();
+        if (PhotonNetwork.IsMasterClient)
+        {
+            onMoveEvent?.Invoke();
+        }
     }
 
     private void MoveTo(Vector2 targetPos, float speed)

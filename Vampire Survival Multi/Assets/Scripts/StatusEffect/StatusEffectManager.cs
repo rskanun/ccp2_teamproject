@@ -1,7 +1,8 @@
 ﻿using System.Collections.Generic;
 public enum StatusEffect
 {
-    Stun // 기절
+    Stun, // 기절
+    Weakness, // 취약
 }
 public class StatusEffectManager
 {

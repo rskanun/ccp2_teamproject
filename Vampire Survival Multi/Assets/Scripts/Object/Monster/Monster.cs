@@ -108,7 +108,8 @@ public class Monster : MonoBehaviourPun
         float def = Stat.DEF;
         float lastDamage = dmg / (dmg + def) * dmg;
 
-        HP -= lastDamage;
+        // 취약 상태일 경우 2배 데미지
+        HP -= lastDamage * (statusManager.HasStatusEffect(StatusEffect.Weakness) ? 2 : 1);
         photonView.RPC(nameof(AsyncHP), RpcTarget.Others, HP);
 
         if (HP <= 0)
