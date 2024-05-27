@@ -110,7 +110,7 @@ public class PlayerData : ScriptableObject
     private float _buffSTR;
     public float BuffSTR
     {
-        private get { return _buffSTR; }
+        get { return _buffSTR; }
         set
         {
             if (value <= 0)
@@ -185,12 +185,15 @@ public class PlayerData : ScriptableObject
 
     public void InitData(ClassData playerClass)
     {
-        // 스텟 초기화
+        // 스탯 초기화
         MaxHP = playerClass.HP;
         STR = playerClass.STR;
         DEF = playerClass.DEF;
         AttackSpeed = playerClass.AttackSpeed;
         MoveSpeed = playerClass.MoveSpeed;
         LifeSteal = playerClass.LifeSteal;
+
+        // 버프 스탯 초기화
+        BuffSTR = 0;
     }
 }
