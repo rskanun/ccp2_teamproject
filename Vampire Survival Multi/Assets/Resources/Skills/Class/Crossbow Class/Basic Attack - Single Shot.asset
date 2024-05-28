@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea1c102f5b20d2648826833aace56b85, type: 3}
+  m_Name: Basic Attack - Single Shot
+  m_EditorClassIdentifier: 
+  _name: "\uB2E8\uBC1C \uC0AC\uACA9"
+  _icon: {fileID: 21300000, guid: fdaccab808cff5742854c43a0d9d7cc6, type: 3}
+  _description: "\uC804\uBC29 1\uC790 \uBC94\uC704\uB85C \uD654\uC0B4\uC744 \uBC1C\uC0AC\uD558\uC5EC
+    \n\uACF5\uACA9(\uACF5\uACA9\uB825 *1)"
+  _cooldown: 0
+  distance: 10
+  speed: 6
+  projectilePrefab: {fileID: 660804144596147880, guid: 74ab8755fa2ef9d429c9a42dbd52169c,
+    type: 3}
