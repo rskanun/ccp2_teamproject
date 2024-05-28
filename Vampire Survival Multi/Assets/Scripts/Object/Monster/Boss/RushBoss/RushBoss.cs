@@ -6,12 +6,14 @@ public class RushBoss : BossMonster
     [SerializeField] private float rushCooldown;
     [SerializeField] private RushBossSkill rush;
 
+    private float cooldown;
+
     // 보스 스킬 상태
     private bool isRushing;
 
     protected override void OnCastSkill()
     {
-        if (isRushing == false && CoolTime <= 0.0f)
+        if (isRushing == false && cooldown <= 0.0f)
         {
             // 가장 가까운 플레이어를 타겟으로 돌진
             GameObject target = GetTarget();
@@ -49,9 +51,17 @@ public class RushBoss : BossMonster
     public void OnRushStop()
     {
         // 쿨타임 설정
-        CoolTime = rushCooldown;
+        cooldown = rushCooldown;
 
         isRushing = false;
+    }
+
+    protected override void OnCooldown()
+    {
+        if (cooldown > 0.0f)
+        {
+            cooldown -= Time.deltaTime;
+        }
     }
 
     public override void OnMove(Vector2 targetPos)

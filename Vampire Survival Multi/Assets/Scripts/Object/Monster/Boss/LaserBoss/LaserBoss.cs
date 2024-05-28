@@ -8,17 +8,18 @@ public class LaserBoss : BossMonster
     [SerializeField] private LaserBossSkill laserAttack;
 
     // 보스 공격 데이터
+    private float cooldown;
     private float attackRotate;
 
     protected override void OnCastSkill()
     {
-        if (CoolTime <= 0.0f)
+        if (cooldown <= 0.0f)
         {
             // 레이저 스킬 사용
             photonView.RPC(nameof(OnLaserShoot), RpcTarget.All);
 
             // 쿨타임 설정
-            photonView.RPC(nameof(SetCoolTime), RpcTarget.All);
+            cooldown = laserCooldown;
         }
     }
 
@@ -31,10 +32,12 @@ public class LaserBoss : BossMonster
         attackRotate -= 45;
     }
 
-    [PunRPC]
-    private void SetCoolTime()
+    protected override void OnCooldown()
     {
-        CoolTime = laserCooldown;
+        if (cooldown > 0.0f)
+        {
+            cooldown -= Time.deltaTime;
+        }
     }
 
     protected override void AttackedPlayer(GameObject target)
