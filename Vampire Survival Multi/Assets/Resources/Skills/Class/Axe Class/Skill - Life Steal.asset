@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a2dde9563ab28247aec67892ee0102c, type: 3}
   m_Name: Skill - Life Steal
   m_EditorClassIdentifier: 
-  _name: "\uC2A4\uD0AC - \uB3C4\uB07C"
+  _name: "\uD761\uD608"
   _icon: {fileID: 21300000, guid: 09c0aa722239c1b43ad050413f99f605, type: 3}
   _description: "10% \uAE30\uBCF8 \uD761\uD608"
   _cooldown: 0
