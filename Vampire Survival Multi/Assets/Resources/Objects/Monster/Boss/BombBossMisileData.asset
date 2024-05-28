@@ -9,10 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb53819efc2f39d4fb6038ec447c5dc6, type: 3}
-  m_Name: BossResource
+  m_Script: {fileID: 11500000, guid: 7e2588cb85cf3494380add9239a721c9, type: 3}
+  m_Name: BombBossMisileData
   m_EditorClassIdentifier: 
-  waveBossList:
-  - waveLevel: 5
-    bossList:
-    - {fileID: 6620225952986619061, guid: 6f726cecee23eda42a0951265a91de59, type: 3}
+  _healthPoint: 9999
+  _strength: 0
+  _defensive: 0
+  _moveSpeed: 5
+  _attackDistance: 0.5
