@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f5b0fe7358ef2140b22f7f9da1f8d82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swingAngle: 170
+  swingAngle: 70
 --- !u!114 &2059104204470901343
 MonoBehaviour:
   m_ObjectHideFlags: 0
