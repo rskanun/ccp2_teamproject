@@ -13,10 +13,128 @@ MonoBehaviour:
   m_Name: WaveResource
   m_EditorClassIdentifier: 
   waveDatas:
-  - time: 999
+  - time: 60
     monsters:
     - monster: {fileID: 325465133739098425, guid: 9100b634ffdb99146b2a94e6be723e74,
         type: 3}
+<<<<<<< HEAD
+      spawnCount: 10
+  - time: 60
+    monsters:
+    - monster: {fileID: 325465133739098425, guid: f6d6533cb80630145a471966f6ee1981,
+        type: 3}
+      spawnCount: 20
+  - time: 60
+    monsters:
+    - monster: {fileID: 325465133739098425, guid: 1f3c7419e78b88d4f8cecc292c3c0e45,
+        type: 3}
+      spawnCount: 20
+  - time: 60
+    monsters:
+    - monster: {fileID: 325465133739098425, guid: 771e42d2dcc4bfb49a30777cca9fed2d,
+        type: 3}
+      spawnCount: 20
+  - time: 70
+    monsters:
+    - monster: {fileID: 325465133739098425, guid: 77121b16e4c3a8d4b8d17ea4017f1ecb,
+        type: 3}
+      spawnCount: 30
+  - time: 70
+    monsters:
+    - monster: {fileID: 325465133739098425, guid: 06488200951b83847b6deb763879870b,
+        type: 3}
+      spawnCount: 35
+  - time: 70
+    monsters:
+    - monster: {fileID: 325465133739098425, guid: 126032fe1df52534a92b8781eadee6e9,
+        type: 3}
+      spawnCount: 40
+  - time: 70
+    monsters:
+    - monster: {fileID: 325465133739098425, guid: 65dbd76074a52b14aa998784c80b50a2,
+        type: 3}
+      spawnCount: 40
+  - time: 80
+    monsters:
+    - monster: {fileID: 325465133739098425, guid: 74f49ed7436e2ab4c8f9d5f06caecf1f,
+        type: 3}
+      spawnCount: 50
+  - time: 80
+    monsters:
+    - monster: {fileID: 325465133739098425, guid: 5c48a391312cb7849aaeb5325fb8fbe8,
+        type: 3}
+      spawnCount: 55
+  - time: 80
+    monsters:
+    - monster: {fileID: 325465133739098425, guid: aafb83a6efe8ae3499843c255e407819,
+        type: 3}
+      spawnCount: 60
+  - time: 80
+    monsters:
+    - monster: {fileID: 325465133739098425, guid: ce9623143f42775408257b0334390da7,
+        type: 3}
+      spawnCount: 70
+  - time: 100
+    monsters:
+    - monster: {fileID: 325465133739098425, guid: ef949aa881f0acf4aa1e2479f81a808a,
+        type: 3}
+      spawnCount: 100
+  - time: 100
+    monsters:
+    - monster: {fileID: 325465133739098425, guid: d118cf3568cd28846a07fd5f03babadb,
+        type: 3}
+      spawnCount: 110
+  - time: 100
+    monsters:
+    - monster: {fileID: 325465133739098425, guid: 67b7f70a107c43649b55365517c029d0,
+        type: 3}
+      spawnCount: 120
+  - time: 100
+    monsters:
+    - monster: {fileID: 325465133739098425, guid: 165fe4b08aeb1c1499642cfc115d34f4,
+        type: 3}
+      spawnCount: 130
+  - time: 120
+    monsters:
+    - monster: {fileID: 325465133739098425, guid: ccc918d589294204c984155bc9a5014f,
+        type: 3}
+      spawnCount: 150
+  - time: 120
+    monsters:
+    - monster: {fileID: 325465133739098425, guid: c09a71135371f6041910e0787d4c5956,
+        type: 3}
+      spawnCount: 180
+  - time: 120
+    monsters:
+    - monster: {fileID: 325465133739098425, guid: 27ec16ec4ec0c0744bbf649306364e35,
+        type: 3}
+      spawnCount: 200
+  - time: 120
+    monsters:
+    - monster: {fileID: 325465133739098425, guid: 8d079ab5e7360374b8f45f88be56fd03,
+        type: 3}
+      spawnCount: 230
+  - time: 120
+    monsters:
+    - monster: {fileID: 325465133739098425, guid: 626bfd89e3fb5314ba7f05f3ddc5722b,
+        type: 3}
+      spawnCount: 250
+  - time: 120
+    monsters:
+    - monster: {fileID: 325465133739098425, guid: 859718d0a52884f4eb10f148a7e2455f,
+        type: 3}
+      spawnCount: 300
+  - time: 120
+    monsters:
+    - monster: {fileID: 325465133739098425, guid: 6bafd80a20de29c4b8d3bff1fb5d9bed,
+        type: 3}
+      spawnCount: 350
+  - time: 120
+    monsters:
+    - monster: {fileID: 325465133739098425, guid: ebe187f9b06e95d4180a3064ff5e12dc,
+        type: 3}
+      spawnCount: 400
+=======
       spawnCount: 1
   - time: 999
     monsters:
@@ -29,9 +147,19 @@ MonoBehaviour:
         type: 3}
       spawnCount: 1
   - time: 999
+    monsters:
+    - monster: {fileID: 325465133739098425, guid: 9100b634ffdb99146b2a94e6be723e74,
+        type: 3}
+      spawnCount: 1
+  - time: 999
+<<<<<<< HEAD
+    monsters: []
+>>>>>>> 8718111857de01edeec827abdbed55b95e029fdb
+=======
     monsters:
     - monster: {fileID: 325465133739098425, guid: 9100b634ffdb99146b2a94e6be723e74,
         type: 3}
       spawnCount: 1
   - time: 999
     monsters: []
+>>>>>>> 8718111857de01edeec827abdbed55b95e029fdb
