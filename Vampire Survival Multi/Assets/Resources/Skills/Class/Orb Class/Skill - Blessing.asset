@@ -16,6 +16,6 @@ MonoBehaviour:
   _icon: {fileID: 21300000, guid: f945c0e10c38e5b45ac5f8159aa5a7ab, type: 3}
   _description: "\uC9C0\uC18D\uD790&\uC9C0\uC18D \uACF5\uACA9\uB825 \uC99D\uAC00
     \uAD50\uD658\n(\uD68C\uBCF5 : \uACF5\uACA9\uB825*0.05, \uACF5\uC99D : \uACF5\uACA9\uB825*0.05)\r"
-  _cooldown: 20
+  _cooldown: 1
   skillAreaPrefab: {fileID: 7106081657106845994, guid: 398348ffb24d1e1488396ed414cacc72,
     type: 3}

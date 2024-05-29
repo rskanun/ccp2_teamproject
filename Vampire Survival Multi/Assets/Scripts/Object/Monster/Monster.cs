@@ -15,12 +15,6 @@ public class Monster : MonoBehaviourPun
         get { return _currentHP; }
         set { _currentHP = value; }
     }
-    private float _coolTime;
-    protected float CoolTime
-    {
-        get { return _coolTime; }
-        set { _coolTime = value; }
-    }
 
     // 몬스터 상태이상 목록
     private StatusEffectManager statusManager;
@@ -52,9 +46,9 @@ public class Monster : MonoBehaviourPun
         // 일정 시간마다 발동하는 스킬
     }
 
-    private void OnCooldown()
+    protected virtual void OnCooldown()
     {
-        CoolTime -= Time.deltaTime;
+        // 스킬 쿨다운
     }
 
     private void StatusEffectsTimer()
