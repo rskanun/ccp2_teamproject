@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: -8016353243359321557}
   - component: {fileID: -5552653466379661290}
   m_Layer: 0
-  m_Name: Monster_Wave23
+  m_Name: Monster
   m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -102,7 +102,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ccd52465760af91439d92722b5a602f1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _data: {fileID: 11400000, guid: 16413010d008e2646b1ea90350d4e2f9, type: 2}
+  _data: {fileID: 11400000, guid: f1f8bfcac2a486c49907095ef7f6ed12, type: 2}
 --- !u!50 &-3659289031768780915
 Rigidbody2D:
   serializedVersion: 4

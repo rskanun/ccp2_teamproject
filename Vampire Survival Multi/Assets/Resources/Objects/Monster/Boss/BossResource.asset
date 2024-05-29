@@ -15,27 +15,4 @@ MonoBehaviour:
   waveBossList:
   - waveLevel: 5
     bossList:
-<<<<<<< HEAD
-<<<<<<< HEAD
-    - {fileID: 2619630261418695700, guid: 61c91d8e790b3114faeaa6abcc0fd1ef, type: 3}
-  - waveLevel: 10
-    bossList:
-    - {fileID: 3756990987460227, guid: 45434b552f5b46a469fc19f20cc25ac9, type: 3}
-  - waveLevel: 15
-    bossList:
-    - {fileID: 2619630261418695700, guid: e4f867f3d2e1cc14a93e925d05fba078, type: 3}
-  - waveLevel: 20
-    bossList:
-    - {fileID: 3756990987460227, guid: 45434b552f5b46a469fc19f20cc25ac9, type: 3}
-  - waveLevel: 25
-    bossList:
-    - {fileID: 2619630261418695700, guid: 61c91d8e790b3114faeaa6abcc0fd1ef, type: 3}
-  - waveLevel: 30
-    bossList:
-    - {fileID: 2619630261418695700, guid: e4f867f3d2e1cc14a93e925d05fba078, type: 3}
-=======
     - {fileID: 6620225952986619061, guid: 6f726cecee23eda42a0951265a91de59, type: 3}
->>>>>>> 8718111857de01edeec827abdbed55b95e029fdb
-=======
-    - {fileID: 6620225952986619061, guid: 6f726cecee23eda42a0951265a91de59, type: 3}
->>>>>>> 8718111857de01edeec827abdbed55b95e029fdb
