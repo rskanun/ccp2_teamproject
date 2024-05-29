@@ -22,7 +22,7 @@ public class PlayerChecker : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Spawner"))
         {
             playerCount++;
         }
@@ -30,7 +30,7 @@ public class PlayerChecker : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Spawner"))
         {
             playerCount--;
         }

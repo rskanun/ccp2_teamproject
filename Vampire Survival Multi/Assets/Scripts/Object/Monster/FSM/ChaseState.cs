@@ -45,7 +45,7 @@ public class ChaseState : IMonsterState
             Player p = player.GetComponent<Player>();
 
             // 은신 상태 플레이어 제외
-            if (p.HasBuff(Buff.Invisible) == false)
+            if (p != null && p.HasBuff(Buff.Invisible) == false)
             {
                 float distance = Vector2.Distance(player.transform.position, monster.transform.position);
 

@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Monster
+  - Spawner
   layers:
   - Default
   - TransparentFX
@@ -14,6 +16,8 @@ TagManager:
   - 
   - 
   - 
+  - Wall
+  - Player
   - 
   - 
   - 
@@ -25,9 +29,7 @@ TagManager:
   - 
   - 
   - 
-  - Layer 1
-  - Layer 2
-  - Layer 3
+  - 
   - 
   - 
   - 
