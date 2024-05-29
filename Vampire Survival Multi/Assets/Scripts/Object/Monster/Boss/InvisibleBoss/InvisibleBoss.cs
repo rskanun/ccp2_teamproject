@@ -13,7 +13,7 @@ public class InvisibleBoss : BossMonster
 
     protected override void OnCastSkill()
     {
-        if (curCooldown <= 0)
+        if (isActiveState && curCooldown <= 0)
         {
             // 돌 던지기
 
