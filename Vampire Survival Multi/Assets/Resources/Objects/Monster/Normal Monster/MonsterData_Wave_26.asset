@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7e2588cb85cf3494380add9239a721c9, type: 3}
-  m_Name: MonsterData
+  m_Name: MonsterData_Wave_26
   m_EditorClassIdentifier: 
-  _healthPoint: 300
-  _strength: 10
-  _defensive: 0
+  _healthPoint: 2000
+  _strength: 125
+  _defensive: 250
   _moveSpeed: 3
   _attackDistance: 1
