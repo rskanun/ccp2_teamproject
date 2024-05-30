@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 325465133739098406}
   - component: {fileID: -8016353243359321557}
   - component: {fileID: -5552653466379661290}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Monster_Wave13
   m_TagString: Monster
   m_Icon: {fileID: 0}
