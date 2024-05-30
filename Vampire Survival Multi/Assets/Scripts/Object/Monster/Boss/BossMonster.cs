@@ -2,6 +2,8 @@
 
 public abstract class BossMonster : Monster
 {
+    protected const string OBJECT_DIRECTION = "Objects/Monster/Boss/SkillObject/";
+
     [Header("참조 이벤트")]
     [SerializeField] private GameEvent bossClearEvent;
 

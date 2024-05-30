@@ -38,32 +38,31 @@ public class Spawner : MonoBehaviour
     [SerializeField]
     private int playerCount = 0;
 
-    public bool IsSpawnable
+    public bool IsPlayerInArea
+    {
+        get { return playerCount > 0; }
+    }
+
+    public bool IsSpawnerInMap
     {
         get
         {
-            // 범위 안에 플레이어가 없고
-            if (playerCount <= 0)
-            {
-                MapData mapData = MapData.Instance;
+            MapData mapData = MapData.Instance;
 
-                Vector2 maxVec = maxPos;
-                Vector2 minVec = minPos;
-                Vector2 mapMaxPos = mapData.MaxPos;
-                Vector2 mapMinPos = mapData.MinPos;
+            Vector2 maxVec = maxPos;
+            Vector2 minVec = minPos;
+            Vector2 mapMaxPos = mapData.MaxPos;
+            Vector2 mapMinPos = mapData.MinPos;
 
-                // 소환 범위 일부가 경계선 안인 경우
-                return (maxVec.x > mapMinPos.x && maxVec.y > mapMinPos.y)
-                    && (minVec.x < mapMaxPos.x && minVec.y < mapMaxPos.y);
-            }
-
-            return false;
+            // 소환 범위 일부가 경계선 안인 경우
+            return (maxVec.x > mapMinPos.x && maxVec.y > mapMinPos.y)
+                && (minVec.x < mapMaxPos.x && minVec.y < mapMaxPos.y);
         }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Spawner"))
         {
             playerCount++;
         }
@@ -71,7 +70,7 @@ public class Spawner : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D collision)
     {
-        if (collision.CompareTag("Player"))
+        if (collision.CompareTag("Spawner"))
         {
             playerCount--;
         }

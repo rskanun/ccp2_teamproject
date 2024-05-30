@@ -27,7 +27,7 @@ public class BombBoss : BossMonster
             float missileHP = Stat.HP / 10.0f;
 
             // 유도탄 생성
-            GameObject missile = PhotonNetwork.Instantiate(missileObj.name, transform.position, Quaternion.identity);
+            GameObject missile = PhotonNetwork.Instantiate(OBJECT_DIRECTION + missileObj.name, transform.position, Quaternion.identity);
             missile.GetComponent<Missile>().InitMissileData(missileHP);
 
             // 쿨타임 적용
@@ -40,7 +40,7 @@ public class BombBoss : BossMonster
         if (curBombCooldown <= 0.0f)
         {
             // 설치형 생성
-            PhotonNetwork.Instantiate(bombObj.name, transform.position, Quaternion.identity);
+            PhotonNetwork.Instantiate(OBJECT_DIRECTION + bombObj.name, transform.position, Quaternion.identity);
 
             // 쿨타임 적용
             curBombCooldown = bombCooldown;

@@ -9,7 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d5a209ceb524ca44196cb049b58bfbec, type: 3}
-  m_Name: MapData
+  m_Script: {fileID: 11500000, guid: 7e2588cb85cf3494380add9239a721c9, type: 3}
+  m_Name: SuicideBossData
   m_EditorClassIdentifier: 
-  map: {fileID: 6038972157872881775, guid: 4ca4a14087fb1434fa3cfad218b65ddd, type: 3}
+  _healthPoint: 1
+  _strength: 1
+  _defensive: 0
+  _moveSpeed: 3
+  _attackDistance: 1

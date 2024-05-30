@@ -230,6 +230,7 @@ public class PlayerController : MonoBehaviourPun, IControlState
 
         // 플레이어 좌표 갱신
         playerData.Position = transform.position;
+
         anim.SetFloat("Speed", movement.magnitude);
         if (movement.x != 0)
         {
