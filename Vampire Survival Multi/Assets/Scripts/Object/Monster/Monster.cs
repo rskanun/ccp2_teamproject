@@ -95,7 +95,7 @@ public class Monster : MonoBehaviourPun
         }
     }
 
-    public void OnTakeDamage(Player attacker, float damage)
+    public virtual void OnTakeDamage(Player attacker, float damage)
     {
         // 공격 받았을 때
         float dmg = Mathf.Abs(damage);
@@ -125,7 +125,7 @@ public class Monster : MonoBehaviourPun
         photonView.RPC(nameof(GetExp), RpcTarget.All, exp);
 
         // 플레이어에게 킬 알림
-        killPlayer.OnKilled();
+        killPlayer?.OnKilled();
 
         // 몬스터 제거
         photonView.RPC(nameof(DestroyMob), RpcTarget.All);
