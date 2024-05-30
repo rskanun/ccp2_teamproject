@@ -25,6 +25,10 @@ public class RewardUI : MonoBehaviour
     // 애니메이션 코루틴
     private Coroutine loadingCoroutine;
 
+    [Header("인벤토리 패널")]
+    [SerializeField] private GameObject inventoryPanel; // 인벤토리 패널 추가
+    [SerializeField] private GameObject itemPrefab; // 아이템 프리팹 추가
+
     private void OnEnable()
     {
         loadingCoroutine = StartCoroutine(LoadingAnim());
@@ -67,7 +71,7 @@ public class RewardUI : MonoBehaviour
     public void SetStatePanel(bool isActive)
     {
         statePanel.SetActive(isActive);
-    }    
+    }
 
     public void SetPlayerCount(int count)
     {
@@ -94,5 +98,36 @@ public class RewardUI : MonoBehaviour
     public void SetActivePlayer(int index, bool isActive)
     {
         selectPlayers[index].SetActive(isActive);
+    }
+
+    // 인벤토리 패널 활성화/비활성화 함수 추가
+    public void ToggleInventoryPanel()
+    {
+        bool isActive = !inventoryPanel.activeSelf;
+        inventoryPanel.SetActive(isActive);
+
+        if (isActive)
+        {
+            UpdateInventory();
+        }
+    }
+
+    // 현재 아이템 목록을 업데이트하는 함수 추가
+    private void UpdateInventory()
+    {
+        // 인벤토리 패널의 모든 자식을 제거
+        foreach (Transform child in inventoryPanel.transform)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // 현재 플레이어의 아이템 목록을 가져와서 인벤토리 패널에 추가
+        List<ItemData> playerItems = PlayerInventory.Instance.GetItems();
+        foreach (ItemData item in playerItems)
+        {
+            GameObject itemObj = Instantiate(itemPrefab, inventoryPanel.transform);
+            SelectedItem selectedItem = itemObj.GetComponent<SelectedItem>();
+            selectedItem.SetItem(item);
+        }
     }
 }
