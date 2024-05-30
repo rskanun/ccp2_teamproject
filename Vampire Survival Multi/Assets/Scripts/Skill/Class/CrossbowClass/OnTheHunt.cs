@@ -10,7 +10,5 @@ public class OnTheHunt : Skill
 
         // 플레이어의 공격력에 증가 시킴
         caster.SetBuffSTR(caster.PlayerData.BuffSTR + increaseSTR);
-
-        Debug.Log(caster.PlayerData.STR);
     }
 }

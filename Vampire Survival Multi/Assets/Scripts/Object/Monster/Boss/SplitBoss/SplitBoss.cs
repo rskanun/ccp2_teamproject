@@ -20,7 +20,7 @@ public class SplitBoss : BossMonster
             // 분열수만큼 분열체 생성
             for (int i = 0; i < splitBodyNum; i++)
             {
-                string name = RemoveCloneInName(gameObject.name);
+                string name = "Objects/Monster/Boss/" + RemoveCloneInName(gameObject.name);
                 float posX = Random.Range(transform.position.x - 0.5f, transform.position.x + 0.5f);
                 float posY = Random.Range(transform.position.y - 0.5f, transform.position.y + 0.5f);
                 GameObject splitBody = PhotonNetwork.Instantiate(name, new Vector3(posX, posY, transform.position.z), Quaternion.identity);

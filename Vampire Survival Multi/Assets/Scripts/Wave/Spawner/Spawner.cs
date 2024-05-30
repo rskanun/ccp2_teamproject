@@ -4,7 +4,7 @@ using UnityEngine;
 public class Spawner : MonoBehaviour
 {
     private const string MOB_DIRECTION = "Objects/Monster/Normal Monster/";
-    private string BOSS_DIRECTION = "Objects/Monster/Boss/";
+    private const string BOSS_DIRECTION = "Objects/Monster/Boss/";
 
     [Header("스폰 범위")]
     [SerializeField] 
