@@ -15,6 +15,7 @@ public class WaveResource : ScriptableObject
     private class Wave
     {
         public int time;
+        public bool isBossWave;
         public List<WaveMonsterData> monsters;
     }
 
@@ -83,24 +84,6 @@ public class WaveResource : ScriptableObject
     
     public List<GameObject> GetWaveMobs(int waveLevel)
     {
-        bool isBossWave = BossResource.Instance.IsBossWave(waveLevel);
-
-        if (isBossWave) return GetBossMobs(waveLevel);
-        return GetNormalMobs(waveLevel);
-    }
-
-    private List<GameObject> GetBossMobs(int waveLevel)
-    {
-        List<GameObject> result = new List<GameObject>();
-        GameObject bossMob = BossResource.Instance.GetWaveBoss(waveLevel);
-
-        result.Add(bossMob);
-
-        return result;
-    }
-
-    private List<GameObject> GetNormalMobs(int waveLevel)
-    {
         int index = waveLevel - 1;
 
         if (0 <= index && index < waveDatas.Count)
@@ -115,6 +98,43 @@ public class WaveResource : ScriptableObject
     }
 
     private List<GameObject> WaveDataToList(Wave waveData)
+    {
+        if (waveData.isBossWave)
+        {
+            // 보스 웨이브일 경우 랜덤한 보스몹 리턴
+            return GetBossMob(waveData);
+        }
+        else
+        {
+            // 일반 웨이브일 경우 모든 몬스터 리턴
+            return GetNormalMob(waveData);
+        }
+    }
+
+    private List<GameObject> GetBossMob(Wave waveData)
+    {
+        List<GameObject> spawnBossList = new List<GameObject>();
+
+        if (waveData.monsters.Count > 0)
+        {
+            int randomIndex = Random.Range(0, waveData.monsters.Count);
+
+            // 소환할 보스몹 정보
+            WaveMonsterData bossData = waveData.monsters[randomIndex];
+
+            int count = bossData.spawnCount;
+            GameObject spawnMob = bossData.monster;
+
+            for (int i = 0; i < count; i++)
+            {
+                spawnBossList.Add(spawnMob);
+            }
+        }
+
+        return spawnBossList;
+    }
+
+    private List<GameObject> GetNormalMob(Wave waveData)
     {
         List<GameObject> spawnMobList = new List<GameObject>();
 
@@ -131,5 +151,12 @@ public class WaveResource : ScriptableObject
         }
 
         return spawnMobList;
+    }
+
+    public bool IsBossWave(int waveLevel)
+    {
+        int index = waveLevel - 1;
+
+        return waveDatas[index].isBossWave;
     }
 }

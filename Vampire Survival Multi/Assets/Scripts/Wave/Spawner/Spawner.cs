@@ -3,6 +3,9 @@ using UnityEngine;
 
 public class Spawner : MonoBehaviour
 {
+    private const string MOB_DIRECTION = "Objects/Monster/Normal Monster/";
+    private string BOSS_DIRECTION = "Objects/Monster/Boss/";
+
     [Header("스폰 범위")]
     [SerializeField] 
     private Vector2 _spawnArea;
@@ -87,6 +90,7 @@ public class Spawner : MonoBehaviour
         Vector2 pivot = transform.position;
         Vector2 spawnPos = pivot + new Vector2(randomX, randomY);
 
-        PhotonNetwork.Instantiate(mob.name, spawnPos, Quaternion.identity);
+        string mobName = (WaveData.Instance.IsBossWave ? BOSS_DIRECTION : MOB_DIRECTION) + mob.name;
+        PhotonNetwork.Instantiate(mobName, spawnPos, Quaternion.identity);
     }
 }

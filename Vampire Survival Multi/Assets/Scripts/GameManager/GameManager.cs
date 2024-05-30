@@ -68,9 +68,6 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private void InitGameData()
     {
-        // 소환 프리팹 설정
-        InitPrefabResource();
-
         // 플레이어 데이터 초기화
         InitPlayer();
 
@@ -102,25 +99,6 @@ public class GameManager : MonoBehaviourPunCallbacks
     private void WaveStart()
     {
         waveData.WaveStart();
-    }
-
-    /***************************************************************
-    * [ 프리팹 세팅 ]
-    * 
-    * 게임 내에서 사용될 오브젝트 프리팹 세팅
-    ***************************************************************/
-
-    private void InitPrefabResource()
-    {
-        DefaultPool pool = PhotonNetwork.PrefabPool as DefaultPool;
-
-        if (pool != null)
-        {
-            foreach (GameObject mobPrefab in MonsterResource.Instance.MonsterList)
-            {
-                pool.ResourceCache.TryAdd(mobPrefab.name, mobPrefab);
-            }
-        }
     }
 
     /***************************************************************
