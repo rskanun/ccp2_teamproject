@@ -1,12 +1,10 @@
 ﻿using UnityEngine;
 
-[RequireComponent (typeof(SelectedItemUI))]
+[RequireComponent(typeof(SelectedItemUI))]
 public class SelectedItem : MonoBehaviour
 {
-    // 참조 컴포넌트
     private SelectedItemUI ui;
     private RewardManager manager;
-
     private ItemData item;
 
     private void Awake()
@@ -18,14 +16,13 @@ public class SelectedItem : MonoBehaviour
     public void SetItem(ItemData item)
     {
         this.item = item;
-
         ui.SetItem(item);
     }
 
     public void SelectItem()
     {
         PlayerEquip.Instance.EquipItem(item);
-
+        PlayerInventory.Instance.AddItem(item); // 플레이어 인벤토리에 아이템 추가
         manager.CloseWindow();
     }
 
