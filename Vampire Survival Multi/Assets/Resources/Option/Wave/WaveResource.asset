@@ -14,122 +14,254 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   waveDatas:
   - time: 60
+    isBossWave: 0
     monsters:
     - monster: {fileID: 325465133739098425, guid: 9100b634ffdb99146b2a94e6be723e74,
         type: 3}
       spawnCount: 10
   - time: 60
+    isBossWave: 0
     monsters:
     - monster: {fileID: 325465133739098425, guid: 4dd1425bc73c5984ca0ae4de8b5b72ca,
         type: 3}
       spawnCount: 20
   - time: 60
+    isBossWave: 0
     monsters:
     - monster: {fileID: 325465133739098425, guid: 4bc4ac1882fd79a4da5cf0f8de8de953,
         type: 3}
       spawnCount: 20
   - time: 60
+    isBossWave: 0
     monsters:
     - monster: {fileID: 325465133739098425, guid: 6eaa9cff9e064dd4781d0098d804a4b0,
         type: 3}
       spawnCount: 20
+  - time: 60
+    isBossWave: 1
+    monsters:
+    - monster: {fileID: 6620225952986619061, guid: 6f726cecee23eda42a0951265a91de59,
+        type: 3}
+      spawnCount: 1
+    - monster: {fileID: 3756990987460227, guid: 45434b552f5b46a469fc19f20cc25ac9,
+        type: 3}
+      spawnCount: 1
+    - monster: {fileID: 2619630261418695700, guid: 61c91d8e790b3114faeaa6abcc0fd1ef,
+        type: 3}
+      spawnCount: 1
+    - monster: {fileID: 2619630261418695700, guid: e4f867f3d2e1cc14a93e925d05fba078,
+        type: 3}
+      spawnCount: 1
+    - monster: {fileID: 2619630261418695700, guid: 7f87208c4a9bac84b8efaf596fd3ba86,
+        type: 3}
+      spawnCount: 1
   - time: 70
+    isBossWave: 0
     monsters:
     - monster: {fileID: 325465133739098425, guid: b12ba3a7b66962c49923e88cc48f5c7c,
         type: 3}
       spawnCount: 30
   - time: 70
+    isBossWave: 0
     monsters:
     - monster: {fileID: 325465133739098425, guid: 1c86aff2f7022f34c93f1cac3df8efed,
         type: 3}
       spawnCount: 35
   - time: 70
+    isBossWave: 0
     monsters:
     - monster: {fileID: 325465133739098425, guid: cd3ad617c1294b649921daa62a165c24,
         type: 3}
       spawnCount: 40
   - time: 70
+    isBossWave: 0
     monsters:
     - monster: {fileID: 325465133739098425, guid: e6b33683114e4674db44832d5210662a,
         type: 3}
       spawnCount: 40
+  - time: 70
+    isBossWave: 1
+    monsters:
+    - monster: {fileID: 6620225952986619061, guid: 1e3298c1ecdbd6741a2d19a4118fbf81,
+        type: 3}
+      spawnCount: 1
+    - monster: {fileID: 3756990987460227, guid: de90e81d411743a4294e90b86f20158d,
+        type: 3}
+      spawnCount: 1
+    - monster: {fileID: 2619630261418695700, guid: b94b3ac485d10b644be775ff0d18dd96,
+        type: 3}
+      spawnCount: 1
+    - monster: {fileID: 2619630261418695700, guid: 012f1ed6728dfd24795e15de4f2cfe25,
+        type: 3}
+      spawnCount: 1
+    - monster: {fileID: 2619630261418695700, guid: c8c811a3b0ed4e84985a51deb30c3421,
+        type: 3}
+      spawnCount: 1
   - time: 80
+    isBossWave: 0
     monsters:
     - monster: {fileID: 325465133739098425, guid: 06cbe5405e1aafa4e925820ab78c7ff7,
         type: 3}
       spawnCount: 50
   - time: 80
+    isBossWave: 0
     monsters:
     - monster: {fileID: 325465133739098425, guid: 56d724ada755bc24fb727e0299c946bc,
         type: 3}
       spawnCount: 55
   - time: 80
+    isBossWave: 0
     monsters:
     - monster: {fileID: 325465133739098425, guid: edb51d9a7f67dc84399ad1f4ac42354c,
         type: 3}
       spawnCount: 60
   - time: 80
+    isBossWave: 0
     monsters:
     - monster: {fileID: 325465133739098425, guid: cb6d18ad9ba1f664f8cc5512f8f4de67,
         type: 3}
       spawnCount: 70
+  - time: 80
+    isBossWave: 1
+    monsters:
+    - monster: {fileID: 6620225952986619061, guid: a4079de9f8afd534d8b91844b568c4d3,
+        type: 3}
+      spawnCount: 1
+    - monster: {fileID: 3756990987460227, guid: 0a6bdd6f17e24e945ba4e0670e4ba3c3,
+        type: 3}
+      spawnCount: 1
+    - monster: {fileID: 2619630261418695700, guid: dc1f813f153364a4b9893cd9b61eef51,
+        type: 3}
+      spawnCount: 1
+    - monster: {fileID: 2619630261418695700, guid: 36f66439d38b82d4fb59dd538bd3cf30,
+        type: 3}
+      spawnCount: 1
+    - monster: {fileID: 2619630261418695700, guid: 700cec92d05da4849af238b1867ba517,
+        type: 3}
+      spawnCount: 1
   - time: 100
+    isBossWave: 0
     monsters:
     - monster: {fileID: 325465133739098425, guid: b46b2583f72ba6944b0056519551ed59,
         type: 3}
       spawnCount: 100
   - time: 100
+    isBossWave: 0
     monsters:
     - monster: {fileID: 325465133739098425, guid: 9eb3601151e8bd14d875f8434134354a,
         type: 3}
       spawnCount: 110
   - time: 100
+    isBossWave: 0
     monsters:
     - monster: {fileID: 325465133739098425, guid: a093441b2d93945419f2b48cbd218795,
         type: 3}
       spawnCount: 120
   - time: 100
+    isBossWave: 0
     monsters:
     - monster: {fileID: 325465133739098425, guid: c56d66dd9c75c414ab3f760418b1c822,
         type: 3}
       spawnCount: 130
+  - time: 100
+    isBossWave: 1
+    monsters:
+    - monster: {fileID: 6620225952986619061, guid: 0084d20006894e849b6c7c32f71fa9ab,
+        type: 3}
+      spawnCount: 1
+    - monster: {fileID: 3756990987460227, guid: 9ecbc94626c1e8e4aa8c8069d5ccb9e3,
+        type: 3}
+      spawnCount: 1
+    - monster: {fileID: 2619630261418695700, guid: 9f00c49790b0bb449b73e1a1449949cf,
+        type: 3}
+      spawnCount: 1
+    - monster: {fileID: 2619630261418695700, guid: 8f18fb0205085db4ebd3152a85731233,
+        type: 3}
+      spawnCount: 1
+    - monster: {fileID: 2619630261418695700, guid: b225d49a59a17dc4eb4b91d759347463,
+        type: 3}
+      spawnCount: 1
   - time: 120
+    isBossWave: 0
     monsters:
     - monster: {fileID: 325465133739098425, guid: 4dc9088b7708085429354975534d9ec2,
         type: 3}
       spawnCount: 150
   - time: 120
+    isBossWave: 0
     monsters:
     - monster: {fileID: 325465133739098425, guid: 1e4df5ac7d882e5429414944e3cc36a9,
         type: 3}
       spawnCount: 180
   - time: 120
+    isBossWave: 0
     monsters:
     - monster: {fileID: 325465133739098425, guid: 68441395cfdfaab4d80d0d4bb844eb61,
         type: 3}
       spawnCount: 200
   - time: 120
+    isBossWave: 0
     monsters:
     - monster: {fileID: 325465133739098425, guid: ad036f5945630584dbe572477f487ac2,
         type: 3}
       spawnCount: 230
   - time: 120
+    isBossWave: 1
+    monsters:
+    - monster: {fileID: 6620225952986619061, guid: d426ff3b7e41c7b4a939d984347991f8,
+        type: 3}
+      spawnCount: 1
+    - monster: {fileID: 3756990987460227, guid: 237b65fd1057d5446b268a8d3b96e475,
+        type: 3}
+      spawnCount: 1
+    - monster: {fileID: 2619630261418695700, guid: cc05d72f3ad7fd34db78b366a8aae542,
+        type: 3}
+      spawnCount: 1
+    - monster: {fileID: 2619630261418695700, guid: 782cf8f42e02fb347bc97edcdfb5fc48,
+        type: 3}
+      spawnCount: 1
+    - monster: {fileID: 2619630261418695700, guid: c90416b3e0c7c194d8b95088b271098d,
+        type: 3}
+      spawnCount: 1
+  - time: 120
+    isBossWave: 0
     monsters:
     - monster: {fileID: 325465133739098425, guid: 5e15c26e214e9dd419d7d8359a06f0c3,
         type: 3}
       spawnCount: 250
   - time: 120
+    isBossWave: 0
     monsters:
     - monster: {fileID: 325465133739098425, guid: b08ac461a06515740a71565358341dad,
         type: 3}
       spawnCount: 300
   - time: 120
+    isBossWave: 0
     monsters:
     - monster: {fileID: 325465133739098425, guid: 2c055bbae1de11e46a6ca91aae02540b,
         type: 3}
       spawnCount: 350
   - time: 120
+    isBossWave: 0
     monsters:
     - monster: {fileID: 325465133739098425, guid: a7bd8cc796e7b704cab6b1f499be1095,
         type: 3}
       spawnCount: 400
+  - time: 120
+    isBossWave: 1
+    monsters:
+    - monster: {fileID: 6620225952986619061, guid: d2ed213923136254684cdd8a8bd91aba,
+        type: 3}
+      spawnCount: 1
+    - monster: {fileID: 3756990987460227, guid: 4d076779d572b7d499d84baf0aacf880,
+        type: 3}
+      spawnCount: 1
+    - monster: {fileID: 2619630261418695700, guid: 718da0f2572b7ec41b52c060a2d32736,
+        type: 3}
+      spawnCount: 1
+    - monster: {fileID: 2619630261418695700, guid: f7cf78b8ab58b4d4ea3d6383c86a61fb,
+        type: 3}
+      spawnCount: 1
+    - monster: {fileID: 2619630261418695700, guid: e107ad59636ebf04c84f8374757c1681,
+        type: 3}
+      spawnCount: 1
