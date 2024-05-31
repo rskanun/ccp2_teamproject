@@ -22,7 +22,6 @@ public class SelectedItem : MonoBehaviour
     public void SelectItem()
     {
         PlayerEquip.Instance.EquipItem(item);
-        PlayerInventory.Instance.AddItem(item); // 플레이어 인벤토리에 아이템 추가
         manager.CloseWindow();
     }
 

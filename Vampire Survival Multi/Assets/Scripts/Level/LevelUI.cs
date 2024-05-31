@@ -20,8 +20,6 @@ public class LevelUI : MonoBehaviour
         int exp = gameData.Exp;
         int requireExp = gameData.RequireExp;
 
-        tmpUI.text = "<Level>" +
-            "\r\nLv : " + level +
-            "\r\nExp : " + exp + " / " + requireExp; 
+        tmpUI.text = "Lv : " + level;
     }
 }

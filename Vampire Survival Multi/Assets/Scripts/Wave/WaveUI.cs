@@ -31,10 +31,7 @@ public class WaveUI : MonoBehaviour
 
         string timer = min.ToString("00") + ":" + sec.ToString("00");
 
-        tmpUI.text = "<Wave>" +
-            "\r\nWave : " + waveData.WaveLevel +
-            "\r\nTimer : " + timer +
-            "\r\nMob Count : " + waveData.MobCount;
+        tmpUI.text = "Mob Count : " + waveData.MobCount;
     }
     private void UpdateSlider(int time)
     {
