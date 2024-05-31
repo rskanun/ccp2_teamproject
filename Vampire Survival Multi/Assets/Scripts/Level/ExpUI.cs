@@ -1,12 +1,12 @@
-ï»¿using TMPro;
+using TMPro;
 using UnityEngine;
 
-public class LevelUI : MonoBehaviour
+public class ExpUI : MonoBehaviour
 {
-    [Header("ì°¸ì¡° ì»´í¬ë„ŒíŠ¸")]
+    [Header("ÂüÁ¶ ÄÄÆ÷³ÍÆ®")]
     [SerializeField] private TextMeshProUGUI tmpUI;
 
-    // ê²Œì„ ë°ì´í„°
+    // °ÔÀÓ µ¥ÀÌÅÍ
     private GameData gameData;
 
     private void Start()
@@ -20,6 +20,6 @@ public class LevelUI : MonoBehaviour
         int exp = gameData.Exp;
         int requireExp = gameData.RequireExp;
 
-        tmpUI.text = "Lv : " + level;
+        tmpUI.text = "Exp : " + exp + " / " + requireExp;
     }
 }
