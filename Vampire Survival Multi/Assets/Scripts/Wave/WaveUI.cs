@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class WaveUI : MonoBehaviour
 {
     [Header("UI 오브젝트")]
-    [SerializeField] private TextMeshProUGUI tmpUI;
+    [SerializeField] private TextMeshProUGUI mobCountText;
     [SerializeField] private TextMeshProUGUI waveLevelText;
     [SerializeField] private Slider timerSlider;
     [SerializeField] private Image timerImage;
@@ -41,7 +41,7 @@ public class WaveUI : MonoBehaviour
 
         string timer = min.ToString("00") + ":" + sec.ToString("00");
 
-        tmpUI.text = "Mob Count : " + waveData.MobCount;
+        mobCountText.text = "Mob Count : " + waveData.MobCount;
     }
 
     private void UpdateSlider(float time)
