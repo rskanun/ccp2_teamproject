@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: LocalPlayerData
   m_EditorClassIdentifier: 
   _playerData: {fileID: 0}
+  _classData: {fileID: 11400000, guid: 016fdf86795781b4882c0830a17518aa, type: 2}
   _isDead: 0
-  classEvent: {fileID: 0}
-  posEvent: {fileID: 0}
+  classEvent: {fileID: 11400000, guid: c441514fcf887af4883022791ff3c104, type: 2}
+  posEvent: {fileID: 11400000, guid: 8a32a3850b4b6ec40b656d85d4fcbe0e, type: 2}
