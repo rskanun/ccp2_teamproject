@@ -58,13 +58,13 @@ public class WaveUI : MonoBehaviour
             timerSlider.value = waveTime - time;
 
             // 남은 시간에 따른 슬라이드바 스프라이트 변경
-            if (isCloseToTimeOut == false && time <= 30)
+            if (isCloseToTimeOut == false && time <= 10)
             {
                 isCloseToTimeOut = true;
 
                 timerImage.sprite = redTimer;
             }
-            else if (isCloseToTimeOut && time > 30)
+            else if (isCloseToTimeOut && time > 10)
             {
                 isCloseToTimeOut = false;
 
