@@ -29,8 +29,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 604153516294900674}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1, y: 1, z: 0}
-  m_LocalScale: {x: 2, y: 0.1, z: 1}
+  m_LocalPosition: {x: -1, y: 1.097, z: 0}
+  m_LocalScale: {x: 2, y: 0.7930026, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -77,9 +77,9 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: ab7e0e638e9fcee4b8edca4075e52c16, type: 3}
-  m_Color: {r: 0.4339623, g: 0.4339623, b: 0.4339623, a: 1}
-  m_FlipX: 0
+  m_Sprite: {fileID: 21300000, guid: 5b6400b73d87fe84796a0fe500e7362c, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_FlipX: 1
   m_FlipY: 0
   m_DrawMode: 0
   m_Size: {x: 1, y: 1}
@@ -100,7 +100,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f5b0fe7358ef2140b22f7f9da1f8d82, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  swingAngle: 70
+  swingAngle: 170
 --- !u!114 &2059104204470901343
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -157,7 +157,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0.5}
-    oldSize: {x: 1, y: 1}
+    oldSize: {x: 1.01, y: 0.28}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
