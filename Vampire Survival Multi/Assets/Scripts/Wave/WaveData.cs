@@ -88,16 +88,6 @@ public class WaveData : ScriptableObject
         get { return _mobCount; }
     }
 
-    // 추가된 속성: 초기 시간
-    [ReadOnly]
-    [SerializeField]
-    private float _initialTime;
-    public float InitialTime
-    {
-        private set { _initialTime = value; }
-        get { return _initialTime; }
-    }
-
     public bool IsLastWave
     {
         get
@@ -129,7 +119,6 @@ public class WaveData : ScriptableObject
 
         WaveLevel = startLevel;
         RemainTime = resource.GetWaveTime(startLevel);
-        InitialTime = RemainTime; // 초기 시간 설정
         MobCount = resource.GetWaveMobs(startLevel).Count;
 
         // 소환할 몬스터 목록 추가
@@ -161,7 +150,6 @@ public class WaveData : ScriptableObject
 
             // 웨이브 정보 갱신
             RemainTime = resource.GetWaveTime(currentLevel);
-            InitialTime = RemainTime; // 초기 시간 갱신
             MobCount += resource.GetWaveMobs(currentLevel).Count;
 
             // 소환할 몬스터 목록 추가
