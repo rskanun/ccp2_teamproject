@@ -193,7 +193,7 @@ public class StatManager : MonoBehaviourPun
 
     private float GetEquipAttackSpeed(PlayerData playerStat, ItemData item)
     {
-        float speed = 100.0f / (100.0f + item.AttackSpeed) * playerStat.AttackSpeed;
+        float speed = playerStat.AttackSpeed / (1 + item.AttackSpeed);
 
         return speed;
     }
