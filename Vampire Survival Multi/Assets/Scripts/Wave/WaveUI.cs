@@ -29,18 +29,13 @@ public class WaveUI : MonoBehaviour
     {
         float time = waveData.RemainTime;
 
-        UpdateTimer((int)time);
+        UpdateMobCount();
         UpdateSlider(time);
         UpdateLevel(waveData.WaveLevel);
     }
 
-    private void UpdateTimer(int time)
+    private void UpdateMobCount()
     {
-        int min = time / 60;
-        int sec = time % 60;
-
-        string timer = min.ToString("00") + ":" + sec.ToString("00");
-
         mobCountText.text = "Mob Count : " + waveData.MobCount;
     }
 

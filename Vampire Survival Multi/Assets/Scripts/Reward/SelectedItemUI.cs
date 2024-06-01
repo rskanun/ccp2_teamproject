@@ -5,12 +5,14 @@ using UnityEngine.UI;
 public class SelectedItemUI : MonoBehaviour
 {
     [Header("관련 오브젝트")]
-    [SerializeField] private TextMeshProUGUI _name;
-    [SerializeField] private Image _image;
+    [SerializeField] private TextMeshProUGUI itemName;
+    [SerializeField] private TextMeshProUGUI itemDescription;
+    [SerializeField] private Image image;
 
     public void SetItem(ItemData item)
     {
-        _name.text = item.Name;
-        _image.sprite = item.ItemImage;
+        itemName.text = item.Name;
+        itemDescription.text = item.Description;
+        image.sprite = item.ItemImage;
     }
 }
