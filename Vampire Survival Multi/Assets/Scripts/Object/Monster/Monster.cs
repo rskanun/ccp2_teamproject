@@ -22,10 +22,15 @@ public class Monster : MonoBehaviourPun
     // 몬스터 유한 상태 기계
     private FSM fsm;
 
+    // 스프라이트
+    private SpriteRenderer sprite;
+
     private void Awake()
     {
         if (PhotonNetwork.IsMasterClient)
         {
+            sprite = GetComponent<SpriteRenderer>();
+
             statusManager = new StatusEffectManager();
             fsm = new FSM(new ChaseState(this));
         }
@@ -180,6 +185,7 @@ public class Monster : MonoBehaviourPun
             float speed = Stat.MoveSpeed * Time.deltaTime;
 
             transform.position = Vector2.MoveTowards(transform.position, targetPos, speed);
+            sprite.flipX = targetPos.x < transform.position.x;
         }
     }
 }
