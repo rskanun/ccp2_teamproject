@@ -15,7 +15,8 @@ MonoBehaviour:
   _id: 1118
   _name: "\uBE14\uB799 \uCE69 - \uB2E4\uC774\uC544\uBAAC\uB4DC"
   _itemImage: {fileID: 21300000, guid: e816bbc8099ec4d4c8f1e72a0f863745, type: 3}
-  _description: "\uD604\uC7AC \uCCB4\uB825 10\uB2F9 \uACF5\uACA9\uB825 1\uC99D\uAC00"
+  _description: "\uD604\uC7AC \uCCB4\uB825 10\uB2F9 \uACF5\uACA9\uB825 1\uC99D\uAC00(\uD68D\uB4DD
+    \uC2DC\uC810\uB9CC \uC801\uC6A9)"
   _healthPoint: 0
   _percentHP: 0
   _strength: 0

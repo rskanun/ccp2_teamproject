@@ -15,7 +15,7 @@ MonoBehaviour:
   _id: 1215
   _name: "\uBCF5\uC0AC \uD32C\uB358\uD2B8"
   _itemImage: {fileID: 21300000, guid: 531040fabddc5954494a6e8f255e5d32, type: 3}
-  _description: "\uC6E8\uC774\uBE0C\uC218*5\uC758 \uACF5\uACA9\uB825\r\n"
+  _description: "\uC6E8\uC774\uBE0C\uC218*5\uC758 \uACF5\uACA9\uB825 \uCD94\uAC00"
   _healthPoint: 0
   _percentHP: 0
   _strength: 0
