@@ -9,7 +9,7 @@ public class LoadingUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI percentage;
     [SerializeField] private TextMeshProUGUI loadingTxt;
     [SerializeField] private TextMeshProUGUI completeTxt;
-    [SerializeField] private Image loadingBar;
+    [SerializeField] private Slider loadingBar;
 
     private string initLoadingTxt = "Loading";
 
@@ -18,7 +18,7 @@ public class LoadingUI : MonoBehaviour
 
     public float FillAmount
     {
-        get { return loadingBar.fillAmount; }
+        get { return loadingBar.value; }
     }
 
     public void SetCompletePlayer(int completePlayer, int playerCount)
@@ -28,7 +28,7 @@ public class LoadingUI : MonoBehaviour
 
     public void UpdateBar(float progress, float timer)
     {
-        float percent = Mathf.Lerp(loadingBar.fillAmount, progress, timer);
+        float percent = Mathf.Lerp(loadingBar.value, progress, timer);
 
         UpdateBar(percent);
     }
@@ -36,7 +36,7 @@ public class LoadingUI : MonoBehaviour
     public void UpdateBar(float percent)
     {
         percentage.text = (int)(percent * 100f) + " %";
-        loadingBar.fillAmount = percent;
+        loadingBar.value = percent;
     }
 
     private void OnEnable()

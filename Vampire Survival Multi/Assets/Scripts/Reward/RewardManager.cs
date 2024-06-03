@@ -26,7 +26,6 @@ public class RewardManager : MonoBehaviourPun
     private int rewardCount = 0;
 
     // 선택을 끝낸 플레이어 수
-    [SerializeField]
     private int completedPlayer = 0;
 
     public void GetBossReward()
@@ -60,6 +59,7 @@ public class RewardManager : MonoBehaviourPun
     private void OpenWindow(RewardType type)
     {
         ui.SetContainer(true);
+        ui.SetActiveInvenIcon(true);
 
         // 선택할 수 있는 아이템 랜덤 뽑기
         ItemData[] selectableItems = GetRandomItems(type, selectCount);
@@ -131,6 +131,7 @@ public class RewardManager : MonoBehaviourPun
     private void CompletedReward()
     {
         ui.SetStatePanel(true);
+        ui.SetActiveInvenIcon(false);
         UpdateUI();
 
         photonView.RPC(nameof(AddCompletedPlayer), RpcTarget.AllBuffered);

@@ -59,13 +59,12 @@ public class HandOverManager : MonoBehaviourPun
     [PunRPC]
     private void HandOverItem(Photon.Realtime.Player getPlayer, int itemID)
     {
-        photonView.RPC(nameof(GetReward), getPlayer, itemID);
+        photonView.RPC(nameof(GetHandOverReward), getPlayer, itemID);
     }
 
     [PunRPC]
-    private void GetReward(int itemID)
+    private void GetHandOverReward(int itemID)
     {
-        Debug.Log(itemID);
         ItemData item = ItemResource.Instance.FindItem(itemID);
         PlayerEquip.Instance.EquipItem(item);
     }

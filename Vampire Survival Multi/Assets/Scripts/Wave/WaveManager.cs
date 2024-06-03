@@ -83,28 +83,13 @@ public class WaveManager : MonoBehaviourPun
             {
                 photonView.RPC(nameof(SpawnMob), RpcTarget.All);
 
-                UpdateWaveTime(spawnDelay);
+                curTime = spawnDelay;
             }
             else
             {
-                float passedTime = curTime - Time.deltaTime;
-
-                UpdateWaveTime(passedTime);
+                curTime -= Time.deltaTime;
             }
         }
-    }
-
-    private void UpdateWaveTime(float time)
-    {
-        curTime = time;
-
-        photonView.RPC(nameof(AsyncWaveTime), RpcTarget.Others, time);
-    }
-
-    [PunRPC]
-    private void AsyncWaveTime(float time)
-    {
-        curTime = time;
     }
 
     [PunRPC]

@@ -18,6 +18,9 @@ public class LobbyUI : MonoBehaviour
     [SerializeField] private GameObject switchAdminConfirm;
     [SerializeField] private GameObject kickConfirm;
 
+    [Header("캐릭터 선택창")]
+    [SerializeField] private Button chrSelectButton;
+
     /***************************************************************
     * [ 로비 UI ]
     * 
@@ -85,5 +88,10 @@ public class LobbyUI : MonoBehaviour
     public void SetActiveSettingButton(bool isActive)
     {
         roomSettingButton.SetActive(isActive);
+    }
+
+    public void SetActiveChrSelectButton(bool isActive)
+    {
+        chrSelectButton.interactable = isActive;
     }
 }

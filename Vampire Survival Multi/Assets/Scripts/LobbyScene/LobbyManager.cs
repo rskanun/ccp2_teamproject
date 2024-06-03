@@ -387,6 +387,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         // 준비 상태 변경
         myPanelManager.SetReadyState(isReady);
 
+        // 캐릭터 선택 버튼 상태 변경
+        ui.SetActiveChrSelectButton(!isReady);
+
         // 게임 시작 상태 변경
         photonView.RPC(nameof(UpdateStartActive), masterClient);
     }

@@ -172,8 +172,8 @@ public class GameManager : MonoBehaviourPunCallbacks
 
                 waveData.RemainTime -= time;
 
-                int prevTime = Mathf.FloorToInt(waveData.RemainTime + time);
-                int curTime = Mathf.FloorToInt(waveData.RemainTime);
+                float prevTime = (float)System.Math.Round(waveData.RemainTime + time, 1);
+                float curTime = (float)System.Math.Round(waveData.RemainTime, 1);
 
                 if (prevTime != curTime)
                 {
@@ -193,7 +193,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    private void UpdateWaveTime(int time)
+    private void UpdateWaveTime(float time)
     {
         waveData.RemainTime = time;
     }

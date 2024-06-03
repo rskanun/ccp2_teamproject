@@ -74,13 +74,13 @@ public class PlayerEquip : ScriptableObject
     public void InitEquips()
     {
         // 장비 초기화
-        _equipItems.Clear();
+        EquipItems.Clear();
     }
 
     public void EquipItem(ItemData item)
     {
         // 아이템 장비
-        _equipItems.Add(item);
+        EquipItems.Add(item);
 
         // 이벤트 알림
         equipEvent.NotifyUpdate();
