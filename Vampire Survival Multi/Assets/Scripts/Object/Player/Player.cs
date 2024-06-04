@@ -141,7 +141,7 @@ public class Player : MonoBehaviourPun
         monster.OnTakeDamage(this, damage);
 
         // 최종 데미지에 따른 체력 회복
-        float recoverHP = damage * PlayerData.LifeSteal;
+        float recoverHP = damage * (PlayerData.LifeSteal / 100.0f);
 
         HealHP(recoverHP);
     }

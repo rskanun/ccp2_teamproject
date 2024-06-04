@@ -40,7 +40,7 @@ public class SwingObject : MonoBehaviourPun
                 // 각도 조절
                 transform.localRotation = Quaternion.Euler(0, 0, attackAngle - swingAngle / 2.0f);
             })
-            .Append(transform.DORotate(new Vector3(0, 0, attackAngle + swingAngle / 2.0f), swingSpeed))
+            .Append(transform.DORotate(new Vector3(0, 0, attackAngle + swingAngle / 2.0f), swingSpeed).SetEase(Ease.Linear))
             .OnComplete(() =>
             {
                 if (PhotonNetwork.IsMasterClient)

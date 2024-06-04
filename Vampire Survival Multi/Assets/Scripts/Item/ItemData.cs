@@ -91,6 +91,6 @@ public class ItemData : ScriptableObject
     private float _lifeSteal;
     public float ListSteal
     {
-        get { return _lifeSteal / 100; }
+        get { return _lifeSteal; }
     }
 }
