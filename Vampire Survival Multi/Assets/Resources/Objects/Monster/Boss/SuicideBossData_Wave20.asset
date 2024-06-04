@@ -16,4 +16,4 @@ MonoBehaviour:
   _strength: 175
   _defensive: 250
   _moveSpeed: 3
-  _attackDistance: 1
+  _attackDistance: 1.5
