@@ -72,6 +72,11 @@ public class RewardResource : ScriptableObject
     [ContextMenu("Reload Table")]
     private void OnValidate()
     {
+        InitRewardData();
+    }
+
+    public void InitRewardData()
+    {
         waveRewardTable = GetRewardTable(waveRewardCSV);
         bossRewardTable = GetRewardTable(bossRewardCSV);
     }

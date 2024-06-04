@@ -30,13 +30,6 @@ public class PlayerController : MonoBehaviourPun, IControlState
         spriter = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
 
-        if (playerData.IsPlaying == false)
-        {
-            Destroy(gameObject);
-
-            return;
-        }
-
         // 조종 권한 설정
         Photon.Realtime.Player owner = playerData.Player;
 
