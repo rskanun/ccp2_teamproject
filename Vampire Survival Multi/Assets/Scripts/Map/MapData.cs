@@ -58,37 +58,54 @@ public class MapData : ScriptableObject
     private Vector2 _size;
     public Vector2 Size
     {
-        get { return _size; }
+        private set { _size = value; }
+        get
+        {
+            if (_size == Vector2.zero)
+            {
+                InitMapData();
+            }
+
+            return _size;
+        }
     }
 
     private Vector2 _minPos;
     public Vector2 MinPos
     {
+        private set { _minPos = value; }
         get { return _minPos; }
     }
 
     private Vector2 _maxPos;
     public Vector2 MaxPos
     {
+        private set { _maxPos = value; }
         get { return _maxPos; }
     }
 
     private Vector2 _pivot;
     public Vector2 Pivot
     {
+        private set { _pivot = value; }
         get { return _pivot; }
     }
 
     private void OnValidate()
     {
+        InitMapData();
+    }
+
+    private void InitMapData()
+    {
         Vector2 size = new Vector2(map.size.x, map.size.y);
         Vector2 origin = new Vector2(map.origin.x, map.origin.y);
 
-        _size = size;
+        Size = size;
 
-        _pivot = origin + size / 2;
+        Pivot = origin + size / 2;
 
-        _minPos = _pivot - size / 2;
-        _maxPos = _pivot + size / 2;
+        MinPos = Pivot - size / 2;
+        MaxPos = Pivot + size / 2;
     }
 }

@@ -90,6 +90,11 @@ public class ItemResource : ScriptableObject
     [ContextMenu("Reload Items")]
     private void OnValidate()
     {
+        InitItemData();
+    }
+
+    public void InitItemData()
+    {
         // Init Common Item Datas
         foreach (ItemData item in CommonDatas)
         {
