@@ -15,8 +15,8 @@ MonoBehaviour:
   _healthPoint: 150
   _strength: 75
   _defensive: 80
-  _moveSpeed: 3.6
-  _attackSpeed: 0.75
+  _moveSpeed: 3.4
+  _attackSpeed: 1.25
   _lifeSteal: 10
   _passiveSkill: {fileID: 11400000, guid: f2ad6f2fa8422ad44af192415aaee46f, type: 2}
   _activeSkill: {fileID: 11400000, guid: 2ae6cc2414401b244bfa745afbf1db99, type: 2}

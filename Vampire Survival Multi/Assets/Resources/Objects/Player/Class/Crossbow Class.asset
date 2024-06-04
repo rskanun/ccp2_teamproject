@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Crossbow Class
   m_EditorClassIdentifier: 
   _healthPoint: 50
-  _strength: 150
+  _strength: 65
   _defensive: 25
-  _moveSpeed: 4.25
+  _moveSpeed: 3.6
   _attackSpeed: 1
   _lifeSteal: 0
   _passiveSkill: {fileID: 11400000, guid: 20b5f3e4e270d8d45a001ede0dec231f, type: 2}
