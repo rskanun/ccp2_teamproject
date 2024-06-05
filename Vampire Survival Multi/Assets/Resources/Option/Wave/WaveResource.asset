@@ -49,9 +49,6 @@ MonoBehaviour:
     - monster: {fileID: 2619630261418695700, guid: 61c91d8e790b3114faeaa6abcc0fd1ef,
         type: 3}
       spawnCount: 1
-    - monster: {fileID: 2619630261418695700, guid: e4f867f3d2e1cc14a93e925d05fba078,
-        type: 3}
-      spawnCount: 1
     - monster: {fileID: 2619630261418695700, guid: 7f87208c4a9bac84b8efaf596fd3ba86,
         type: 3}
       spawnCount: 1
@@ -89,9 +86,6 @@ MonoBehaviour:
         type: 3}
       spawnCount: 1
     - monster: {fileID: 2619630261418695700, guid: b94b3ac485d10b644be775ff0d18dd96,
-        type: 3}
-      spawnCount: 1
-    - monster: {fileID: 2619630261418695700, guid: 012f1ed6728dfd24795e15de4f2cfe25,
         type: 3}
       spawnCount: 1
     - monster: {fileID: 2619630261418695700, guid: c8c811a3b0ed4e84985a51deb30c3421,
@@ -133,9 +127,6 @@ MonoBehaviour:
     - monster: {fileID: 2619630261418695700, guid: dc1f813f153364a4b9893cd9b61eef51,
         type: 3}
       spawnCount: 1
-    - monster: {fileID: 2619630261418695700, guid: 36f66439d38b82d4fb59dd538bd3cf30,
-        type: 3}
-      spawnCount: 1
     - monster: {fileID: 2619630261418695700, guid: 700cec92d05da4849af238b1867ba517,
         type: 3}
       spawnCount: 1
@@ -173,9 +164,6 @@ MonoBehaviour:
         type: 3}
       spawnCount: 1
     - monster: {fileID: 2619630261418695700, guid: 9f00c49790b0bb449b73e1a1449949cf,
-        type: 3}
-      spawnCount: 1
-    - monster: {fileID: 2619630261418695700, guid: 8f18fb0205085db4ebd3152a85731233,
         type: 3}
       spawnCount: 1
     - monster: {fileID: 2619630261418695700, guid: b225d49a59a17dc4eb4b91d759347463,
@@ -217,9 +205,6 @@ MonoBehaviour:
     - monster: {fileID: 2619630261418695700, guid: cc05d72f3ad7fd34db78b366a8aae542,
         type: 3}
       spawnCount: 1
-    - monster: {fileID: 2619630261418695700, guid: 782cf8f42e02fb347bc97edcdfb5fc48,
-        type: 3}
-      spawnCount: 1
     - monster: {fileID: 2619630261418695700, guid: c90416b3e0c7c194d8b95088b271098d,
         type: 3}
       spawnCount: 1
@@ -257,9 +242,6 @@ MonoBehaviour:
         type: 3}
       spawnCount: 1
     - monster: {fileID: 2619630261418695700, guid: 718da0f2572b7ec41b52c060a2d32736,
-        type: 3}
-      spawnCount: 1
-    - monster: {fileID: 2619630261418695700, guid: f7cf78b8ab58b4d4ea3d6383c86a61fb,
         type: 3}
       spawnCount: 1
     - monster: {fileID: 2619630261418695700, guid: e107ad59636ebf04c84f8374757c1681,
