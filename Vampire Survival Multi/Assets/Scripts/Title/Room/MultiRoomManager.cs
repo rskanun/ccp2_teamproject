@@ -2,6 +2,7 @@
 using Mono.Cecil.Cil;
 using Photon.Pun;
 using Photon.Realtime;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -138,6 +139,7 @@ public class MultiRoomManager : MonoBehaviourPunCallbacks
     {
         // 검색창에 입력된 단어를 토대로 방 검색
         string keyword = ui.GetSearchKeyword();
+        Debug.Log(keyword);
 
         SearchRoom(keyword);
     }
@@ -154,13 +156,22 @@ public class MultiRoomManager : MonoBehaviourPunCallbacks
         // 기존 오브젝트 초기화
         ui.RemoveAllRooms();
 
+        // 키워드가 null이거나 빈 문자열인 경우 모든 방을 표시
+        if (string.IsNullOrEmpty(keyword))
+        {
+            foreach (var room in cachedRoomList.Values)
+            {
+                ui.AddRoomObj(room, (id, roomPassword) => OnEnterRoom(id, roomPassword));
+            }
+            return;
+        }
+
         foreach (string title in cachedRoomList.Keys)
         {
-            // 키워드가 포함된 방만 생성
-            if (title.Contains(keyword))
+            // 키워드가 포함된 방만 생성 (대소문자 구분하지 않음)
+            if (title.IndexOf(keyword, StringComparison.OrdinalIgnoreCase) >= 0)
             {
                 RoomInfo room = cachedRoomList[title];
-
                 ui.AddRoomObj(room, (id, roomPassword) => OnEnterRoom(id, roomPassword));
             }
         }
